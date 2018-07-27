@@ -175,7 +175,7 @@ var ApiServiceProvider = /** @class */ (function () {
         this.baseURL = __WEBPACK_IMPORTED_MODULE_2__env__["a" /* ENV */].api_base_url;
     }
     ApiServiceProvider.prototype.getExpenses = function () {
-        console.log(__WEBPACK_IMPORTED_MODULE_2__env__["a" /* ENV */].production);
+        console.log('Is production: ' + __WEBPACK_IMPORTED_MODULE_2__env__["a" /* ENV */].production);
         return this.http.get(this.baseURL + 'expenses/');
     };
     ApiServiceProvider.prototype.getPayMethods = function () {

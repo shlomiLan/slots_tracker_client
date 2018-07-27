@@ -11,7 +11,7 @@ export class ApiServiceProvider {
   }
 
   getExpenses(){
-    console.log(ENV.production);
+    console.log('Is production: ' + ENV.production);
     return this.http.get(this.baseURL + 'expenses/')
   }
 
