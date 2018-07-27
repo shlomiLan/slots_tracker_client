@@ -5,12 +5,13 @@ import { ENV } from '@env';
 
 @Injectable()
 export class ApiServiceProvider {
-  private baseURL = ENV.API_BASE_URL;
+  private baseURL = ENV.api_base_url;
 
   constructor(public http: HttpClient) {
   }
 
   getExpenses(){
+    console.log(ENV.production);
     return this.http.get(this.baseURL + 'expenses/')
   }
 

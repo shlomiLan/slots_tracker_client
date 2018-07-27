@@ -140,10 +140,9 @@ var ExpensesPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-expenses',template:/*ion-inline-start:"/Users/shlomilanton/workscpace/slots_tracker_client/src/pages/expenses/expenses.html"*/'<ion-content>\n  <ion-grid>\n      <ion-row>\n        <ion-col col-2>Amount</ion-col>\n        <ion-col col-4>Description</ion-col>\n        <ion-col col-3>pay_method</ion-col>\n        <ion-col col-3>timestamp</ion-col>\n      </ion-row>\n\n      <ion-row *ngFor="let expense of expenses" (click)="createOrUpdateExpense(expense)">\n        <ion-col col-2>{{expense.amount}}</ion-col>\n        <ion-col col-4>{{expense.description}}</ion-col>\n        <ion-col col-3>{{expense.pay_method.name}}</ion-col>\n        <ion-col col-3>{{expense.timestamp}}</ion-col>\n      </ion-row>\n\n      <button ion-button type="button" (click)="createOrUpdateExpense()">Create expense</button>\n      <button ion-button type="button" (click)="getExpenses()">Update list</button>\n\n      <ion-row>\n        <ion-col col-12>Name</ion-col>\n      </ion-row>\n\n      <ion-row *ngFor="let method of methods" (click)="createOrUpdatePayMethod(method)">\n        <ion-col col-12>{{method.name}}</ion-col>\n      </ion-row>\n\n      <button ion-button type="button" (click)="createOrUpdatePayMethod()">Create paying method</button>\n      <button ion-button type="button" (click)="getPayMethods()">Update list</button>\n  </ion-grid>\n\n</ion-content>\n'/*ion-inline-end:"/Users/shlomilanton/workscpace/slots_tracker_client/src/pages/expenses/expenses.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* ModalController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__providers_api_service_api_service__["a" /* ApiServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_api_service_api_service__["a" /* ApiServiceProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */]) === "function" && _c || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* ModalController */], __WEBPACK_IMPORTED_MODULE_2__providers_api_service_api_service__["a" /* ApiServiceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */]])
     ], ExpensesPage);
     return ExpensesPage;
-    var _a, _b, _c;
 }());
 
 //# sourceMappingURL=expenses.js.map
@@ -173,9 +172,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var ApiServiceProvider = /** @class */ (function () {
     function ApiServiceProvider(http) {
         this.http = http;
-        this.baseURL = __WEBPACK_IMPORTED_MODULE_2__env__["a" /* ENV */].API_BASE_URL;
+        this.baseURL = __WEBPACK_IMPORTED_MODULE_2__env__["a" /* ENV */].api_base_url;
     }
     ApiServiceProvider.prototype.getExpenses = function () {
+        console.log(__WEBPACK_IMPORTED_MODULE_2__env__["a" /* ENV */].production);
         return this.http.get(this.baseURL + 'expenses/');
     };
     ApiServiceProvider.prototype.getPayMethods = function () {
@@ -222,10 +222,9 @@ var ApiServiceProvider = /** @class */ (function () {
     };
     ApiServiceProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
     ], ApiServiceProvider);
     return ApiServiceProvider;
-    var _a;
 }());
 
 //# sourceMappingURL=api-service.js.map
@@ -386,8 +385,8 @@ var MyApp = /** @class */ (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ENV; });
 var ENV = {
-    PRODUCTION: false,
-    API_BASE_URL: 'http://127.0.0.1:5000/'
+    production: false,
+    api_base_url: 'http://127.0.0.1:5000/'
 };
 //# sourceMappingURL=env.js.map
 
