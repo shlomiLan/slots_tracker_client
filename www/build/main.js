@@ -22,11 +22,11 @@ webpackEmptyAsyncContext.id = 110;
 
 var map = {
 	"../pages/modal/expense/expense-modal.module": [
-		278,
+		279,
 		1
 	],
 	"../pages/modal/pay_method/pay-method-modal.module": [
-		279,
+		280,
 		0
 	]
 };
@@ -54,7 +54,7 @@ module.exports = webpackAsyncContext;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_api_service_api_service__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_do__ = __webpack_require__(275);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_do__ = __webpack_require__(276);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_do___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_do__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -84,7 +84,7 @@ var ExpensesPage = /** @class */ (function () {
         if (data === void 0) { data = undefined; }
         if (!data) {
             // TODO: Remove this section to return an empty structure
-            data = { amount: undefined, descreption: '', pay_method: '' };
+            data = { amount: undefined, description: '', pay_method: '' };
             // timestamp: ''}
         }
         var myModalOptions = {
@@ -134,16 +134,16 @@ var ExpensesPage = /** @class */ (function () {
         var _this = this;
         this.api.getPayMethods().subscribe(function (response) {
             _this.methods = response;
-            _this.getExpenses();
         });
     };
     ExpensesPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-expenses',template:/*ion-inline-start:"/Users/shlomilanton/workscpace/slots_tracker_client/src/pages/expenses/expenses.html"*/'<ion-content>\n  <ion-grid>\n      <ion-row>\n        <ion-col col-2>Amount</ion-col>\n        <ion-col col-4>descreption</ion-col>\n        <ion-col col-3>pay_method</ion-col>\n        <ion-col col-3>timestamp</ion-col>\n      </ion-row>\n\n      <ion-row *ngFor="let expense of expenses" (click)="createOrUpdateExpense(expense)">\n        <ion-col col-2>{{expense.amount}}</ion-col>\n        <ion-col col-4>{{expense.descreption}}</ion-col>\n        <ion-col col-3>{{expense.pay_method.name}}</ion-col>\n        <ion-col col-3>{{expense.timestamp}}</ion-col>\n      </ion-row>\n\n      <button ion-button type="button" (click)="createOrUpdateExpense()">Create expense</button>\n      <button ion-button type="button" (click)="getExpenses()">Update list</button>\n\n      <ion-row>\n        <ion-col col-12>Name</ion-col>\n      </ion-row>\n\n      <ion-row *ngFor="let method of methods" (click)="createOrUpdatePayMethod(method)">\n        <ion-col col-12>{{method.name}}</ion-col>\n      </ion-row>\n\n      <button ion-button type="button" (click)="createOrUpdatePayMethod()">Create paying method</button>\n      <button ion-button type="button" (click)="getPayMethods()">Update list</button>\n  </ion-grid>\n\n</ion-content>\n'/*ion-inline-end:"/Users/shlomilanton/workscpace/slots_tracker_client/src/pages/expenses/expenses.html"*/
+            selector: 'page-expenses',template:/*ion-inline-start:"/Users/shlomilanton/workscpace/slots_tracker_client/src/pages/expenses/expenses.html"*/'<ion-content>\n  <ion-grid>\n      <ion-row>\n        <ion-col col-2>Amount</ion-col>\n        <ion-col col-4>Description</ion-col>\n        <ion-col col-3>pay_method</ion-col>\n        <ion-col col-3>timestamp</ion-col>\n      </ion-row>\n\n      <ion-row *ngFor="let expense of expenses" (click)="createOrUpdateExpense(expense)">\n        <ion-col col-2>{{expense.amount}}</ion-col>\n        <ion-col col-4>{{expense.description}}</ion-col>\n        <ion-col col-3>{{expense.pay_method.name}}</ion-col>\n        <ion-col col-3>{{expense.timestamp}}</ion-col>\n      </ion-row>\n\n      <button ion-button type="button" (click)="createOrUpdateExpense()">Create expense</button>\n      <button ion-button type="button" (click)="getExpenses()">Update list</button>\n\n      <ion-row>\n        <ion-col col-12>Name</ion-col>\n      </ion-row>\n\n      <ion-row *ngFor="let method of methods" (click)="createOrUpdatePayMethod(method)">\n        <ion-col col-12>{{method.name}}</ion-col>\n      </ion-row>\n\n      <button ion-button type="button" (click)="createOrUpdatePayMethod()">Create paying method</button>\n      <button ion-button type="button" (click)="getPayMethods()">Update list</button>\n  </ion-grid>\n\n</ion-content>\n'/*ion-inline-end:"/Users/shlomilanton/workscpace/slots_tracker_client/src/pages/expenses/expenses.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* ModalController */], __WEBPACK_IMPORTED_MODULE_2__providers_api_service_api_service__["a" /* ApiServiceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* ModalController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__providers_api_service_api_service__["a" /* ApiServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_api_service_api_service__["a" /* ApiServiceProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */]) === "function" && _c || Object])
     ], ExpensesPage);
     return ExpensesPage;
+    var _a, _b, _c;
 }());
 
 //# sourceMappingURL=expenses.js.map
@@ -157,6 +157,7 @@ var ExpensesPage = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ApiServiceProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(111);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__env__ = __webpack_require__(275);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -168,10 +169,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var ApiServiceProvider = /** @class */ (function () {
     function ApiServiceProvider(http) {
         this.http = http;
-        this.baseURL = 'https://slots-tracker.herokuapp.com/';
+        this.baseURL = __WEBPACK_IMPORTED_MODULE_2__env__["a" /* ENV */].API_BASE_URL;
     }
     ApiServiceProvider.prototype.getExpenses = function () {
         return this.http.get(this.baseURL + 'expenses/');
@@ -375,6 +377,19 @@ var MyApp = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=app.component.js.map
+
+/***/ }),
+
+/***/ 275:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ENV; });
+var ENV = {
+    PRODUCTION: false,
+    API_BASE_URL: 'http://127.0.0.1:5000/'
+};
+//# sourceMappingURL=env.js.map
 
 /***/ })
 

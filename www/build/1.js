@@ -1,6 +1,6 @@
 webpackJsonp([1],{
 
-/***/ 278:
+/***/ 279:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ModalPageModule", function() { return ModalPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__expense_modal__ = __webpack_require__(280);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__expense_modal__ = __webpack_require__(281);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,7 +38,7 @@ var ModalPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 280:
+/***/ 281:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -80,11 +80,12 @@ var ExpenseModalPage = /** @class */ (function () {
     };
     ExpenseModalPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            template: "\n    <ion-header>\n      <ion-navbar>\n        <ion-title>Modal</ion-title>\n        <ion-buttons end>\n          <button ion-button (click)=\"closeModal()\">Close</button>\n        </ion-buttons>\n      </ion-navbar>\n    </ion-header>\n\n    <ion-content padding>\n      <form [formGroup]=\"expense\" (ngSubmit)=\"saveData()\">\n        <ion-item>\n          <ion-label>Amount:</ion-label>\n          <ion-input formControlName=\"amount\" type=\"number\"></ion-input>\n        </ion-item>\n        <ion-item>\n          <ion-label>Descreption:</ion-label>\n          <ion-input formControlName=\"descreption\" type=\"text\"></ion-input>\n        </ion-item>\n        <ion-item>\n          <ion-label>Pay method:</ion-label>\n          <ion-select [formControlName]=\"pay_method\" (ionChange)=\"payMethodChange($event);\" interface=\"popover\">\n            <ion-option *ngFor=\"let item of methods.controls\" [value]=\"item.value._id\">\n              {{item.value.name}}\n            </ion-option>\n          </ion-select>\n        </ion-item>\n        <button ion-button type=\"submit\" [disabled]=\"!expense.valid\">Submit</button>\n    </form>\n    </ion-content>\n  "
+            template: "\n    <ion-header>\n      <ion-navbar>\n        <ion-title>Modal</ion-title>\n        <ion-buttons end>\n          <button ion-button (click)=\"closeModal()\">Close</button>\n        </ion-buttons>\n      </ion-navbar>\n    </ion-header>\n\n    <ion-content padding>\n      <form [formGroup]=\"expense\" (ngSubmit)=\"saveData()\">\n        <ion-item>\n          <ion-label>Amount:</ion-label>\n          <ion-input formControlName=\"amount\" type=\"number\"></ion-input>\n        </ion-item>\n        <ion-item>\n          <ion-label>Description:</ion-label>\n          <ion-input formControlName=\"description\" type=\"text\"></ion-input>\n        </ion-item>\n        <ion-item>\n          <ion-label>Pay method:</ion-label>\n          <ion-select formControlName=\"pay_method\" (ionChange)=\"payMethodChange($event);\" interface=\"popover\">\n            <ion-option *ngFor=\"let item of methods.controls\" [value]=\"item.value._id\">\n              {{item.value.name}}\n            </ion-option>\n          </ion-select>\n        </ion-item>\n        <button ion-button type=\"submit\" [disabled]=\"!expense.valid\">Submit</button>\n    </form>\n    </ion-content>\n  "
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["j" /* ViewController */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* NavParams */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormBuilder */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["j" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["j" /* ViewController */]) === "function" && _c || Object])
     ], ExpenseModalPage);
     return ExpenseModalPage;
+    var _a, _b, _c;
 }());
 
 //# sourceMappingURL=expense-modal.js.map
