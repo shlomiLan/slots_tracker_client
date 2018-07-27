@@ -21,12 +21,12 @@ import { IonicPage, NavParams, ViewController } from 'ionic-angular';
           <ion-input formControlName="amount" type="number"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label>Descreption:</ion-label>
-          <ion-input formControlName="descreption" type="text"></ion-input>
+          <ion-label>Description:</ion-label>
+          <ion-input formControlName="description" type="text"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label>Pay method:</ion-label>
-          <ion-select [formControlName]="pay_method" (ionChange)="payMethodChange($event);" interface="popover">
+          <ion-select formControlName="pay_method" (ionChange)="payMethodChange($event);" interface="popover">
             <ion-option *ngFor="let item of methods.controls" [value]="item.value._id">
               {{item.value.name}}
             </ion-option>
@@ -46,6 +46,7 @@ export class ExpenseModalPage {
   constructor( private navParams: NavParams, private formBuilder: FormBuilder, private viewCtrl: ViewController ) {
     this.expense = this.formBuilder.group(this.navParams.get('data'));
     this.methods = this.formBuilder.array(this.navParams.get('methods'));
+
     // Modify the pay_method data for the select element
     this.expense.controls['pay_method'].setValue(this.expense.value.pay_method._id);
   }

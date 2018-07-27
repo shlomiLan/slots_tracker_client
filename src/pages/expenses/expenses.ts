@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { ModalController, ModalOptions, ToastController } from 'ionic-angular';
-import { ApiServiceProvider } from '../../providers/api-service/api-service'
+import {Component} from '@angular/core';
+import {ModalController, ModalOptions, ToastController} from 'ionic-angular';
+import {ApiServiceProvider} from '../../providers/api-service/api-service'
 import 'rxjs/add/operator/do'
 
 
@@ -24,7 +24,7 @@ export class ExpensesPage {
   createOrUpdateExpense(data = undefined) {
     if (!data){
       // TODO: Remove this section to return an empty structure
-      data = {amount: undefined, descreption: '', pay_method: ''};
+      data = {amount: undefined, description: '', pay_method: ''};
       // timestamp: ''}
     }
 
@@ -33,7 +33,7 @@ export class ExpensesPage {
     };
 
     let modal = this.modalCtrl.create('ExpenseModalPage', {data: data, methods: this.methods}, myModalOptions);
-      modal.onDidDismiss(data => {
+    modal.onDidDismiss(data => {
         if (data){
           this.api.creatOrUpdateExpense(data).subscribe(_ => { this.getExpenses() });
         }
@@ -55,20 +55,20 @@ export class ExpensesPage {
     };
 
     let modal = this.modalCtrl.create('PayMethodModalPage', {data: data}, myModalOptions);
-      modal.onDidDismiss(data => {
-        if (data){
-          this.api.createOrUpdatePayMethod(data).subscribe(_ => { this.getPayMethods()}, err =>{
-              const toast = this.toastCtrl.create({
-                message: err.error,
-                duration: 3000,
-                position: 'top'
-              });
-              toast.present();
+    modal.onDidDismiss(data => {
+      if (data){
+        this.api.createOrUpdatePayMethod(data).subscribe(_ => { this.getPayMethods()}, err =>{
+            const toast = this.toastCtrl.create({
+              message: err.error,
+              duration: 3000,
+              position: 'top'
             });
-        }
-      });
+            toast.present();
+          });
+      }
+    });
 
-      modal.present();
+    modal.present();
   }
 
   getExpenses() {
@@ -80,7 +80,6 @@ export class ExpensesPage {
   getPayMethods() {
     this.api.getPayMethods().subscribe(response => {
       this.methods = response;
-      this.getExpenses();
     } );
   }
 }
