@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
+import { ENV } from '@env';
 
 @Injectable()
 export class ApiServiceProvider {
-  private baseURL = 'https://slots-tracker.herokuapp.com/';
+  private baseURL = ENV.API_BASE_URL;
 
   constructor(public http: HttpClient) {
   }
