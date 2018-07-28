@@ -5,6 +5,7 @@ import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 
 import {MyApp} from './app.component';
 import {ExpensesPage} from '../pages/expenses/expenses';
+import {PayMethodsPage} from '../pages/pay_methods/pay_methods';
 
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
@@ -14,7 +15,8 @@ import {DatePipe} from "@angular/common";
 @NgModule({
   declarations: [
     MyApp,
-    ExpensesPage
+    ExpensesPage,
+    PayMethodsPage
   ],
   imports: [
     BrowserModule,
@@ -24,7 +26,8 @@ import {DatePipe} from "@angular/common";
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    ExpensesPage
+    ExpensesPage,
+    PayMethodsPage
   ],
   providers: [
     StatusBar,

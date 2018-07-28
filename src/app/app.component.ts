@@ -1,9 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import {Component, ViewChild} from '@angular/core';
+import {Nav, Platform} from 'ionic-angular';
+import {StatusBar} from '@ionic-native/status-bar';
+import {SplashScreen} from '@ionic-native/splash-screen';
 
-import { ExpensesPage } from '../pages/expenses/expenses';
+import {ExpensesPage} from '../pages/expenses/expenses';
+import {PayMethodsPage} from '../pages/pay_methods/pay_methods';
 
 @Component({
   templateUrl: 'app.html'
@@ -20,7 +21,7 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Expenses', component: ExpensesPage }
+      {title: 'Expenses', component: ExpensesPage}, {title: 'Pay Methods', component: PayMethodsPage}
     ];
 
   }

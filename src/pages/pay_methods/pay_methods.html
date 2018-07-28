@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{title}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12>Name</ion-col>
+    </ion-row>
+
+    <ion-row *ngFor="let method of methods" (click)="createOrUpdatePayMethod(method)">
+      <ion-col col-12>{{method.name}}</ion-col>
+    </ion-row>
+
+    <button ion-button type="button" (click)="createOrUpdatePayMethod()">Create paying method</button>
+    <button ion-button type="button" (click)="getPayMethods()">Update list</button>
+  </ion-grid>
+
+</ion-content>
