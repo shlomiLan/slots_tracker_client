@@ -1,14 +1,15 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import {BrowserModule} from '@angular/platform-browser';
+import {ErrorHandler, NgModule} from '@angular/core';
+import {HttpClientModule} from '@angular/common/http';
+import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 
-import { MyApp } from './app.component';
-import { ExpensesPage } from '../pages/expenses/expenses';
+import {MyApp} from './app.component';
+import {ExpensesPage} from '../pages/expenses/expenses';
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { ApiServiceProvider } from '../providers/api-service/api-service';
+import {StatusBar} from '@ionic-native/status-bar';
+import {SplashScreen} from '@ionic-native/splash-screen';
+import {ApiServiceProvider} from '../providers/api-service/api-service';
+import {DatePipe} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ApiServiceProvider } from '../providers/api-service/api-service';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ApiServiceProvider
+    ApiServiceProvider,
+    DatePipe
   ]
 })
 export class AppModule {}

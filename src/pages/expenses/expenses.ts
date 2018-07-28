@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {DatePipe} from '@angular/common'
 import {ModalController, ModalOptions, ToastController} from 'ionic-angular';
 import {ApiServiceProvider} from '../../providers/api-service/api-service'
 import 'rxjs/add/operator/do'
@@ -13,7 +14,8 @@ export class ExpensesPage {
   expenses: any;
   methods: any;
 
-  constructor(public modalCtrl: ModalController, private api: ApiServiceProvider, public toastCtrl: ToastController) {
+  constructor(public modalCtrl: ModalController, private api: ApiServiceProvider, public toastCtrl: ToastController,
+              public datepipe: DatePipe) {
 
     // Initialize data
     this.getPayMethods();
@@ -24,9 +26,14 @@ export class ExpensesPage {
   createOrUpdateExpense(data = undefined) {
     if (!data){
       // TODO: Remove this section to return an empty structure
-      data = {amount: undefined, description: '', pay_method: ''};
-      // timestamp: ''}
+      console.log(typeof(new Date()));
+      data = {
+        amount: undefined, description: '', pay_method: '',
+        timestamp: this.datepipe.transform(new Date(), 'yyyy-MM-dd')
+      }
     }
+
+    console.log(data);
 
     const myModalOptions: ModalOptions = {
       enableBackdropDismiss: false

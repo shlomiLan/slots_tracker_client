@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
-import { IonicPage, NavParams, ViewController } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {IonicPage, NavParams, ViewController} from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -31,6 +31,10 @@ import { IonicPage, NavParams, ViewController } from 'ionic-angular';
               {{item.value.name}}
             </ion-option>
           </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label>Date:</ion-label>
+          <ion-datetime displayFormat="D MMM YYYY" formControlName="timestamp"></ion-datetime>
         </ion-item>
         <button ion-button type="submit" [disabled]="!expense.valid">Submit</button>
     </form>

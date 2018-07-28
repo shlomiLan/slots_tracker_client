@@ -52,10 +52,11 @@ module.exports = webpackAsyncContext;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ExpensesPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_api_service_api_service__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_do__ = __webpack_require__(276);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_do___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_do__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_api_service_api_service__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_do__ = __webpack_require__(276);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_do___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_do__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -69,11 +70,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ExpensesPage = /** @class */ (function () {
-    function ExpensesPage(modalCtrl, api, toastCtrl) {
+    function ExpensesPage(modalCtrl, api, toastCtrl, datepipe) {
         this.modalCtrl = modalCtrl;
         this.api = api;
         this.toastCtrl = toastCtrl;
+        this.datepipe = datepipe;
         // Initialize data
         this.getPayMethods();
         this.getExpenses();
@@ -84,9 +87,11 @@ var ExpensesPage = /** @class */ (function () {
         if (data === void 0) { data = undefined; }
         if (!data) {
             // TODO: Remove this section to return an empty structure
-            data = { amount: undefined, description: '', pay_method: '' };
-            // timestamp: ''}
+            console.log(typeof (new Date()));
+            data = { amount: undefined, description: '', pay_method: '',
+                timestamp: this.datepipe.transform(new Date(), 'yyyy-MM-dd') };
         }
+        console.log(data);
         var myModalOptions = {
             enableBackdropDismiss: false
         };
@@ -140,9 +145,10 @@ var ExpensesPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-expenses',template:/*ion-inline-start:"/Users/shlomilanton/workscpace/slots_tracker_client/src/pages/expenses/expenses.html"*/'<ion-content>\n  <ion-grid>\n      <ion-row>\n        <ion-col col-2>Amount</ion-col>\n        <ion-col col-4>Description</ion-col>\n        <ion-col col-3>pay_method</ion-col>\n        <ion-col col-3>timestamp</ion-col>\n      </ion-row>\n\n      <ion-row *ngFor="let expense of expenses" (click)="createOrUpdateExpense(expense)">\n        <ion-col col-2>{{expense.amount}}</ion-col>\n        <ion-col col-4>{{expense.description}}</ion-col>\n        <ion-col col-3>{{expense.pay_method.name}}</ion-col>\n        <ion-col col-3>{{expense.timestamp}}</ion-col>\n      </ion-row>\n\n      <button ion-button type="button" (click)="createOrUpdateExpense()">Create expense</button>\n      <button ion-button type="button" (click)="getExpenses()">Update list</button>\n\n      <ion-row>\n        <ion-col col-12>Name</ion-col>\n      </ion-row>\n\n      <ion-row *ngFor="let method of methods" (click)="createOrUpdatePayMethod(method)">\n        <ion-col col-12>{{method.name}}</ion-col>\n      </ion-row>\n\n      <button ion-button type="button" (click)="createOrUpdatePayMethod()">Create paying method</button>\n      <button ion-button type="button" (click)="getPayMethods()">Update list</button>\n  </ion-grid>\n\n</ion-content>\n'/*ion-inline-end:"/Users/shlomilanton/workscpace/slots_tracker_client/src/pages/expenses/expenses.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* ModalController */], __WEBPACK_IMPORTED_MODULE_2__providers_api_service_api_service__["a" /* ApiServiceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* ModalController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__providers_api_service_api_service__["a" /* ApiServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_api_service_api_service__["a" /* ApiServiceProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["i" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["i" /* ToastController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_common__["d" /* DatePipe */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_common__["d" /* DatePipe */]) === "function" && _d || Object])
     ], ExpensesPage);
     return ExpensesPage;
+    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=expenses.js.map
@@ -259,12 +265,14 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_status_bar__ = __webpack_require__(193);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_splash_screen__ = __webpack_require__(196);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_api_service_api_service__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__angular_common__ = __webpack_require__(33);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -302,7 +310,8 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_6__ionic_native_status_bar__["a" /* StatusBar */],
                 __WEBPACK_IMPORTED_MODULE_7__ionic_native_splash_screen__["a" /* SplashScreen */],
                 { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["u" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["b" /* IonicErrorHandler */] },
-                __WEBPACK_IMPORTED_MODULE_8__providers_api_service_api_service__["a" /* ApiServiceProvider */]
+                __WEBPACK_IMPORTED_MODULE_8__providers_api_service_api_service__["a" /* ApiServiceProvider */],
+                __WEBPACK_IMPORTED_MODULE_9__angular_common__["d" /* DatePipe */]
             ]
         })
     ], AppModule);
