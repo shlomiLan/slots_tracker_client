@@ -88,8 +88,10 @@ var ExpensesPage = /** @class */ (function () {
         if (!data) {
             // TODO: Remove this section to return an empty structure
             console.log(typeof (new Date()));
-            data = { amount: undefined, description: '', pay_method: '',
-                timestamp: this.datepipe.transform(new Date(), 'yyyy-MM-dd') };
+            data = {
+                amount: undefined, description: '', pay_method: '',
+                timestamp: this.datepipe.transform(new Date(), 'yyyy-MM-dd')
+            };
         }
         console.log(data);
         var myModalOptions = {
@@ -98,7 +100,7 @@ var ExpensesPage = /** @class */ (function () {
         var modal = this.modalCtrl.create('ExpenseModalPage', { data: data, methods: this.methods }, myModalOptions);
         modal.onDidDismiss(function (data) {
             if (data) {
-                _this.api.creatOrUpdateExpense(data).subscribe(function (_) { _this.getExpenses(); });
+                _this.api.createOrUpdateExpense(data).subscribe(function (_) { _this.getExpenses(); });
             }
         });
         modal.present();
@@ -187,7 +189,7 @@ var ApiServiceProvider = /** @class */ (function () {
     ApiServiceProvider.prototype.getPayMethods = function () {
         return this.http.get(this.baseURL + 'pay_methods/');
     };
-    ApiServiceProvider.prototype.creatOrUpdateExpense = function (data) {
+    ApiServiceProvider.prototype.createOrUpdateExpense = function (data) {
         var id = this.get_id(data);
         this.clean_data(data);
         var url = this.baseURL + 'expenses/';
@@ -228,9 +230,10 @@ var ApiServiceProvider = /** @class */ (function () {
     };
     ApiServiceProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object])
     ], ApiServiceProvider);
     return ApiServiceProvider;
+    var _a;
 }());
 
 //# sourceMappingURL=api-service.js.map

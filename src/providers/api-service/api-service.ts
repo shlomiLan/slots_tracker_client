@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 
-import { ENV } from '@env';
+import {ENV} from '@env';
 
 @Injectable()
 export class ApiServiceProvider {
@@ -19,7 +19,7 @@ export class ApiServiceProvider {
     return this.http.get(this.baseURL + 'pay_methods/')
   }
 
-  creatOrUpdateExpense(data){
+  createOrUpdateExpense(data) {
     let id = this.get_id(data);
     this.clean_data(data);
     let url = this.baseURL + 'expenses/';

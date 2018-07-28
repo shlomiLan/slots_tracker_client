@@ -42,7 +42,9 @@ export class ExpensesPage {
     let modal = this.modalCtrl.create('ExpenseModalPage', {data: data, methods: this.methods}, myModalOptions);
     modal.onDidDismiss(data => {
         if (data){
-          this.api.creatOrUpdateExpense(data).subscribe(_ => { this.getExpenses() });
+          this.api.createOrUpdateExpense(data).subscribe(_ => {
+            this.getExpenses()
+          });
         }
       });
 
