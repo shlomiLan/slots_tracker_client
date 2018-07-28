@@ -3,22 +3,32 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>{{title}}</ion-title>
+    <ion-title>Pay Methods</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col col-12>Name</ion-col>
-    </ion-row>
+  <ion-list>
+    <ion-item-sliding *ngFor="let method of methods">
+      <ion-item>
+        <p>{{method.name}}</p>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button color="danger" (click)="deletePayMethod(method)" icon-start>
+          <ion-icon name="trash"></ion-icon>
+          Delete
+        </button>
+        <button ion-button color="primary" (click)="createOrUpdatePayMethod(method)">
+          <ion-icon name="create"></ion-icon>
+          Edit
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 
-    <ion-row *ngFor="let method of methods" (click)="createOrUpdatePayMethod(method)">
-      <ion-col col-12>{{method.name}}</ion-col>
-    </ion-row>
-
-    <button ion-button type="button" (click)="createOrUpdatePayMethod()">Create paying method</button>
-    <button ion-button type="button" (click)="getPayMethods()">Update list</button>
-  </ion-grid>
-
+  <ion-fab right bottom>
+    <button ion-fab (click)="createOrUpdatePayMethod()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

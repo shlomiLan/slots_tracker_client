@@ -49,6 +49,15 @@ export class PayMethodsPage {
     modal.present();
   }
 
+  deletePayMethod(pay_method) {
+    const toast = this.toastCtrl.create({
+      message: 'Not implemented yet',
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
+  }
+
   getPayMethods() {
     this.api.getPayMethods().subscribe(response => {
       this.methods = response;

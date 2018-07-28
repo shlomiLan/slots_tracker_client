@@ -3,27 +3,34 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
+    <ion-title>Expenses</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col col-2>Amount</ion-col>
-      <ion-col col-4>Description</ion-col>
-      <ion-col col-3>Pay method</ion-col>
-      <ion-col col-3>Timestamp</ion-col>
-    </ion-row>
-
-    <ion-row *ngFor="let expense of expenses" (click)="createOrUpdateExpense(expense)">
-      <ion-col col-2>{{expense.amount}}</ion-col>
-      <ion-col col-4>{{expense.description}}</ion-col>
-      <ion-col col-3>{{expense.pay_method.name}}</ion-col>
-      <ion-col col-3>{{expense.timestamp}}</ion-col>
-    </ion-row>
-
-    <button ion-button type="button" (click)="createOrUpdateExpense()">Create expense</button>
-    <button ion-button type="button" (click)="getExpenses()">Update list</button>
-  </ion-grid>
-
+  <ion-list>
+    <ion-item-sliding *ngFor="let expense of expenses">
+      <ion-item>
+        <p>{{expense.amount}}</p>
+        <p>{{expense.description}}</p>
+        <p>{{expense.pay_method.name}}</p>
+        <p item-end>{{expense.timestamp}}</p>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button color="danger" (click)="deleteExpense(expense)" icon-start>
+          <ion-icon name="trash"></ion-icon>
+          Delete
+        </button>
+        <button ion-button color="primary" (click)="createOrUpdateExpense(expense)">
+          <ion-icon name="create"></ion-icon>
+          Edit
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <ion-fab right bottom>
+    <button ion-fab (click)="createOrUpdateExpense()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

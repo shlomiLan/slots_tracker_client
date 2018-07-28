@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {DatePipe} from '@angular/common'
-import {ModalController, ModalOptions} from 'ionic-angular';
+import {ModalController, ModalOptions, ToastController} from 'ionic-angular';
 import {ApiServiceProvider} from '../../providers/api-service/api-service'
 import 'rxjs/add/operator/do'
 
@@ -13,7 +13,8 @@ export class ExpensesPage {
   expenses: any;
   methods: any;
 
-  constructor(public modalCtrl: ModalController, private api: ApiServiceProvider, public datepipe: DatePipe) {
+  constructor(public modalCtrl: ModalController, private api: ApiServiceProvider, public datepipe: DatePipe,
+              public toastCtrl: ToastController) {
 
     // Initialize data
     this.getExpenses();
@@ -45,6 +46,16 @@ export class ExpensesPage {
 
       modal.present();
   }
+
+  deleteExpense(expense) {
+    const toast = this.toastCtrl.create({
+      message: 'Not implemented yet',
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
+  }
+
 
   getExpenses() {
     this.api.getExpenses().subscribe(response => {
