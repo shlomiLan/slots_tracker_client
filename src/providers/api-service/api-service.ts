@@ -1,7 +1,8 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 
-import {ENV} from '@env';
+import {ENV} from '../../../src/environments/environment';
+
 
 @Injectable()
 export class ApiServiceProvider {

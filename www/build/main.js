@@ -388,10 +388,10 @@ var MyApp = /** @class */ (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ENV; });
 var ENV = {
-    production: false,
-    api_base_url: 'http://127.0.0.1:5000/'
+    production: true,
+    api_base_url: 'https://slots-tracker.herokuapp.com/'
 };
-//# sourceMappingURL=env.js.map
+//# sourceMappingURL=environment.js.map
 
 /***/ }),
 
@@ -402,7 +402,7 @@ var ENV = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ApiServiceProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(112);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__env__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_environments_environment__ = __webpack_require__(277);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -414,14 +414,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+// import {ENV} from '@env';
 
+// import { environment as ENV } from '../../../src/environments/environment' ;
 var ApiServiceProvider = /** @class */ (function () {
     function ApiServiceProvider(http) {
         this.http = http;
-        this.baseURL = __WEBPACK_IMPORTED_MODULE_2__env__["a" /* ENV */].api_base_url;
+        this.baseURL = __WEBPACK_IMPORTED_MODULE_2__src_environments_environment__["a" /* ENV */].api_base_url;
+        console.log(__WEBPACK_IMPORTED_MODULE_2__src_environments_environment__["a" /* ENV */].api_base_url);
     }
     ApiServiceProvider.prototype.getExpenses = function () {
-        console.log('Is production: ' + __WEBPACK_IMPORTED_MODULE_2__env__["a" /* ENV */].production);
+        console.log('Is production: ' + __WEBPACK_IMPORTED_MODULE_2__src_environments_environment__["a" /* ENV */].production);
         return this.http.get(this.baseURL + 'expenses/');
     };
     ApiServiceProvider.prototype.getPayMethods = function () {
