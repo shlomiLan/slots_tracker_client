@@ -1,4 +1,4 @@
 export const ENV = {
-  production: true,
-  api_base_url: 'https://slots-tracker.herokuapp.com/'
+  production: false,
+  api_base_url: 'http://127.0.0.1:5000/'
 };

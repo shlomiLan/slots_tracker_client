@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Categories</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item-sliding *ngFor="let method of methods">
+      <ion-item>
+        <p>{{method.name}}</p>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button color="danger" (click)="deleteCategory(method)" icon-start>
+          <ion-icon name="trash"></ion-icon>
+          Delete
+        </button>
+        <button ion-button color="primary" (click)="createOrUpdateCategory(method)">
+          <ion-icon name="create"></ion-icon>
+          Edit
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-fab right bottom>
+    <button ion-fab (click)="createOrUpdateCategory()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

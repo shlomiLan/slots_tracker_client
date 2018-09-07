@@ -20,6 +20,10 @@ export class ApiServiceProvider {
     return this.http.get(this.baseURL + 'pay_methods/')
   }
 
+  getCategories() {
+    return this.http.get(this.baseURL + 'categories/')
+  }
+
   createOrUpdateExpense(data) {
     let id = this.get_id(data);
     this.clean_data(data);
@@ -39,6 +43,19 @@ export class ApiServiceProvider {
     let url = this.baseURL + 'pay_methods/';
 
     if (id){
+      url = url + id;
+      return this.http.put(url, data);
+    }
+
+    return this.http.post(url, data);
+  }
+
+  createOrUpdateCategory(data) {
+    let id = this.get_id(data);
+    this.clean_data(data);
+    let url = this.baseURL + 'categories/';
+
+    if (id) {
       url = url + id;
       return this.http.put(url, data);
     }
