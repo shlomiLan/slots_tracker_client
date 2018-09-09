@@ -12,6 +12,7 @@ import 'rxjs/add/operator/do'
 export class ExpensesPage {
   expenses: any;
   methods: any;
+  categories: any;
 
   constructor(public modalCtrl: ModalController, private api: ApiServiceProvider, public datepipe: DatePipe,
               public toastCtrl: ToastController) {
@@ -19,6 +20,7 @@ export class ExpensesPage {
     // Initialize data
     this.getExpenses();
     this.getPayMethods();
+    this.getCategories();
   }
 
   // Logic for creating or updating expense
@@ -26,7 +28,7 @@ export class ExpensesPage {
     if (!data){
       // TODO: Remove this section to return an empty structure
       data = {
-        amount: undefined, description: '', pay_method: '',
+        amount: undefined, description: '', pay_method: '', category: '',
         timestamp: this.datepipe.transform(new Date(), 'yyyy-MM-dd')
       }
     }
@@ -35,7 +37,8 @@ export class ExpensesPage {
       enableBackdropDismiss: false
     };
 
-    let modal = this.modalCtrl.create('ExpenseModalPage', {data: data, methods: this.methods}, myModalOptions);
+    let modal = this.modalCtrl.create('ExpenseModalPage',
+      {data: data, methods: this.methods, categories: this.categories}, myModalOptions);
     modal.onDidDismiss(data => {
         if (data){
           this.api.createOrUpdateExpense(data).subscribe(_ => {
@@ -67,6 +70,12 @@ export class ExpensesPage {
     this.api.getPayMethods().subscribe(response => {
       this.methods = response;
     } );
+  }
+
+  getCategories() {
+    this.api.getCategories().subscribe(response => {
+      this.categories = response;
+    });
   }
 }
 
