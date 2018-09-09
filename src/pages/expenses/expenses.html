@@ -9,25 +9,15 @@
 
 <ion-content>
   <ion-list>
-    <ion-item-sliding *ngFor="let expense of expenses">
-      <ion-item>
-        <p>{{expense.amount}}</p>
-        <p>{{expense.description}}</p>
-        <p>{{expense.category.name}}</p>
-        <p>{{expense.pay_method.name}}</p>
-        <p item-end>{{expense.timestamp}}</p>
-      </ion-item>
-      <ion-item-options>
-        <button ion-button color="danger" (click)="deleteExpense(expense)" icon-start>
-          <ion-icon name="trash"></ion-icon>
-          Delete
-        </button>
-        <button ion-button color="primary" (click)="createOrUpdateExpense(expense)">
-          <ion-icon name="create"></ion-icon>
-          Edit
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
+    <ion-item *ngFor="let expense of expenses" (click)="createOrUpdateExpense(expense)">
+      <h3>{{expense.description}}</h3>
+      <h4>{{expense.category.name}}</h4>
+      <p>{{expense.pay_method.name}}</p>
+      <div item-end>
+        <h3>{{expense.amount}}</h3>
+        <h4 item-end>{{expense.timestamp}}</h4>
+      </div>
+    </ion-item>
   </ion-list>
   <ion-fab right bottom>
     <button ion-fab (click)="createOrUpdateExpense()">
