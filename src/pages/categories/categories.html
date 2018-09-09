@@ -9,21 +9,9 @@
 
 <ion-content>
   <ion-list>
-    <ion-item-sliding *ngFor="let method of methods">
-      <ion-item>
-        <p>{{method.name}}</p>
-      </ion-item>
-      <ion-item-options>
-        <button ion-button color="danger" (click)="deleteCategory(method)" icon-start>
-          <ion-icon name="trash"></ion-icon>
-          Delete
-        </button>
-        <button ion-button color="primary" (click)="createOrUpdateCategory(method)">
-          <ion-icon name="create"></ion-icon>
-          Edit
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
+    <ion-item *ngFor="let category of categories" (click)="createOrUpdateCategory(category)">
+      <p>{{category.name}}</p>
+    </ion-item>
   </ion-list>
 
   <ion-fab right bottom>

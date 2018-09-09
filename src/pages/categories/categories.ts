@@ -11,7 +11,7 @@ import 'rxjs/add/operator/do'
 
 
 export class CategoriesPage {
-  methods: any;
+  categories: any;
 
   constructor(public modalCtrl: ModalController, private api: ApiServiceProvider, public toastCtrl: ToastController) {
 
@@ -60,7 +60,7 @@ export class CategoriesPage {
 
   getCategories() {
     this.api.getCategories().subscribe(response => {
-      this.methods = response;
+      this.categories = response;
     });
   }
 }
