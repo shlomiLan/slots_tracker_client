@@ -44,6 +44,11 @@ import {IonicPage, NavParams, ViewController} from 'ionic-angular';
           <ion-label>Date:</ion-label>
           <ion-datetime displayFormat="D MMM YYYY" formControlName="timestamp"></ion-datetime>
         </ion-item>
+        <ion-item>
+          <ion-label>One time</ion-label>
+          <ion-checkbox color="dark" formControlName="one_time"></ion-checkbox>
+        </ion-item>
+
         <button ion-button type="submit" [disabled]="!expense.valid">Submit</button>
     </form>
     </ion-content>
