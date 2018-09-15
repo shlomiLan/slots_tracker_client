@@ -1,8 +1,7 @@
 import {Component} from '@angular/core';
-import {ModalController, ModalOptions, ToastController} from 'ionic-angular';
+import {LoadingController, ModalController, ModalOptions, ToastController} from 'ionic-angular';
 import {ApiServiceProvider} from '../../providers/api-service/api-service'
 import 'rxjs/add/operator/do'
-
 
 @Component({
   selector: 'page-categories',
@@ -12,11 +11,19 @@ import 'rxjs/add/operator/do'
 
 export class CategoriesPage {
   categories: any;
+  loader: any;
 
-  constructor(public modalCtrl: ModalController, private api: ApiServiceProvider, public toastCtrl: ToastController) {
+  constructor(public modalCtrl: ModalController, private api: ApiServiceProvider, public toastCtrl: ToastController,
+              public loadingCtrl: LoadingController) {
 
     // Initialize data
     this.getCategories();
+
+    this.loader = this.loadingCtrl.create({
+      content: 'Loading data'
+    });
+
+    this.loader.present();
   }
 
   // Logic for creating or updating categories
@@ -61,6 +68,15 @@ export class CategoriesPage {
   getCategories() {
     this.api.getCategories().subscribe(response => {
       this.categories = response;
+      this.loader.dismiss();
+    }, err => {
+      this.loader.dismiss();
+      let error_msg = 'In getCategories: ' + err.error;
+      this.toastCtrl.create({
+        message: error_msg,
+        position: 'top',
+        showCloseButton: true,
+      }).present();
     });
   }
 }

@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ModalController, ModalOptions, ToastController} from 'ionic-angular';
+import {LoadingController, ModalController, ModalOptions, ToastController} from 'ionic-angular';
 import {ApiServiceProvider} from '../../providers/api-service/api-service'
 import 'rxjs/add/operator/do'
 
@@ -12,11 +12,19 @@ import 'rxjs/add/operator/do'
 
 export class PayMethodsPage {
   methods: any;
+  loader: any;
 
-  constructor(public modalCtrl: ModalController, private api: ApiServiceProvider, public toastCtrl: ToastController) {
+  constructor(public modalCtrl: ModalController, private api: ApiServiceProvider, public toastCtrl: ToastController,
+              public loadingCtrl: LoadingController) {
 
     // Initialize data
     this.getPayMethods();
+
+    this.loader = this.loadingCtrl.create({
+      content: 'Loading data'
+    });
+
+    this.loader.present();
   }
 
   // Logic for creating or updating pay method
@@ -61,6 +69,15 @@ export class PayMethodsPage {
   getPayMethods() {
     this.api.getPayMethods().subscribe(response => {
       this.methods = response;
+      this.loader.dismiss();
+    }, err => {
+      this.loader.dismiss();
+      let error_msg = 'In getPayMethods: ' + err.error;
+      this.toastCtrl.create({
+        message: error_msg,
+        position: 'top',
+        showCloseButton: true,
+      }).present();
     });
   }
 }
