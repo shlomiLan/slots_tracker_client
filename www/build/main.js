@@ -1,4 +1,4 @@
-webpackJsonp([2],{
+webpackJsonp([3],{
 
 /***/ 112:
 /***/ (function(module, exports) {
@@ -21,12 +21,16 @@ webpackEmptyAsyncContext.id = 112;
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"../pages/modal/expense/expense-modal.module": [
+	"../pages/modal/category/category-modal.module": [
 		281,
+		2
+	],
+	"../pages/modal/expense/expense-modal.module": [
+		282,
 		1
 	],
 	"../pages/modal/pay_method/pay-method-modal.module": [
-		282,
+		283,
 		0
 	]
 };
@@ -71,15 +75,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+var State;
+(function (State) {
+    State[State["Unset"] = 1] = "Unset";
+    State[State["Success"] = 2] = "Success";
+    State[State["Error"] = 4] = "Error";
+})(State || (State = {}));
 var ExpensesPage = /** @class */ (function () {
-    function ExpensesPage(modalCtrl, api, datepipe, toastCtrl) {
+    function ExpensesPage(modalCtrl, api, datepipe, toastCtrl, loadingCtrl) {
         this.modalCtrl = modalCtrl;
         this.api = api;
         this.datepipe = datepipe;
         this.toastCtrl = toastCtrl;
+        this.loadingCtrl = loadingCtrl;
+        this.data_loading_indicator = { methods: State.Unset, categories: State.Unset, expenses: State.Unset };
+        this.error_msg = '';
         // Initialize data
         this.getExpenses();
         this.getPayMethods();
+        this.getCategories();
+        this.loader = this.loadingCtrl.create({
+            content: 'Loading data'
+        });
+        this.loader.present();
     }
     // Logic for creating or updating expense
     ExpensesPage.prototype.createOrUpdateExpense = function (data) {
@@ -88,14 +106,14 @@ var ExpensesPage = /** @class */ (function () {
         if (!data) {
             // TODO: Remove this section to return an empty structure
             data = {
-                amount: undefined, description: '', pay_method: '',
-                timestamp: this.datepipe.transform(new Date(), 'yyyy-MM-dd')
+                amount: undefined, description: '', pay_method: '', category: '',
+                timestamp: this.datepipe.transform(new Date(), 'yyyy-MM-dd'), one_time: false
             };
         }
         var myModalOptions = {
             enableBackdropDismiss: false
         };
-        var modal = this.modalCtrl.create('ExpenseModalPage', { data: data, methods: this.methods }, myModalOptions);
+        var modal = this.modalCtrl.create('ExpenseModalPage', { data: data, methods: this.methods, categories: this.categories }, myModalOptions);
         modal.onDidDismiss(function (data) {
             if (data) {
                 _this.api.createOrUpdateExpense(data).subscribe(function (_) {
@@ -117,20 +135,58 @@ var ExpensesPage = /** @class */ (function () {
         var _this = this;
         this.api.getExpenses().subscribe(function (response) {
             _this.expenses = response;
+            _this.data_loading_indicator.expenses = State.Success;
+            _this.close_loading();
+        }, function (err) {
+            _this.data_loading_indicator.expenses = State.Error;
+            _this.error_msg = _this.error_msg.concat('In getExpenses: ', err.error);
+            _this.close_loading();
         });
     };
     ExpensesPage.prototype.getPayMethods = function () {
         var _this = this;
         this.api.getPayMethods().subscribe(function (response) {
             _this.methods = response;
+            _this.data_loading_indicator.methods = State.Success;
+            _this.close_loading();
+        }, function (err) {
+            _this.data_loading_indicator.methods = State.Error;
+            _this.error_msg = _this.error_msg.concat('In getPayMethods: ', err.error);
+            _this.close_loading();
         });
+    };
+    ExpensesPage.prototype.getCategories = function () {
+        var _this = this;
+        this.api.getCategories().subscribe(function (response) {
+            _this.categories = response;
+            _this.data_loading_indicator.categories = State.Success;
+            _this.close_loading();
+        }, function (err) {
+            _this.data_loading_indicator.categories = State.Error;
+            _this.error_msg = _this.error_msg.concat('In getCategories: ', err.error);
+            _this.close_loading();
+        });
+    };
+    ExpensesPage.prototype.close_loading = function () {
+        var load_data = this.data_loading_indicator;
+        if (load_data.methods != State.Unset && load_data.categories != State.Unset && load_data.expenses != State.Unset) {
+            this.loader.dismiss();
+            if (load_data.methods == State.Error || load_data.categories == State.Error || load_data.expenses == State.Error) {
+                this.expenses = undefined;
+                this.toastCtrl.create({
+                    message: this.error_msg,
+                    position: 'top',
+                    showCloseButton: true,
+                }).present();
+            }
+        }
     };
     ExpensesPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-expenses',template:/*ion-inline-start:"/Users/shlomilanton/workscpace/slots_tracker_client/src/pages/expenses/expenses.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Expenses</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item-sliding *ngFor="let expense of expenses">\n      <ion-item>\n        <p>{{expense.amount}}</p>\n        <p>{{expense.description}}</p>\n        <p>{{expense.pay_method.name}}</p>\n        <p item-end>{{expense.timestamp}}</p>\n      </ion-item>\n      <ion-item-options>\n        <button ion-button color="danger" (click)="deleteExpense(expense)" icon-start>\n          <ion-icon name="trash"></ion-icon>\n          Delete\n        </button>\n        <button ion-button color="primary" (click)="createOrUpdateExpense(expense)">\n          <ion-icon name="create"></ion-icon>\n          Edit\n        </button>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n  <ion-fab right bottom>\n    <button ion-fab (click)="createOrUpdateExpense()">\n      <ion-icon name="add"></ion-icon>\n    </button>\n  </ion-fab>\n</ion-content>\n'/*ion-inline-end:"/Users/shlomilanton/workscpace/slots_tracker_client/src/pages/expenses/expenses.html"*/
+            selector: 'page-expenses',template:/*ion-inline-start:"/Users/shlomilanton/workscpace/slots_tracker_client/src/pages/expenses/expenses.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Expenses</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item *ngFor="let expense of expenses" (click)="createOrUpdateExpense(expense)">\n      <h3>{{expense.description}}</h3>\n      <h4>{{expense.category.name}}</h4>\n      <p>{{expense.pay_method.name}}</p>\n      <div item-end>\n        <h3>{{expense.amount}}</h3>\n        <h4 item-end>{{expense.timestamp}}</h4>\n      </div>\n    </ion-item>\n  </ion-list>\n  <ion-fab right bottom>\n    <button ion-fab (click)="createOrUpdateExpense()">\n      <ion-icon name="add"></ion-icon>\n    </button>\n  </ion-fab>\n</ion-content>\n'/*ion-inline-end:"/Users/shlomilanton/workscpace/slots_tracker_client/src/pages/expenses/expenses.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* ModalController */], __WEBPACK_IMPORTED_MODULE_3__providers_api_service_api_service__["a" /* ApiServiceProvider */], __WEBPACK_IMPORTED_MODULE_1__angular_common__["d" /* DatePipe */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["i" /* ToastController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["f" /* ModalController */], __WEBPACK_IMPORTED_MODULE_3__providers_api_service_api_service__["a" /* ApiServiceProvider */], __WEBPACK_IMPORTED_MODULE_1__angular_common__["d" /* DatePipe */],
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["j" /* ToastController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* LoadingController */]])
     ], ExpensesPage);
     return ExpensesPage;
 }());
@@ -163,12 +219,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var PayMethodsPage = /** @class */ (function () {
-    function PayMethodsPage(modalCtrl, api, toastCtrl) {
+    function PayMethodsPage(modalCtrl, api, toastCtrl, loadingCtrl) {
         this.modalCtrl = modalCtrl;
         this.api = api;
         this.toastCtrl = toastCtrl;
+        this.loadingCtrl = loadingCtrl;
         // Initialize data
         this.getPayMethods();
+        this.loader = this.loadingCtrl.create({
+            content: 'Loading data'
+        });
+        this.loader.present();
     }
     // Logic for creating or updating pay method
     PayMethodsPage.prototype.createOrUpdatePayMethod = function (data) {
@@ -210,13 +271,23 @@ var PayMethodsPage = /** @class */ (function () {
         var _this = this;
         this.api.getPayMethods().subscribe(function (response) {
             _this.methods = response;
+            _this.loader.dismiss();
+        }, function (err) {
+            _this.loader.dismiss();
+            var error_msg = 'In getPayMethods: ' + err.error;
+            _this.toastCtrl.create({
+                message: error_msg,
+                position: 'top',
+                showCloseButton: true,
+            }).present();
         });
     };
     PayMethodsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-pay-methods',template:/*ion-inline-start:"/Users/shlomilanton/workscpace/slots_tracker_client/src/pages/pay_methods/pay_methods.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Pay Methods</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item-sliding *ngFor="let method of methods">\n      <ion-item>\n        <p>{{method.name}}</p>\n      </ion-item>\n      <ion-item-options>\n        <button ion-button color="danger" (click)="deletePayMethod(method)" icon-start>\n          <ion-icon name="trash"></ion-icon>\n          Delete\n        </button>\n        <button ion-button color="primary" (click)="createOrUpdatePayMethod(method)">\n          <ion-icon name="create"></ion-icon>\n          Edit\n        </button>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n\n  <ion-fab right bottom>\n    <button ion-fab (click)="createOrUpdatePayMethod()">\n      <ion-icon name="add"></ion-icon>\n    </button>\n  </ion-fab>\n</ion-content>\n'/*ion-inline-end:"/Users/shlomilanton/workscpace/slots_tracker_client/src/pages/pay_methods/pay_methods.html"*/
+            selector: 'page-pay-methods',template:/*ion-inline-start:"/Users/shlomilanton/workscpace/slots_tracker_client/src/pages/pay_methods/pay_methods.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Pay Methods</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item *ngFor="let method of methods" (click)="createOrUpdatePayMethod(method)">\n      <p>{{method.name}}</p>\n    </ion-item>\n  </ion-list>\n\n  <ion-fab right bottom>\n    <button ion-fab (click)="createOrUpdatePayMethod()">\n      <ion-icon name="add"></ion-icon>\n    </button>\n  </ion-fab>\n</ion-content>\n'/*ion-inline-end:"/Users/shlomilanton/workscpace/slots_tracker_client/src/pages/pay_methods/pay_methods.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* ModalController */], __WEBPACK_IMPORTED_MODULE_2__providers_api_service_api_service__["a" /* ApiServiceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* ModalController */], __WEBPACK_IMPORTED_MODULE_2__providers_api_service_api_service__["a" /* ApiServiceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ToastController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */]])
     ], PayMethodsPage);
     return PayMethodsPage;
 }());
@@ -229,9 +300,110 @@ var PayMethodsPage = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CategoriesPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_api_service_api_service__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_do__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_do___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_do__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var CategoriesPage = /** @class */ (function () {
+    function CategoriesPage(modalCtrl, api, toastCtrl, loadingCtrl) {
+        this.modalCtrl = modalCtrl;
+        this.api = api;
+        this.toastCtrl = toastCtrl;
+        this.loadingCtrl = loadingCtrl;
+        // Initialize data
+        this.getCategories();
+        this.loader = this.loadingCtrl.create({
+            content: 'Loading data'
+        });
+        this.loader.present();
+    }
+    // Logic for creating or updating categories
+    CategoriesPage.prototype.createOrUpdateCategory = function (data) {
+        var _this = this;
+        if (data === void 0) { data = undefined; }
+        if (!data) {
+            // TODO: Remove this section to return an empty structure
+            data = { name: undefined };
+        }
+        var myModalOptions = {
+            enableBackdropDismiss: false
+        };
+        var modal = this.modalCtrl.create('CategoryModalPage', { data: data }, myModalOptions);
+        modal.onDidDismiss(function (data) {
+            if (data) {
+                _this.api.createOrUpdateCategory(data).subscribe(function (_) {
+                    _this.getCategories();
+                }, function (err) {
+                    var toast = _this.toastCtrl.create({
+                        message: err.error,
+                        duration: 3000,
+                        position: 'top'
+                    });
+                    toast.present();
+                });
+            }
+        });
+        modal.present();
+    };
+    CategoriesPage.prototype.deleteCategory = function (category) {
+        var toast = this.toastCtrl.create({
+            message: 'Not implemented yet',
+            duration: 3000,
+            position: 'top'
+        });
+        toast.present();
+    };
+    CategoriesPage.prototype.getCategories = function () {
+        var _this = this;
+        this.api.getCategories().subscribe(function (response) {
+            _this.categories = response;
+            _this.loader.dismiss();
+        }, function (err) {
+            _this.loader.dismiss();
+            var error_msg = 'In getCategories: ' + err.error;
+            _this.toastCtrl.create({
+                message: error_msg,
+                position: 'top',
+                showCloseButton: true,
+            }).present();
+        });
+    };
+    CategoriesPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-categories',template:/*ion-inline-start:"/Users/shlomilanton/workscpace/slots_tracker_client/src/pages/categories/categories.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Categories</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item *ngFor="let category of categories" (click)="createOrUpdateCategory(category)">\n      <p>{{category.name}}</p>\n    </ion-item>\n  </ion-list>\n\n  <ion-fab right bottom>\n    <button ion-fab (click)="createOrUpdateCategory()">\n      <ion-icon name="add"></ion-icon>\n    </button>\n  </ion-fab>\n</ion-content>\n'/*ion-inline-end:"/Users/shlomilanton/workscpace/slots_tracker_client/src/pages/categories/categories.html"*/
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* ModalController */], __WEBPACK_IMPORTED_MODULE_2__providers_api_service_api_service__["a" /* ApiServiceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ToastController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */]])
+    ], CategoriesPage);
+    return CategoriesPage;
+}());
+
+//# sourceMappingURL=categories.js.map
+
+/***/ }),
+
+/***/ 202:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(202);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(222);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(203);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(223);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -239,7 +411,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 222:
+/***/ 223:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -248,10 +420,10 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__(113);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__(269);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__(270);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_expenses_expenses__ = __webpack_require__(199);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_pay_methods_pay_methods__ = __webpack_require__(200);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_categories_categories__ = __webpack_require__(280);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_categories_categories__ = __webpack_require__(201);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_status_bar__ = __webpack_require__(195);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_splash_screen__ = __webpack_require__(198);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_api_service_api_service__ = __webpack_require__(50);
@@ -290,6 +462,7 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["b" /* HttpClientModule */],
                 __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["c" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* MyApp */], {}, {
                     links: [
+                        { loadChildren: '../pages/modal/category/category-modal.module#ModalPageModule', name: 'CategoryModalPage', segment: 'category-modal', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/modal/expense/expense-modal.module#ModalPageModule', name: 'ExpenseModalPage', segment: 'expense-modal', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/modal/pay_method/pay-method-modal.module#ModalPageModule', name: 'PayMethodModalPage', segment: 'pay-method-modal', priority: 'low', defaultHistory: [] }
                     ]
@@ -318,7 +491,7 @@ var AppModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 269:
+/***/ 270:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -329,7 +502,7 @@ var AppModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(198);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_expenses_expenses__ = __webpack_require__(199);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_pay_methods_pay_methods__ = __webpack_require__(200);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_categories_categories__ = __webpack_require__(280);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_categories_categories__ = __webpack_require__(201);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -374,13 +547,13 @@ var MyApp = /** @class */ (function () {
         this.nav.setRoot(page.component);
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* Nav */]),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* Nav */])
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Nav */]),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Nav */])
     ], MyApp.prototype, "nav", void 0);
     MyApp = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/shlomilanton/workscpace/slots_tracker_client/src/app/app.html"*/'<ion-menu [content]="content">\n  <ion-header>\n    <ion-toolbar>\n      <ion-title>Menu</ion-title>\n    </ion-toolbar>\n  </ion-header>\n\n  <ion-content>\n    <ion-list>\n      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">\n        {{p.title}}\n      </button>\n    </ion-list>\n  </ion-content>\n\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>\n'/*ion-inline-end:"/Users/shlomilanton/workscpace/slots_tracker_client/src/app/app.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
     ], MyApp);
     return MyApp;
 }());
@@ -389,102 +562,16 @@ var MyApp = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 277:
+/***/ 278:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ENV; });
 var ENV = {
-    production: false,
-    api_base_url: 'http://127.0.0.1:5000/'
+    production: true,
+    api_base_url: 'https://slots-tracker-stage.herokuapp.com/'
 };
 //# sourceMappingURL=environment.js.map
-
-/***/ }),
-
-/***/ 280:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CategoriesPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_api_service_api_service__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_do__ = __webpack_require__(100);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_do___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_do__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-var CategoriesPage = /** @class */ (function () {
-    function CategoriesPage(modalCtrl, api, toastCtrl) {
-        this.modalCtrl = modalCtrl;
-        this.api = api;
-        this.toastCtrl = toastCtrl;
-        // Initialize data
-        this.getCategories();
-    }
-    // Logic for creating or updating categories
-    CategoriesPage.prototype.createOrUpdateCategory = function (data) {
-        var _this = this;
-        if (data === void 0) { data = undefined; }
-        if (!data) {
-            // TODO: Remove this section to return an empty structure
-            data = { name: undefined };
-        }
-        var myModalOptions = {
-            enableBackdropDismiss: false
-        };
-        var modal = this.modalCtrl.create('CategoryModalPage', { data: data }, myModalOptions);
-        modal.onDidDismiss(function (data) {
-            if (data) {
-                _this.api.createOrUpdateCategory(data).subscribe(function (_) {
-                    _this.getCategories();
-                }, function (err) {
-                    var toast = _this.toastCtrl.create({
-                        message: err.error,
-                        duration: 3000,
-                        position: 'top'
-                    });
-                    toast.present();
-                });
-            }
-        });
-        modal.present();
-    };
-    CategoriesPage.prototype.deleteCategory = function (category) {
-        var toast = this.toastCtrl.create({
-            message: 'Not implemented yet',
-            duration: 3000,
-            position: 'top'
-        });
-        toast.present();
-    };
-    CategoriesPage.prototype.getCategories = function () {
-        var _this = this;
-        this.api.getCategories().subscribe(function (response) {
-            _this.methods = response;
-        });
-    };
-    CategoriesPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-categories',template:/*ion-inline-start:"/Users/shlomilanton/workscpace/slots_tracker_client/src/pages/categories/categories.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Categories</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item-sliding *ngFor="let method of methods">\n      <ion-item>\n        <p>{{method.name}}</p>\n      </ion-item>\n      <ion-item-options>\n        <button ion-button color="danger" (click)="deleteCategory(method)" icon-start>\n          <ion-icon name="trash"></ion-icon>\n          Delete\n        </button>\n        <button ion-button color="primary" (click)="createOrUpdateCategory(method)">\n          <ion-icon name="create"></ion-icon>\n          Edit\n        </button>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n\n  <ion-fab right bottom>\n    <button ion-fab (click)="createOrUpdateCategory()">\n      <ion-icon name="add"></ion-icon>\n    </button>\n  </ion-fab>\n</ion-content>\n'/*ion-inline-end:"/Users/shlomilanton/workscpace/slots_tracker_client/src/pages/categories/categories.html"*/
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* ModalController */], __WEBPACK_IMPORTED_MODULE_2__providers_api_service_api_service__["a" /* ApiServiceProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */]])
-    ], CategoriesPage);
-    return CategoriesPage;
-}());
-
-//# sourceMappingURL=categories.js.map
 
 /***/ }),
 
@@ -495,7 +582,7 @@ var CategoriesPage = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ApiServiceProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(113);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_environments_environment__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_environments_environment__ = __webpack_require__(278);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -514,7 +601,6 @@ var ApiServiceProvider = /** @class */ (function () {
         this.baseURL = __WEBPACK_IMPORTED_MODULE_2__src_environments_environment__["a" /* ENV */].api_base_url;
     }
     ApiServiceProvider.prototype.getExpenses = function () {
-        console.log('Is production: ' + __WEBPACK_IMPORTED_MODULE_2__src_environments_environment__["a" /* ENV */].production);
         return this.http.get(this.baseURL + 'expenses/');
     };
     ApiServiceProvider.prototype.getPayMethods = function () {
@@ -574,15 +660,14 @@ var ApiServiceProvider = /** @class */ (function () {
     };
     ApiServiceProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
     ], ApiServiceProvider);
     return ApiServiceProvider;
-    var _a;
 }());
 
 //# sourceMappingURL=api-service.js.map
 
 /***/ })
 
-},[201]);
+},[202]);
 //# sourceMappingURL=main.js.map
