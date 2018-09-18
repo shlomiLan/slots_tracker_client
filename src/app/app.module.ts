@@ -23,7 +23,9 @@ import {DatePipe} from "@angular/common";
   imports: [
     BrowserModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      animate: false // disable animation
+    }),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
