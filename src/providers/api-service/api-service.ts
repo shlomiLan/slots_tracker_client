@@ -11,16 +11,16 @@ export class ApiServiceProvider {
   constructor(public http: HttpClient) {
   }
 
-  getExpenses(){
-    return this.http.get(this.baseURL + 'expenses/')
+  getExpenses(limit) {
+    return this.http.get(this.baseURL + 'expenses/?limit=' + limit);
   }
 
   getPayMethods(){
-    return this.http.get(this.baseURL + 'pay_methods/')
+    return this.http.get(this.baseURL + 'pay_methods/');
   }
 
   getCategories() {
-    return this.http.get(this.baseURL + 'categories/')
+    return this.http.get(this.baseURL + 'categories/');
   }
 
   createOrUpdateExpense(data) {

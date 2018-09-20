@@ -76,7 +76,7 @@ export class ExpensesPage {
 
 
   getExpenses() {
-    this.api.getExpenses().subscribe(response => {
+    this.api.getExpenses(10).subscribe(response => {
       this.expenses = response;
       this.data_loading_indicator.expenses = State.Success;
       this.close_loading();
