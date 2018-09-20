@@ -34,3 +34,6 @@ Thumbs.db
 UserInterfaceState.xcuserstate
 .bash_profile
 config.xml
+
+# base environment file
+src/environments/environment.ts

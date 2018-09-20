@@ -133,7 +133,7 @@ var ExpensesPage = /** @class */ (function () {
     };
     ExpensesPage.prototype.getExpenses = function () {
         var _this = this;
-        this.api.getExpenses().subscribe(function (response) {
+        this.api.getExpenses(10).subscribe(function (response) {
             _this.expenses = response;
             _this.data_loading_indicator.expenses = State.Success;
             _this.close_loading();
@@ -571,7 +571,7 @@ var MyApp = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ENV; });
 var ENV = {
     production: true,
-    api_base_url: 'https://slots-tracker-stage.herokuapp.com/'
+    api_base_url: 'https://slots-tracker.herokuapp.com/'
 };
 //# sourceMappingURL=environment.js.map
 
@@ -602,8 +602,8 @@ var ApiServiceProvider = /** @class */ (function () {
         this.http = http;
         this.baseURL = __WEBPACK_IMPORTED_MODULE_2__src_environments_environment__["a" /* ENV */].api_base_url;
     }
-    ApiServiceProvider.prototype.getExpenses = function () {
-        return this.http.get(this.baseURL + 'expenses/');
+    ApiServiceProvider.prototype.getExpenses = function (limit) {
+        return this.http.get(this.baseURL + 'expenses/?limit=' + limit);
     };
     ApiServiceProvider.prototype.getPayMethods = function () {
         return this.http.get(this.baseURL + 'pay_methods/');
