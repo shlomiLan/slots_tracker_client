@@ -12,13 +12,15 @@ import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {ApiServiceProvider} from '../providers/api-service/api-service';
 import {DatePipe} from "@angular/common";
+import {TabsPage} from "../pages/tabs/tabs";
 
 @NgModule({
   declarations: [
     MyApp,
     ExpensesPage,
     PayMethodsPage,
-    CategoriesPage
+    CategoriesPage,
+    TabsPage
   ],
   imports: [
     BrowserModule,
@@ -32,7 +34,8 @@ import {DatePipe} from "@angular/common";
     MyApp,
     ExpensesPage,
     PayMethodsPage,
-    CategoriesPage
+    CategoriesPage,
+    TabsPage
   ],
   providers: [
     StatusBar,
