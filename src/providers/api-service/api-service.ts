@@ -64,7 +64,7 @@ export class ApiServiceProvider {
 
   get_id(data){
     if (this.data_has_id(data)){
-      return data._id
+      return data._id;
     }
 
     return undefined;
@@ -82,7 +82,7 @@ export class ApiServiceProvider {
 
   clean_data(data){
     if (this.data_has_id(data)){
-      delete data._id
+      delete data._id;
     }
   }
 }
