@@ -88,12 +88,10 @@ var ExpensesPage = /** @class */ (function () {
         this.datepipe = datepipe;
         this.toastCtrl = toastCtrl;
         this.loadingCtrl = loadingCtrl;
-        this.data_loading_indicator = { methods: State.Unset, categories: State.Unset, expenses: State.Unset };
+        this.expenses_state = State.Unset;
         this.error_msg = '';
         // Initialize data
         this.getExpenses();
-        this.getPayMethods();
-        this.getCategories();
         this.loader = this.loadingCtrl.create({
             content: 'Loading data'
         });
@@ -113,11 +111,31 @@ var ExpensesPage = /** @class */ (function () {
         var myModalOptions = {
             enableBackdropDismiss: false
         };
-        var modal = this.modalCtrl.create('ExpenseModalPage', { data: data, methods: this.methods, categories: this.categories }, myModalOptions);
+        var modal = this.modalCtrl.create('ExpenseModalPage', { data: data }, myModalOptions);
         modal.onDidDismiss(function (data) {
             if (data) {
-                _this.api.createOrUpdateExpense(data).subscribe(function (_) {
-                    _this.getExpenses();
+                if (data.hasOwnProperty('err')) {
+                    _this.toastCtrl.create({
+                        message: data.err,
+                        position: 'top',
+                        showCloseButton: true,
+                    }).present();
+                    return;
+                }
+                _this.api.createOrUpdateExpense(data).subscribe(function (res) {
+                    // TODO: fix return data from server:
+                    /*
+                    {_id: "5ba4e3202c8884055984144f", amount: 55, description: "fgdf", pay_method: "5b8fdf622c888414d1bfa197", timestamp: "2018-09-21", …}
+                    active: true
+                    amount: 55
+                    category: "5b8fdf642c888414d1bfa1a0"
+                    description: "fgdf"
+                    one_time: false
+                    pay_method: "5b8fdf622c888414d1bfa197"
+                    timestamp: "2018-09-21"
+                    _id: "5ba4e3202c8884055984144f"
+                     */
+                    _this.expenses.push(res);
                 });
             }
         });
@@ -135,43 +153,18 @@ var ExpensesPage = /** @class */ (function () {
         var _this = this;
         this.api.getExpenses(10).subscribe(function (response) {
             _this.expenses = response;
-            _this.data_loading_indicator.expenses = State.Success;
+            _this.expenses_state = State.Success;
             _this.close_loading();
         }, function (err) {
-            _this.data_loading_indicator.expenses = State.Error;
+            _this.expenses_state = State.Error;
             _this.error_msg = _this.error_msg.concat('In getExpenses: ', err.error);
             _this.close_loading();
         });
     };
-    ExpensesPage.prototype.getPayMethods = function () {
-        var _this = this;
-        this.api.getPayMethods().subscribe(function (response) {
-            _this.methods = response;
-            _this.data_loading_indicator.methods = State.Success;
-            _this.close_loading();
-        }, function (err) {
-            _this.data_loading_indicator.methods = State.Error;
-            _this.error_msg = _this.error_msg.concat('In getPayMethods: ', err.error);
-            _this.close_loading();
-        });
-    };
-    ExpensesPage.prototype.getCategories = function () {
-        var _this = this;
-        this.api.getCategories().subscribe(function (response) {
-            _this.categories = response;
-            _this.data_loading_indicator.categories = State.Success;
-            _this.close_loading();
-        }, function (err) {
-            _this.data_loading_indicator.categories = State.Error;
-            _this.error_msg = _this.error_msg.concat('In getCategories: ', err.error);
-            _this.close_loading();
-        });
-    };
     ExpensesPage.prototype.close_loading = function () {
-        var load_data = this.data_loading_indicator;
-        if (load_data.methods != State.Unset && load_data.categories != State.Unset && load_data.expenses != State.Unset) {
+        if (this.expenses_state != State.Unset) {
             this.loader.dismiss();
-            if (load_data.methods == State.Error || load_data.categories == State.Error || load_data.expenses == State.Error) {
+            if (this.expenses_state == State.Error) {
                 this.expenses = undefined;
                 this.toastCtrl.create({
                     message: this.error_msg,
@@ -185,10 +178,10 @@ var ExpensesPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-expenses',template:/*ion-inline-start:"/Users/shlomilanton/workscpace/slots_tracker_client/src/pages/expenses/expenses.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Expenses</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item *ngFor="let expense of expenses" (click)="createOrUpdateExpense(expense)">\n      <h3>{{expense.description}}</h3>\n      <h4>{{expense.category.name}}</h4>\n      <p>{{expense.pay_method.name}}</p>\n      <div item-end>\n        <h3>{{expense.amount}}</h3>\n        <h4 item-end>{{expense.timestamp}}</h4>\n      </div>\n    </ion-item>\n  </ion-list>\n  <ion-fab right bottom>\n    <button ion-fab (click)="createOrUpdateExpense()">\n      <ion-icon name="add"></ion-icon>\n    </button>\n  </ion-fab>\n</ion-content>\n'/*ion-inline-end:"/Users/shlomilanton/workscpace/slots_tracker_client/src/pages/expenses/expenses.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["f" /* ModalController */], __WEBPACK_IMPORTED_MODULE_3__providers_api_service_api_service__["a" /* ApiServiceProvider */], __WEBPACK_IMPORTED_MODULE_1__angular_common__["d" /* DatePipe */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["j" /* ToastController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* LoadingController */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["f" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["f" /* ModalController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__providers_api_service_api_service__["a" /* ApiServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_api_service_api_service__["a" /* ApiServiceProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_common__["d" /* DatePipe */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_common__["d" /* DatePipe */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["j" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["j" /* ToastController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* LoadingController */]) === "function" && _e || Object])
     ], ExpensesPage);
     return ExpensesPage;
+    var _a, _b, _c, _d, _e;
 }());
 
 //# sourceMappingURL=expenses.js.map
@@ -570,8 +563,8 @@ var MyApp = /** @class */ (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ENV; });
 var ENV = {
-    production: true,
-    api_base_url: 'https://slots-tracker.herokuapp.com/'
+    production: false,
+    api_base_url: 'http://127.0.0.1:5000/'
 };
 //# sourceMappingURL=environment.js.map
 
@@ -662,9 +655,10 @@ var ApiServiceProvider = /** @class */ (function () {
     };
     ApiServiceProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object])
     ], ApiServiceProvider);
     return ApiServiceProvider;
+    var _a;
 }());
 
 //# sourceMappingURL=api-service.js.map

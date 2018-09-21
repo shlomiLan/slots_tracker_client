@@ -46,6 +46,7 @@ var ModalPageModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_api_service_api_service__ = __webpack_require__(50);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -58,17 +59,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+var State;
+(function (State) {
+    State[State["Unset"] = 1] = "Unset";
+    State[State["Success"] = 2] = "Success";
+    State[State["Error"] = 4] = "Error";
+})(State || (State = {}));
 var ExpenseModalPage = /** @class */ (function () {
-    function ExpenseModalPage(navParams, formBuilder, viewCtrl) {
+    function ExpenseModalPage(navParams, formBuilder, viewCtrl, api) {
         this.navParams = navParams;
         this.formBuilder = formBuilder;
         this.viewCtrl = viewCtrl;
+        this.api = api;
+        // Initialize data
+        this.error_msg = '';
+        this.data_loading_indicator = { methods: State.Unset, categories: State.Unset };
+        this.getPayMethods();
+        this.getCategories();
         this.expense = this.formBuilder.group(this.navParams.get('data'));
-        this.methods = this.formBuilder.array(this.navParams.get('methods'));
-        this.categories = this.formBuilder.array(this.navParams.get('categories'));
         // Modify the pay_method and category data for the select element
         this.expense.controls['pay_method'].setValue(this.expense.value.pay_method._id);
         this.expense.controls['category'].setValue(this.expense.value.category._id);
+        //   }
+        // }
     }
     ExpenseModalPage.prototype.saveData = function () {
         this.expense.controls['pay_method'].setValue({ "_id": this.expense.value.pay_method });
@@ -84,14 +98,44 @@ var ExpenseModalPage = /** @class */ (function () {
     ExpenseModalPage.prototype.categoryChange = function (value) {
         this.expense.controls['category'].setValue(value);
     };
+    ExpenseModalPage.prototype.getPayMethods = function () {
+        var _this = this;
+        this.api.getPayMethods().subscribe(function (response) {
+            _this.methods = response;
+            _this.methods_form = _this.formBuilder.array(_this.methods);
+            _this.data_loading_indicator.methods = State.Success;
+            console.log(_this.data_loading_indicator.methods);
+        }, function (err) {
+            _this.data_loading_indicator.methods = State.Error;
+            _this.error_msg = _this.error_msg.concat('In getPayMethods: ', err.error);
+            _this.close_and_display_error();
+        });
+    };
+    ExpenseModalPage.prototype.getCategories = function () {
+        var _this = this;
+        this.api.getCategories().subscribe(function (response) {
+            _this.categories = response;
+            _this.categories_form = _this.formBuilder.array(_this.categories);
+            _this.data_loading_indicator.categories = State.Success;
+        }, function (err) {
+            _this.data_loading_indicator.categories = State.Error;
+            _this.error_msg = _this.error_msg.concat('In getCategories: ', err.error);
+            _this.close_and_display_error();
+        });
+    };
+    ExpenseModalPage.prototype.close_and_display_error = function () {
+        console.log(this.data_loading_indicator.methods);
+        console.log(this.data_loading_indicator.categories);
+        this.viewCtrl.dismiss({ err: this.error_msg });
+    };
     ExpenseModalPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            template: "\n    <ion-header>\n      <ion-navbar>\n        <ion-title>Modal</ion-title>\n        <ion-buttons end>\n          <button ion-button (click)=\"closeModal()\">Close</button>\n        </ion-buttons>\n      </ion-navbar>\n    </ion-header>\n\n    <ion-content padding>\n      <form [formGroup]=\"expense\" (ngSubmit)=\"saveData()\">\n        <ion-item>\n          <ion-label>Amount:</ion-label>\n          <ion-input formControlName=\"amount\" type=\"number\"></ion-input>\n        </ion-item>\n        <ion-item>\n          <ion-label>Description:</ion-label>\n          <ion-input formControlName=\"description\" type=\"text\"></ion-input>\n        </ion-item>\n        <ion-item>\n          <ion-label>Category:</ion-label>\n          <ion-select formControlName=\"category\" (ionChange)=\"categoryChange($event);\" interface=\"popover\">\n            <ion-option *ngFor=\"let item of categories.controls\" [value]=\"item.value._id\">\n              {{item.value.name}}\n            </ion-option>\n          </ion-select>\n        </ion-item>\n        <ion-item>\n          <ion-label>Pay method:</ion-label>\n          <ion-select formControlName=\"pay_method\" (ionChange)=\"payMethodChange($event);\" interface=\"popover\">\n            <ion-option *ngFor=\"let item of methods.controls\" [value]=\"item.value._id\">\n              {{item.value.name}}\n            </ion-option>\n          </ion-select>\n        </ion-item>\n        <ion-item>\n          <ion-label>Date:</ion-label>\n          <ion-datetime displayFormat=\"D MMM YYYY\" formControlName=\"timestamp\"></ion-datetime>\n        </ion-item>\n        <ion-item>\n          <ion-label>One time</ion-label>\n          <ion-checkbox color=\"dark\" formControlName=\"one_time\"></ion-checkbox>\n        </ion-item>\n\n        <button ion-button type=\"submit\" [disabled]=\"!expense.valid\">Submit</button>\n    </form>\n    </ion-content>\n  "
+            template: "\n    <ion-header>\n      <ion-navbar>\n        <ion-title>Modal</ion-title>\n        <ion-buttons end>\n          <button ion-button (click)=\"closeModal()\">Close</button>\n        </ion-buttons>\n      </ion-navbar>\n    </ion-header>\n\n    <ion-content padding>\n      <form [formGroup]=\"expense\" (ngSubmit)=\"saveData()\" *ngIf=\"categories_form && methods_form\">\n        <ion-item>\n          <ion-label>Amount:</ion-label>\n          <ion-input formControlName=\"amount\" type=\"number\"></ion-input>\n        </ion-item>\n        <ion-item>\n          <ion-label>Description:</ion-label>\n          <ion-input formControlName=\"description\" type=\"text\"></ion-input>\n        </ion-item>\n        <ion-item>\n          <ion-label>Category:</ion-label>\n          <ion-select formControlName=\"category\" (ionChange)=\"categoryChange($event);\" interface=\"popover\">\n            <ion-option *ngFor=\"let item of categories_form.controls\" [value]=\"item.value._id\">\n              {{item.value.name}}\n            </ion-option>\n          </ion-select>\n        </ion-item>\n        <ion-item>\n          <ion-label>Pay method:</ion-label>\n          <ion-select formControlName=\"pay_method\" (ionChange)=\"payMethodChange($event);\" interface=\"popover\">\n            <ion-option *ngFor=\"let item of methods_form.controls\" [value]=\"item.value._id\">\n              {{item.value.name}}\n            </ion-option>\n          </ion-select>\n        </ion-item>\n        <ion-item>\n          <ion-label>Date:</ion-label>\n          <ion-datetime displayFormat=\"D MMM YYYY\" formControlName=\"timestamp\"></ion-datetime>\n        </ion-item>\n        <ion-item>\n          <ion-label>One time</ion-label>\n          <ion-checkbox color=\"dark\" formControlName=\"one_time\"></ion-checkbox>\n        </ion-item>\n\n        <button ion-button type=\"submit\" [disabled]=\"!expense.valid\">Submit</button>\n    </form>\n    </ion-content>\n  "
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["h" /* NavParams */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormBuilder */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["k" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["k" /* ViewController */]) === "function" && _c || Object])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["h" /* NavParams */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormBuilder */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["k" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["k" /* ViewController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__providers_api_service_api_service__["a" /* ApiServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_api_service_api_service__["a" /* ApiServiceProvider */]) === "function" && _d || Object])
     ], ExpenseModalPage);
     return ExpenseModalPage;
-    var _a, _b, _c;
+    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=expense-modal.js.map
