@@ -13,22 +13,18 @@ enum State {Unset = 1, Success = 2, Error = 4}
 
 export class ExpensesPage {
   expenses: any;
-  methods: any;
-  categories: any;
   loader: any;
-  data_loading_indicator: { methods: State; categories: State; expenses: State };
+  expenses_state: State;
   error_msg: string;
 
   constructor(public modalCtrl: ModalController, private api: ApiServiceProvider, public datepipe: DatePipe,
               public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
 
-    this.data_loading_indicator = {methods: State.Unset, categories: State.Unset, expenses: State.Unset};
+    this.expenses_state = State.Unset;
     this.error_msg = '';
 
     // Initialize data
     this.getExpenses();
-    this.getPayMethods();
-    this.getCategories();
 
     this.loader = this.loadingCtrl.create({
       content: 'Loading data'
@@ -52,17 +48,39 @@ export class ExpensesPage {
       enableBackdropDismiss: false
     };
 
-    let modal = this.modalCtrl.create('ExpenseModalPage',
-      {data: data, methods: this.methods, categories: this.categories}, myModalOptions);
-    modal.onDidDismiss(data => {
-        if (data){
-          this.api.createOrUpdateExpense(data).subscribe(_ => {
-            this.getExpenses()
-          });
-        }
-      });
+    let modal = this.modalCtrl.create('ExpenseModalPage', {data: data}, myModalOptions);
 
-      modal.present();
+    modal.onDidDismiss(data => {
+      if (data) {
+        if (data.hasOwnProperty('err')) {
+          this.toastCtrl.create({
+            message: data.err,
+            position: 'top',
+            showCloseButton: true,
+          }).present();
+
+          return
+        }
+
+        this.api.createOrUpdateExpense(data).subscribe(res => {
+          // TODO: fix return data from server:
+          /*
+          {_id: "5ba4e3202c8884055984144f", amount: 55, description: "fgdf", pay_method: "5b8fdf622c888414d1bfa197", timestamp: "2018-09-21", …}
+          active: true
+          amount: 55
+          category: "5b8fdf642c888414d1bfa1a0"
+          description: "fgdf"
+          one_time: false
+          pay_method: "5b8fdf622c888414d1bfa197"
+          timestamp: "2018-09-21"
+          _id: "5ba4e3202c8884055984144f"
+           */
+          this.expenses.push(res);
+        });
+      }
+    });
+
+    modal.present();
   }
 
   deleteExpense(expense) {
@@ -78,45 +96,20 @@ export class ExpensesPage {
   getExpenses() {
     this.api.getExpenses(10).subscribe(response => {
       this.expenses = response;
-      this.data_loading_indicator.expenses = State.Success;
+      this.expenses_state = State.Success;
       this.close_loading();
     }, err => {
-      this.data_loading_indicator.expenses = State.Error;
+      this.expenses_state = State.Error;
       this.error_msg = this.error_msg.concat('In getExpenses: ', err.error);
       this.close_loading();
     });
   }
 
-  getPayMethods() {
-    this.api.getPayMethods().subscribe(response => {
-      this.methods = response;
-      this.data_loading_indicator.methods = State.Success;
-      this.close_loading();
-    }, err => {
-      this.data_loading_indicator.methods = State.Error;
-      this.error_msg = this.error_msg.concat('In getPayMethods: ', err.error);
-      this.close_loading();
-    });
-  }
-
-  getCategories() {
-    this.api.getCategories().subscribe(response => {
-      this.categories = response;
-      this.data_loading_indicator.categories = State.Success;
-      this.close_loading();
-    }, err => {
-      this.data_loading_indicator.categories = State.Error;
-      this.error_msg = this.error_msg.concat('In getCategories: ', err.error);
-      this.close_loading();
-    });
-  }
-
   close_loading() {
-    let load_data = this.data_loading_indicator;
-    if (load_data.methods != State.Unset && load_data.categories != State.Unset && load_data.expenses != State.Unset) {
+    if (this.expenses_state != State.Unset) {
       this.loader.dismiss();
 
-      if (load_data.methods == State.Error || load_data.categories == State.Error || load_data.expenses == State.Error) {
+      if (this.expenses_state == State.Error) {
         this.expenses = undefined;
 
         this.toastCtrl.create({

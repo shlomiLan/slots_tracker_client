@@ -1,6 +1,9 @@
 import {Component} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {IonicPage, NavParams, ViewController} from 'ionic-angular';
+import {ApiServiceProvider} from "../../../providers/api-service/api-service";
+
+enum State {Unset = 1, Success = 2, Error = 4}
 
 @IonicPage()
 @Component({
@@ -15,7 +18,7 @@ import {IonicPage, NavParams, ViewController} from 'ionic-angular';
     </ion-header>
 
     <ion-content padding>
-      <form [formGroup]="expense" (ngSubmit)="saveData()">
+      <form [formGroup]="expense" (ngSubmit)="saveData()" *ngIf="categories_form && methods_form">
         <ion-item>
           <ion-label>Amount:</ion-label>
           <ion-input formControlName="amount" type="number"></ion-input>
@@ -27,7 +30,7 @@ import {IonicPage, NavParams, ViewController} from 'ionic-angular';
         <ion-item>
           <ion-label>Category:</ion-label>
           <ion-select formControlName="category" (ionChange)="categoryChange($event);" interface="popover">
-            <ion-option *ngFor="let item of categories.controls" [value]="item.value._id">
+            <ion-option *ngFor="let item of categories_form.controls" [value]="item.value._id">
               {{item.value.name}}
             </ion-option>
           </ion-select>
@@ -35,7 +38,7 @@ import {IonicPage, NavParams, ViewController} from 'ionic-angular';
         <ion-item>
           <ion-label>Pay method:</ion-label>
           <ion-select formControlName="pay_method" (ionChange)="payMethodChange($event);" interface="popover">
-            <ion-option *ngFor="let item of methods.controls" [value]="item.value._id">
+            <ion-option *ngFor="let item of methods_form.controls" [value]="item.value._id">
               {{item.value.name}}
             </ion-option>
           </ion-select>
@@ -56,36 +59,80 @@ import {IonicPage, NavParams, ViewController} from 'ionic-angular';
 })
 
 export class ExpenseModalPage {
-  private expense : FormGroup;
-  private methods : FormArray;
-  private categories: FormArray;
+  private expense: FormGroup;
+  private methods_form: FormArray;
+  private categories_form: FormArray;
 
+  private methods: any;
+  private categories: any;
+  private data_loading_indicator: { methods: State, categories: State };
+  private error_msg: string;
 
-  constructor( private navParams: NavParams, private formBuilder: FormBuilder, private viewCtrl: ViewController ) {
+  constructor(private navParams: NavParams, private formBuilder: FormBuilder, private viewCtrl: ViewController,
+              private api: ApiServiceProvider) {
+
+    // Initialize data
+    this.error_msg = '';
+    this.data_loading_indicator = {methods: State.Unset, categories: State.Unset};
+    this.getPayMethods();
+    this.getCategories();
+
     this.expense = this.formBuilder.group(this.navParams.get('data'));
-    this.methods = this.formBuilder.array(this.navParams.get('methods'));
-    this.categories = this.formBuilder.array(this.navParams.get('categories'));
 
     // Modify the pay_method and category data for the select element
     this.expense.controls['pay_method'].setValue(this.expense.value.pay_method._id);
     this.expense.controls['category'].setValue(this.expense.value.category._id);
+    //   }
+    // }
   }
 
-  saveData(){
+  saveData() {
     this.expense.controls['pay_method'].setValue({"_id": this.expense.value.pay_method});
     this.expense.controls['category'].setValue({"_id": this.expense.value.category});
     this.viewCtrl.dismiss(this.expense.value);
   }
 
-  closeModal(){
+  closeModal() {
     this.viewCtrl.dismiss();
   }
 
-  payMethodChange(value){
+  payMethodChange(value) {
     this.expense.controls['pay_method'].setValue(value);
   }
 
   categoryChange(value) {
     this.expense.controls['category'].setValue(value);
+  }
+
+  getPayMethods() {
+    this.api.getPayMethods().subscribe(response => {
+      this.methods = response;
+      this.methods_form = this.formBuilder.array(this.methods);
+      this.data_loading_indicator.methods = State.Success;
+      console.log(this.data_loading_indicator.methods);
+    }, err => {
+      this.data_loading_indicator.methods = State.Error;
+      this.error_msg = this.error_msg.concat('In getPayMethods: ', err.error);
+      this.close_and_display_error();
+    });
+  }
+
+  getCategories() {
+    this.api.getCategories().subscribe(response => {
+      this.categories = response;
+      this.categories_form = this.formBuilder.array(this.categories);
+      this.data_loading_indicator.categories = State.Success;
+    }, err => {
+      this.data_loading_indicator.categories = State.Error;
+      this.error_msg = this.error_msg.concat('In getCategories: ', err.error);
+      this.close_and_display_error();
+    });
+  }
+
+  close_and_display_error() {
+    console.log(this.data_loading_indicator.methods);
+    console.log(this.data_loading_indicator.categories);
+
+    this.viewCtrl.dismiss({err: this.error_msg});
   }
 }
