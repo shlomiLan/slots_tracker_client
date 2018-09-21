@@ -7,8 +7,7 @@ import {IonicPage, NavParams, ViewController} from 'ionic-angular';
   template: `
     <ion-header>
       <ion-navbar>
-        <ion-title>Modal</ion-title>
-        <ion-buttons end>
+        <ion-buttons>
           <button ion-button (click)="closeModal()">Close</button>
         </ion-buttons>
       </ion-navbar>
@@ -20,7 +19,9 @@ import {IonicPage, NavParams, ViewController} from 'ionic-angular';
           <ion-label>Name:</ion-label>
           <ion-input formControlName="name" type="text"></ion-input>
         </ion-item>
-        <button ion-button type="submit" [disabled]="!category.valid">Submit</button>
+        <ion-buttons end>
+          <button ion-button type="submit" [disabled]="!category.valid">Submit</button>
+        </ion-buttons>
       </form>
     </ion-content>
   `

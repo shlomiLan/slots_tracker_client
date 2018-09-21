@@ -10,8 +10,7 @@ enum State {Unset = 1, Success = 2, Error = 4}
   template: `
     <ion-header>
       <ion-navbar>
-        <ion-title>Modal</ion-title>
-        <ion-buttons end>
+        <ion-buttons>
           <button ion-button (click)="closeModal()">Close</button>
         </ion-buttons>
       </ion-navbar>
@@ -52,8 +51,10 @@ enum State {Unset = 1, Success = 2, Error = 4}
           <ion-checkbox color="dark" formControlName="one_time"></ion-checkbox>
         </ion-item>
 
-        <button ion-button type="submit" [disabled]="!expense.valid">Submit</button>
-    </form>
+        <ion-buttons end>
+          <button ion-button type="submit" [disabled]="!expense.valid">Submit</button>
+        </ion-buttons>
+      </form>
     </ion-content>
   `
 })
