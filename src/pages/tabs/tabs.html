@@ -1,7 +1,6 @@
 <ion-content padding>
-  <ion-tabs #tabs tabsPlacement="bottom">
+  <ion-tabs tabsPlacement=top>>
     <ion-tab [tabTitle]="page.get_title()" [root]="page" [tabIcon]="page.get_icon()"
              *ngFor="let page of pages;"></ion-tab>
   </ion-tabs>
-
 </ion-content>
