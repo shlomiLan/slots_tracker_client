@@ -83,8 +83,6 @@ export class ExpenseModalPage {
     // Modify the pay_method and category data for the select element
     this.expense.controls['pay_method'].setValue(this.expense.value.pay_method._id);
     this.expense.controls['category'].setValue(this.expense.value.category._id);
-    //   }
-    // }
   }
 
   saveData() {
@@ -110,7 +108,6 @@ export class ExpenseModalPage {
       this.methods = response;
       this.methods_form = this.formBuilder.array(this.methods);
       this.data_loading_indicator.methods = State.Success;
-      console.log(this.data_loading_indicator.methods);
     }, err => {
       this.data_loading_indicator.methods = State.Error;
       this.error_msg = this.error_msg.concat('In getPayMethods: ', err.error);
@@ -131,9 +128,6 @@ export class ExpenseModalPage {
   }
 
   close_and_display_error() {
-    console.log(this.data_loading_indicator.methods);
-    console.log(this.data_loading_indicator.categories);
-
     this.viewCtrl.dismiss({err: this.error_msg});
   }
 }
