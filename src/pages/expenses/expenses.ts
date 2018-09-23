@@ -31,7 +31,6 @@ export class ExpensesPage {
     });
 
     this.loader.present();
-
   }
 
   static get_title(): string {
@@ -43,10 +42,10 @@ export class ExpensesPage {
   }
 
   // Logic for creating or updating expense
-  createOrUpdateExpense(data = undefined) {
-    if (!data){
+  createOrUpdateExpense(expense = undefined) {
+    if (!expense) {
       // TODO: Remove this section to return an empty structure
-      data = {
+      expense = {
         amount: undefined, description: '', pay_method: '', category: '',
         timestamp: this.datepipe.transform(new Date(), 'yyyy-MM-dd'), one_time: false
       }
@@ -56,7 +55,7 @@ export class ExpensesPage {
       enableBackdropDismiss: false
     };
 
-    let modal = this.modalCtrl.create('ExpenseModalPage', {data: data}, myModalOptions);
+    let modal = this.modalCtrl.create('ExpenseModalPage', {data: expense}, myModalOptions);
 
     modal.onDidDismiss(data => {
       if (data) {
@@ -71,19 +70,12 @@ export class ExpensesPage {
         }
 
         this.api.createOrUpdateExpense(data).subscribe(res => {
-          // TODO: fix return data from server:
-          /*
-          {_id: "5ba4e3202c8884055984144f", amount: 55, description: "fgdf", pay_method: "5b8fdf622c888414d1bfa197", timestamp: "2018-09-21", …}
-          active: true
-          amount: 55
-          category: "5b8fdf642c888414d1bfa1a0"
-          description: "fgdf"
-          one_time: false
-          pay_method: "5b8fdf622c888414d1bfa197"
-          timestamp: "2018-09-21"
-          _id: "5ba4e3202c8884055984144f"
-           */
-          this.expenses.push(res);
+          let index = this.expenses.findIndex(expense => expense._id == res['_id']);
+          if (index != -1) {
+            this.expenses[index] = res;
+          } else {
+            this.expenses.unshift(res);
+          }
         });
       }
     });

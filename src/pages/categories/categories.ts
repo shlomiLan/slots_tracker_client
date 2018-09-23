@@ -49,7 +49,12 @@ export class CategoriesPage {
     modal.onDidDismiss(data => {
       if (data) {
         this.api.createOrUpdateCategory(data).subscribe(res => {
-          this.categories.push(res);
+          let index = this.categories.findIndex(expense => expense._id == res['_id']);
+          if (index != -1) {
+            this.categories[index] = res;
+          } else {
+            this.categories.unshift(res);
+          }
         }, err => {
           const toast = this.toastCtrl.create({
             message: err.error,

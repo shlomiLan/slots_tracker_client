@@ -50,7 +50,12 @@ export class PayMethodsPage {
     modal.onDidDismiss(data => {
       if (data) {
         this.api.createOrUpdatePayMethod(data).subscribe(res => {
-          this.methods.push(res);
+          let index = this.methods.findIndex(expense => expense._id == res['_id']);
+          if (index != -1) {
+            this.methods[index] = res;
+          } else {
+            this.methods.unshift(res);
+          }
         }, err => {
           const toast = this.toastCtrl.create({
             message: err.error,
