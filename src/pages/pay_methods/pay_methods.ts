@@ -49,8 +49,8 @@ export class PayMethodsPage {
     let modal = this.modalCtrl.create('PayMethodModalPage', {data: data}, myModalOptions);
     modal.onDidDismiss(data => {
       if (data) {
-        this.api.createOrUpdatePayMethod(data).subscribe(_ => {
-          this.getPayMethods()
+        this.api.createOrUpdatePayMethod(data).subscribe(res => {
+          this.methods.push(res);
         }, err => {
           const toast = this.toastCtrl.create({
             message: err.error,

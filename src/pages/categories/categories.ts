@@ -48,8 +48,8 @@ export class CategoriesPage {
     let modal = this.modalCtrl.create('CategoryModalPage', {data: data}, myModalOptions);
     modal.onDidDismiss(data => {
       if (data) {
-        this.api.createOrUpdateCategory(data).subscribe(_ => {
-          this.getCategories()
+        this.api.createOrUpdateCategory(data).subscribe(res => {
+          this.categories.push(res);
         }, err => {
           const toast = this.toastCtrl.create({
             message: err.error,
