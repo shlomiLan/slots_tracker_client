@@ -34,6 +34,14 @@ export class ExpensesPage {
 
   }
 
+  static get_title(): string {
+    return 'Expenses';
+  }
+
+  static get_icon(): string {
+    return 'pricetags';
+  }
+
   // Logic for creating or updating expense
   createOrUpdateExpense(data = undefined) {
     if (!data){

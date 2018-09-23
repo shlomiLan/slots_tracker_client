@@ -27,6 +27,14 @@ export class PayMethodsPage {
     this.loader.present();
   }
 
+  static get_title(): string {
+    return 'Pay methods';
+  }
+
+  static get_icon(): string {
+    return 'logo-yen';
+  }
+
   // Logic for creating or updating pay method
   createOrUpdatePayMethod(data = undefined) {
     if (!data) {

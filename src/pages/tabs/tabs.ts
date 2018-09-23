@@ -9,12 +9,10 @@ import {CategoriesPage} from "../categories/categories";
 })
 
 export class TabsPage {
-  tab1Root = ExpensesPage;
-  tab2Root = CategoriesPage;
-  tab3Root = PayMethodsPage;
+  private pages: any = [];
 
   constructor() {
-
+    this.pages = [ExpensesPage, CategoriesPage, PayMethodsPage];
   }
 }
 

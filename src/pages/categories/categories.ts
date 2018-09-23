@@ -26,6 +26,14 @@ export class CategoriesPage {
     this.loader.present();
   }
 
+  static get_title(): string {
+    return 'Categories';
+  }
+
+  static get_icon(): string {
+    return 'apps';
+  }
+
   // Logic for creating or updating categories
   createOrUpdateCategory(data = undefined) {
     if (!data) {
