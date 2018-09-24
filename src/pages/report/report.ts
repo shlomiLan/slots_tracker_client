@@ -14,7 +14,7 @@ export class ReportPage {
   }
 
   static get_icon(): string {
-    return 'report';
+    return 'stats';
   }
 
 }
