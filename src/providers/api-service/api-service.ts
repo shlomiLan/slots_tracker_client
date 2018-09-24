@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 
-import {ENV} from '../../../src/environments/environment';
+import {ENV} from '../../environments/environment';
 
 
 @Injectable()
