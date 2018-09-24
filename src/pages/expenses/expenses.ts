@@ -94,7 +94,7 @@ export class ExpensesPage {
 
 
   getExpenses() {
-    this.api.getExpenses(10).subscribe(response => {
+    this.api.getExpenses().subscribe(response => {
       this.expenses = response;
       this.expenses_state = State.Success;
       this.close_loading();

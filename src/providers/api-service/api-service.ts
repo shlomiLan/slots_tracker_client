@@ -11,8 +11,8 @@ export class ApiServiceProvider {
   constructor(public http: HttpClient) {
   }
 
-  getExpenses(limit) {
-    return this.http.get(this.baseURL + 'expenses/?limit=' + limit);
+  getExpenses() {
+    return this.http.get(this.baseURL + 'expenses/');
   }
 
   getPayMethods(){
