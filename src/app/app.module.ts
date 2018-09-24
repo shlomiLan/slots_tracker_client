@@ -13,6 +13,7 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {ApiServiceProvider} from '../providers/api-service/api-service';
 import {DatePipe} from "@angular/common";
 import {TabsPage} from "../pages/tabs/tabs";
+import {ReportPage} from "../pages/report/report";
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {TabsPage} from "../pages/tabs/tabs";
     ExpensesPage,
     PayMethodsPage,
     CategoriesPage,
-    TabsPage
+    TabsPage,
+    ReportPage
   ],
   imports: [
     BrowserModule,
@@ -35,7 +37,8 @@ import {TabsPage} from "../pages/tabs/tabs";
     ExpensesPage,
     PayMethodsPage,
     CategoriesPage,
-    TabsPage
+    TabsPage,
+    ReportPage
   ],
   providers: [
     StatusBar,

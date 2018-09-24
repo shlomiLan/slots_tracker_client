@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {ExpensesPage} from "../expenses/expenses";
 import {PayMethodsPage} from "../pay_methods/pay_methods";
 import {CategoriesPage} from "../categories/categories";
+import {ReportPage} from "../report/report";
 
 @Component({
   selector: 'page-tabs',
@@ -12,7 +13,7 @@ export class TabsPage {
   private pages: any = [];
 
   constructor() {
-    this.pages = [ExpensesPage, CategoriesPage, PayMethodsPage];
+    this.pages = [ExpensesPage, CategoriesPage, PayMethodsPage, ReportPage];
   }
 }
 
