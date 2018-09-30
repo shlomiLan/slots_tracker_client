@@ -13,7 +13,7 @@ export class TabsPage {
   private pages: any = [];
 
   constructor() {
-    this.pages = [ExpensesPage, CategoriesPage, PayMethodsPage, ReportPage];
+    this.pages = [ReportPage, ExpensesPage, CategoriesPage, PayMethodsPage];
   }
 }
 

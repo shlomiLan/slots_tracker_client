@@ -14,6 +14,7 @@ import {ApiServiceProvider} from '../providers/api-service/api-service';
 import {DatePipe} from "@angular/common";
 import {TabsPage} from "../pages/tabs/tabs";
 import {ReportPage} from "../pages/report/report";
+import {ChartsModule} from "ng2-charts";
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import {ReportPage} from "../pages/report/report";
     IonicModule.forRoot(MyApp, {
       animate: false // disable animation
     }),
+    ChartsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

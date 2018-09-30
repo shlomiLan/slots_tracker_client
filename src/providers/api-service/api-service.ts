@@ -23,6 +23,10 @@ export class ApiServiceProvider {
     return this.http.get(this.baseURL + 'categories/');
   }
 
+  getChartsData() {
+    return this.http.get(this.baseURL + 'charts/');
+  }
+
   createOrUpdateExpense(data) {
     let id = this.get_id(data);
     this.clean_data(data);
