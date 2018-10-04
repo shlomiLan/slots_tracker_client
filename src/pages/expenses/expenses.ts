@@ -43,19 +43,22 @@ export class ExpensesPage {
 
   // Logic for creating or updating expense
   createOrUpdateExpense(expense = undefined) {
+    let is_new = false;
     if (!expense) {
       // TODO: Remove this section to return an empty structure
       expense = {
         amount: undefined, description: '', pay_method: '', category: '',
-        timestamp: this.datepipe.transform(new Date(), 'yyyy-MM-dd'), one_time: false
-      }
+        timestamp: this.datepipe.transform(new Date(), 'yyyy-MM-dd'), one_time: false,
+      };
+
+      is_new = true;
     }
 
     const myModalOptions: ModalOptions = {
       enableBackdropDismiss: false
     };
 
-    let modal = this.modalCtrl.create('ExpenseModalPage', {data: expense}, myModalOptions);
+    let modal = this.modalCtrl.create('ExpenseModalPage', {data: expense, is_new: is_new}, myModalOptions);
 
     modal.onDidDismiss(data => {
       if (data) {
@@ -70,11 +73,15 @@ export class ExpensesPage {
         }
 
         this.api.createOrUpdateExpense(data).subscribe(res => {
-          let index = this.expenses.findIndex(expense => expense._id == res['_id']);
-          if (index != -1) {
-            this.expenses[index] = res;
-          } else {
-            this.expenses.unshift(res);
+          for (let i in res) {
+            let item = res[i];
+
+            let index = this.expenses.findIndex(expense => expense._id == item['_id']);
+            if (index != -1) {
+              this.expenses[index] = item;
+            } else {
+              this.expenses.unshift(item);
+            }
           }
         });
       }

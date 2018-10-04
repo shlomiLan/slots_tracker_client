@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {IonicPage, NavParams, ViewController} from 'ionic-angular';
 import {ApiServiceProvider} from "../../../providers/api-service/api-service";
 
@@ -17,7 +17,7 @@ enum State {Unset = 1, Success = 2, Error = 4}
     </ion-header>
 
     <ion-content padding>
-      <form [formGroup]="expense" (ngSubmit)="saveData()" *ngIf="categories_form && methods_form">
+      <form [formGroup]="expense" (ngSubmit)="saveData()" *ngIf="expense && categories_form && methods_form">
         <ion-item>
           <ion-label>Amount:</ion-label>
           <ion-input formControlName="amount" type="number"></ion-input>
@@ -51,6 +51,11 @@ enum State {Unset = 1, Success = 2, Error = 4}
           <ion-checkbox color="dark" formControlName="one_time"></ion-checkbox>
         </ion-item>
 
+        <ion-item *ngIf="is_new">>
+          <ion-label>Payments:</ion-label>
+          <ion-input formControlName="payments" type="number" [min]="1"></ion-input>
+        </ion-item>
+
         <ion-buttons end>
           <button ion-button type="submit" [disabled]="!expense.valid">Submit</button>
         </ion-buttons>
@@ -63,6 +68,7 @@ export class ExpenseModalPage {
   private expense: FormGroup;
   private methods_form: FormArray;
   private categories_form: FormArray;
+  private readonly is_new: boolean;
 
   private methods: any;
   private categories: any;
@@ -77,6 +83,20 @@ export class ExpenseModalPage {
     this.data_loading_indicator = {methods: State.Unset, categories: State.Unset};
     this.getPayMethods();
     this.getCategories();
+    this.is_new = this.navParams.get('is_new');
+
+    // Add the payment field only if create new expense
+    if (this.is_new == true) {
+      this.navParams.get('data')['payments'] = 1;
+    }
+
+    for (let prop of Object.keys(this.navParams.get('data'))) {
+      this.navParams.get('data')[prop] = [this.navParams.get('data')[prop], [Validators.required]];
+
+      if (prop == 'payments') {
+        this.navParams.get('data')[prop][1].push(Validators.min(1));
+      }
+    }
 
     this.expense = this.formBuilder.group(this.navParams.get('data'));
 

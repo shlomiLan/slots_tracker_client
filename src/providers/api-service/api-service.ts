@@ -32,11 +32,18 @@ export class ApiServiceProvider {
     this.clean_data(data);
     let url = this.baseURL + 'expenses/';
 
+    let payments = data.payments;
+    delete data.payments;
+
     if (id){
       url = url + id;
       return this.http.put(url, data);
     }
 
+    // Only split payment when creating new expense
+    if (payments) {
+      url = url + '?payments=' + payments;
+    }
     return this.http.post(url, data);
   }
 

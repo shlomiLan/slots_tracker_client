@@ -5,7 +5,7 @@
       <h4>{{expense.category.name}}</h4>
       <p>{{expense.pay_method.name}}</p>
       <div item-end>
-        <h3>{{expense.amount}}</h3>
+        <h3>{{expense.amount | currency:'ILS':true: '1.0-1'}}</h3>
         <h4 item-end>{{expense.timestamp}}</h4>
       </div>
     </ion-item>
