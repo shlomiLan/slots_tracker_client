@@ -84,21 +84,22 @@ export class ExpenseModalPage {
     this.getPayMethods();
     this.getCategories();
     this.is_new = this.navParams.get('is_new');
+    let expense_data = Object.assign({}, this.navParams.get('data'));
 
     // Add the payment field only if create new expense
     if (this.is_new == true) {
-      this.navParams.get('data')['payments'] = 1;
+      expense_data['payments'] = 1;
     }
 
-    for (let prop of Object.keys(this.navParams.get('data'))) {
-      this.navParams.get('data')[prop] = [this.navParams.get('data')[prop], [Validators.required]];
+    for (let prop of Object.keys(expense_data)) {
+      expense_data[prop] = [expense_data[prop], [Validators.min(1)]];
 
       if (prop == 'payments') {
         this.navParams.get('data')[prop][1].push(Validators.min(1));
       }
     }
 
-    this.expense = this.formBuilder.group(this.navParams.get('data'));
+    this.expense = this.formBuilder.group(expense_data);
 
     // Modify the pay_method and category data for the select element
     this.expense.controls['pay_method'].setValue(this.expense.value.pay_method._id);
