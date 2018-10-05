@@ -48,7 +48,7 @@ export class ExpensesPage {
       // TODO: Remove this section to return an empty structure
       expense = {
         amount: undefined, description: '', pay_method: '', category: '',
-        timestamp: this.datepipe.transform(new Date(), 'yyyy-MM-dd'), one_time: false,
+        timestamp: this.datepipe.transform(new Date(), 'yyyy-MM-dd'), one_time: false
       };
 
       is_new = true;

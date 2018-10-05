@@ -41,11 +41,10 @@ export class ReportPage {
   getChartsData() {
     this.api.getChartsData().subscribe(response => {
       this.charts_data = response;
-      console.log(this.charts_data);
       this.loader.dismiss();
     }, err => {
       this.loader.dismiss();
-      let error_msg = 'In getCategories: ' + err.error;
+      let error_msg = 'In getChartsData: ' + err.error;
       this.toastCtrl.create({
         message: error_msg,
         position: 'top',
