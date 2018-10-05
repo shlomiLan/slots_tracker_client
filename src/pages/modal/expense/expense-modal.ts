@@ -92,10 +92,10 @@ export class ExpenseModalPage {
     }
 
     for (let prop of Object.keys(expense_data)) {
-      expense_data[prop] = [expense_data[prop], [Validators.min(1)]];
+      expense_data[prop] = [expense_data[prop], [Validators.required]];
 
       if (prop == 'payments') {
-        this.navParams.get('data')[prop][1].push(Validators.min(1));
+        expense_data[prop][1].push(Validators.min(1));
       }
     }
 
