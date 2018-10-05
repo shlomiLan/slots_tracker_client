@@ -51,7 +51,7 @@ enum State {Unset = 1, Success = 2, Error = 4}
           <ion-checkbox color="dark" formControlName="one_time"></ion-checkbox>
         </ion-item>
 
-        <ion-item *ngIf="is_new">>
+        <ion-item *ngIf="is_new">
           <ion-label>Payments:</ion-label>
           <ion-input formControlName="payments" type="number" [min]="1"></ion-input>
         </ion-item>

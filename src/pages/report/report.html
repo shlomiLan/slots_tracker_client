@@ -1,24 +1,22 @@
 <ion-content>
-  <div *ngIf="charts_data">
+  <ion-list *ngIf="charts_data">
     <ion-item *ngFor="let chart of charts_data">
-      <div *ngIf="chart.type == 'table'; then tableTemplate else chartTemplate"></div>
+      <div style="display: block;" *ngIf="chart.type == 'table'; then tableTemplate else chartTemplate"></div>
+
       <ng-template #chartTemplate>
-        <div style="display: block;">
           <canvas baseChart
                   [datasets]="chart.data"
                   [labels]="chart.labels"
                   [chartType]="chart.type"
                   [options]="chart.options">
           </canvas>
-        </div>
       </ng-template>
+
       <ng-template #tableTemplate>
-        <ion-list *ngFor="let row of chart.data">
-          <ion-item>
+        <p text-wrap *ngFor="let row of chart.data">
             {{row[0]}} - {{row[1]}}
-          </ion-item>
-        </ion-list>
+        </p>
       </ng-template>
     </ion-item>
-  </div>
+  </ion-list>
 </ion-content>
