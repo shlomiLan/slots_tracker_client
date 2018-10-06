@@ -62,16 +62,6 @@ export class ExpensesPage {
 
     modal.onDidDismiss(data => {
       if (data) {
-        if (data.hasOwnProperty('err')) {
-          this.toastCtrl.create({
-            message: data.err,
-            position: 'top',
-            showCloseButton: true,
-          }).present();
-
-          return
-        }
-
         this.api.createOrUpdateExpense(data).subscribe(res => {
           for (let i in res) {
             let item = res[i];
@@ -83,6 +73,12 @@ export class ExpensesPage {
               this.expenses.unshift(item);
             }
           }
+        }, err => {
+          this.toastCtrl.create({
+            message: err.error,
+            position: 'top',
+            showCloseButton: true,
+          }).present();
         });
       }
     });

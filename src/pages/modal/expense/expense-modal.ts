@@ -3,8 +3,6 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {IonicPage, NavParams, ViewController} from 'ionic-angular';
 import {ApiServiceProvider} from "../../../providers/api-service/api-service";
 
-enum State {Unset = 1, Success = 2, Error = 4}
-
 @IonicPage()
 @Component({
   template: `
@@ -72,7 +70,6 @@ export class ExpenseModalPage {
 
   private methods: any;
   private categories: any;
-  private data_loading_indicator: { methods: State, categories: State };
   private error_msg: string;
 
   constructor(private navParams: NavParams, private formBuilder: FormBuilder, private viewCtrl: ViewController,
@@ -80,7 +77,6 @@ export class ExpenseModalPage {
 
     // Initialize data
     this.error_msg = '';
-    this.data_loading_indicator = {methods: State.Unset, categories: State.Unset};
     this.getPayMethods();
     this.getCategories();
     this.is_new = this.navParams.get('is_new');
@@ -128,11 +124,9 @@ export class ExpenseModalPage {
     this.api.getPayMethods().subscribe(response => {
       this.methods = response;
       this.methods_form = this.formBuilder.array(this.methods);
-      this.data_loading_indicator.methods = State.Success;
     }, err => {
-      this.data_loading_indicator.methods = State.Error;
       this.error_msg = this.error_msg.concat('In getPayMethods: ', err.error);
-      this.close_and_display_error();
+      this.close_and_display_error(err);
     });
   }
 
@@ -140,15 +134,13 @@ export class ExpenseModalPage {
     this.api.getCategories().subscribe(response => {
       this.categories = response;
       this.categories_form = this.formBuilder.array(this.categories);
-      this.data_loading_indicator.categories = State.Success;
     }, err => {
-      this.data_loading_indicator.categories = State.Error;
       this.error_msg = this.error_msg.concat('In getCategories: ', err.error);
-      this.close_and_display_error();
+      this.close_and_display_error(err);
     });
   }
 
-  close_and_display_error() {
-    this.viewCtrl.dismiss({err: this.error_msg});
+  close_and_display_error(err) {
+    this.viewCtrl.dismiss(err);
   }
 }
