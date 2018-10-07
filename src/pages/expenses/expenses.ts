@@ -13,6 +13,7 @@ enum State {Unset = 1, Success = 2, Error = 4}
 
 export class ExpensesPage {
   expenses: any;
+  filtered_expenses: any;
   loader: any;
   expenses_state: State;
   error_msg: string;
@@ -72,6 +73,9 @@ export class ExpensesPage {
             } else {
               this.expenses.unshift(item);
             }
+
+            console.log(this.filtered_expenses);
+            console.log(this.expenses);
           }
         }, err => {
           this.toastCtrl.create({
@@ -99,6 +103,7 @@ export class ExpensesPage {
   getExpenses() {
     this.api.getExpenses().subscribe(response => {
       this.expenses = response;
+      this.filtered_expenses = response;
       this.expenses_state = State.Success;
       this.close_loading();
     }, err => {
@@ -106,6 +111,26 @@ export class ExpensesPage {
       this.error_msg = this.error_msg.concat('In getExpenses: ', err.error);
       this.close_loading();
     });
+  }
+
+  initializeItems() {
+    this.expenses = this.filtered_expenses;
+  }
+
+  getFilterExpenses(ev: any) {
+    // Reset items back to all of the items
+    this.initializeItems();
+
+    // set val to the value of the searchbar
+    const val = ev.target.value;
+
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.expenses = this.expenses.filter((item) => {
+        console.log(item.description.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        return (item.description.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }
   }
 
   close_loading() {
