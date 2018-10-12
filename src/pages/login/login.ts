@@ -65,6 +65,3 @@ export class LoginPage {
     alert.present();
   }
 }
-
-
-'cordova plugin add cordova-plugin-ionic --save --variable APP_ID="a9f030da" --variable CHANNEL_NAME="Master" --variable UPDATE_METHOD="auto"'
