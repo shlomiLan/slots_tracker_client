@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {ErrorHandler, NgModule} from '@angular/core';
+import {ErrorHandler, Injectable, Injector, NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 
@@ -16,6 +16,33 @@ import {TabsPage} from "../pages/tabs/tabs";
 import {ReportPage} from "../pages/report/report";
 import {ChartsModule} from "ng2-charts";
 import {AuthServiceProvider} from '../providers/auth-service/auth-service';
+import {Pro} from "@ionic/pro";
+
+
+Pro.init('a9f030da', {
+  appVersion: '1.3.0'
+});
+
+@Injectable()
+export class MyErrorHandler implements ErrorHandler {
+  ionicErrorHandler: IonicErrorHandler;
+
+  constructor(injector: Injector) {
+    try {
+      this.ionicErrorHandler = injector.get(IonicErrorHandler);
+    } catch (e) {
+      // Unable to get the IonicErrorHandler provider, ensure
+      // IonicErrorHandler has been added to the providers list below
+    }
+  }
+
+  handleError(err: any): void {
+    Pro.monitoring.handleNewError(err);
+    // Remove this if you want to disable Ionic's auto exception handling
+    // in development mode.
+    this.ionicErrorHandler && this.ionicErrorHandler.handleError(err);
+  }
+}
 
 @NgModule({
   declarations: [

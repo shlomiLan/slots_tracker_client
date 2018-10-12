@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="slots.tracker" version="1.2" xmlns="http://www.w3.org/ns/widgets">
+<widget id="slots.tracker" version="1.3.0" xmlns="http://www.w3.org/ns/widgets">
   <name>Slots tracker</name>
   <description>App to keep track on expenses.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
@@ -85,7 +85,7 @@
   <plugin name="cordova-plugin-ionic" spec="^5.2.5">
     <variable name="APP_ID" value="a9f030da"/>
     <variable name="CHANNEL_NAME" value="Production"/>
-    <variable name="UPDATE_METHOD" value="auto"/>
+    <variable name="UPDATE_METHOD" value="background"/>
     <variable name="UPDATE_API" value="https://api.ionicjs.com"/>
     <variable name="MAX_STORE" value="2"/>
     <variable name="MIN_BACKGROUND_DURATION" value="30"/>
