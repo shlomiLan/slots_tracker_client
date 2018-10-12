@@ -1,13 +1,16 @@
 import {Component} from '@angular/core';
 import {AlertController, IonicPage, Loading, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
-import {TabsPage} from "../tabs/tabs";
+
+// import {TabsPage} from "../tabs/tabs";
 
 @IonicPage()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
 })
+
+
 export class LoginPage {
   loading: Loading;
   registerCredentials = {email: 'email', password: 'pass'};
@@ -27,7 +30,7 @@ export class LoginPage {
   }
 
   moveToApp() {
-    this.navCtrl.setRoot(TabsPage);
+    // this.navCtrl.setRoot('TabsPage');
   }
 
   public login() {

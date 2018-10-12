@@ -16,17 +16,16 @@ import {TabsPage} from "../pages/tabs/tabs";
 import {ReportPage} from "../pages/report/report";
 import {ChartsModule} from "ng2-charts";
 import {AuthServiceProvider} from '../providers/auth-service/auth-service';
-import {LoginPage} from "../pages/login/login";
 
 @NgModule({
   declarations: [
     MyApp,
+    // LoginPage,
     ExpensesPage,
     PayMethodsPage,
     CategoriesPage,
     TabsPage,
-    ReportPage,
-    LoginPage
+    ReportPage
   ],
   imports: [
     BrowserModule,
@@ -39,12 +38,12 @@ import {LoginPage} from "../pages/login/login";
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    // LoginPage,
     ExpensesPage,
     PayMethodsPage,
     CategoriesPage,
     TabsPage,
-    ReportPage,
-    LoginPage
+    ReportPage
   ],
   providers: [
     StatusBar,
