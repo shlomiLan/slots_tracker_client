@@ -15,6 +15,8 @@ import {DatePipe} from "@angular/common";
 import {TabsPage} from "../pages/tabs/tabs";
 import {ReportPage} from "../pages/report/report";
 import {ChartsModule} from "ng2-charts";
+import {AuthServiceProvider} from '../providers/auth-service/auth-service';
+import {LoginPage} from "../pages/login/login";
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import {ChartsModule} from "ng2-charts";
     PayMethodsPage,
     CategoriesPage,
     TabsPage,
-    ReportPage
+    ReportPage,
+    LoginPage
   ],
   imports: [
     BrowserModule,
@@ -40,14 +43,16 @@ import {ChartsModule} from "ng2-charts";
     PayMethodsPage,
     CategoriesPage,
     TabsPage,
-    ReportPage
+    ReportPage,
+    LoginPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ApiServiceProvider,
-    DatePipe
+    DatePipe,
+    AuthServiceProvider
   ]
 })
 export class AppModule {}
