@@ -35,7 +35,7 @@ export class ExpensesPage {
   }
 
   static get_title(): string {
-    return 'Expenses44';
+    return 'Expenses';
   }
 
   static get_icon(): string {
