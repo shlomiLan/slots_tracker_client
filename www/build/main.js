@@ -906,8 +906,8 @@ var ApiServiceProvider = /** @class */ (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ENV; });
 var ENV = {
-    production: false,
-    api_base_url: 'http://127.0.0.1:5000/'
+    production: true,
+    api_base_url: 'https://slots-tracker.herokuapp.com/'
 };
 //# sourceMappingURL=environment.js.map
 
