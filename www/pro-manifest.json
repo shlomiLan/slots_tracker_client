@@ -46,8 +46,8 @@
   },
   {
     "href": "build/main.js",
-    "size": 34424,
-    "integrity": "sha256-q1ihiE6JK60ai+Q3dTMhAnWs2eVF8ARPF+ZDLUvRaAo= sha384-fjeTlYJOd6v40SmTFvnO19qlTGdLLMiq5e0CjKbZO2OdAqtOpEIxeJfDPrUQ9ZfW sha512-GIPh7dje4e4vu6vrpr0b3tc1gOhxLteDnN3lnkYwE/aLRqu4WZ9HxgBvXUNKIRNLx2RP9zWHI2M59GMyWdPnUg=="
+    "size": 34425,
+    "integrity": "sha256-/G1y7gzqns4FzMw6Z0oDVUi9uqAhdl3ymEujUDtBfPc= sha384-gyXkf2ZnsmVklwMGvkaham195ZNTxNTnMsA0Fa9U3348/DH+oniShProkUyzQazB sha512-LtrMFsG/diopVx/kbb0v4ux456IMb1pXUqPCou2NJmQkkzzE9u4RnR++dv419y5264RDCU1MSviMrtUJtoiF2Q=="
   },
   {
     "href": "build/polyfills.js",

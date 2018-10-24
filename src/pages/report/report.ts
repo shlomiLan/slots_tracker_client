@@ -31,7 +31,7 @@ export class ReportPage {
   }
 
   static get_title(): string {
-    return 'Report2';
+    return 'Report3';
   }
 
   static get_icon(): string {
