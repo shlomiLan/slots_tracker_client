@@ -17,12 +17,12 @@
   {
     "href": "build/0.js",
     "size": 12633,
-    "integrity": "sha256-qhwOpo+Occoqc2fRv984vaAaQML7iNocA+xcsuErpJA= sha384-+YzmqwmCHI1jj9cQA1BunImghz3tU9dozf/rwpQ9pHu3EObKe3JVYCQDMuiWRo89 sha512-qXxTKnXFSNclm02CXKnO9Ap3yWpyMYFnYmqQJD+0NrXZAT22iy3To6/SR1eQB6LJoNLZ4T9J0Pg2cdPcLaAmdA=="
+    "integrity": "sha256-LimxJLIj3tZ6ADfGMqM9B6QEXagQM44wutqVgGv4N1g= sha384-RLWRGAtkEqbLlThAX6QqDeVbrc7WM/9P2G49O6mDnJT9nPq3Ydbkupd6u4BvNPlt sha512-5sEQ82BNi4QZmHdhjs5hF5zGkO72JIIwpGQHfWc3yTCWChVa08OxkrUCLScPWJqmH1qZP0Nor+Iw2SOMDD++bA=="
   },
   {
     "href": "build/1.js",
     "size": 30318,
-    "integrity": "sha256-JPmVlyWhctQ3+Jpel1lib0/QgXiPRbOfOfaiGhqXMWA= sha384-24OrJt4DNcl6wOsCpjAaLpsOIeOAMd0Pk4LgAuMrntpWSOrK+gTOEtjR6y5QbwDf sha512-jNvSOz/bUhDtq2ip5h22Ntj1C86sY1JcRwdSJZQZXdsWNY6ImyiQCTdJ2qTcALOxvsOfB2vkJ6xuuG+QLHH8VQ=="
+    "integrity": "sha256-lXVcK0fIJ+2d8YoH3SSXUxVno9rhfEzjhVtRcnye6OE= sha384-SbJsaor4AXbNWtDNWFmTiAt40X2Lh2dVaOvgqo55BQk2FK99bZ1gGdIaeLsvs1La sha512-Xeu4fRNfBU0q/3LigcnPXSo2GddDuyXENg0Hz1FS3oarhZbCPe9qY6Vlo7WwUFnhK+ITDMcUkRw1AQVZTm/xUQ=="
   },
   {
     "href": "build/2.js",
@@ -41,13 +41,13 @@
   },
   {
     "href": "build/main.css",
-    "size": 430368,
-    "integrity": "sha256-tfo6dAsS9o35yzpQW+vgDromCjT01m7JXBtoS9mQvj0= sha384-wrzybMJxeQlGXkgq67I8TvZQvDNEJRGDRSnsdbsyV/4MCM5pFtpEGlb5mJm2HrzY sha512-WOyIctRJl1DhIG9NewGxca212Uduqodn4R6o79UbYgN2oQpaEHtXokImHPirhWU73zfP0ly5s3YN127M8otVEg=="
+    "size": 430320,
+    "integrity": "sha256-bobrWMFeSRcwMdclXbG8g6smoFacYsVCSQS19xPj1SY= sha384-+QWirz4RxXtOcsFC2UPoql8m1azQT9aexXZ/IB1u9Iz67en/t++q86xaUhQ7JFil sha512-QF7w/xow/itOcca4kqkiFuu6VU+nOx3VDf5ougQwZf6I0qCQfI3aeFrZL4FWFKjyRycmh/JDm3QFrUiitHkzZg=="
   },
   {
     "href": "build/main.js",
-    "size": 34158,
-    "integrity": "sha256-NxEGRgUuEfmG7+RqjjhH2VM5vWpFyECu1Msx37lQpM0= sha384-JtSpVU5wUQ+HRf2/klPgPzLGQfr9uV9urdPAXt3d+8nq3SernohgUIaoN6KDZIH/ sha512-psMoKW2vL+HZluT4FoaU4dKvGvsBzz+eSr5s34LhwSqRwAKedue6SlpSHUJRUFlF/QoXEKbtEKiSnBlsu8RL/g=="
+    "size": 34156,
+    "integrity": "sha256-oonNQTHka+tTqNE7si4I5T6ysYMmVdkB94qJoByQbfs= sha384-Le2aXqWVKZNCYfCSxd/MfO6wX1q3FdH+q/vBbATbzgdPfFl5gEmhGXFihlKI/E0x sha512-VAUhX9bwCS+h4rSEeAabkMBlLzPVvlhL8yzqoHN4XPqbdGbA9roZ1cQRD86yEeo93p5sEJpsYahxGdOWsZi7Tw=="
   },
   {
     "href": "build/polyfills.js",

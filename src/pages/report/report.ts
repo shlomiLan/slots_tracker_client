@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {ApiServiceProvider} from "../../providers/api-service/api-service";
 import {Loading, LoadingController, ToastController} from "ionic-angular";
+import Chart from 'chart.js';
 import 'chartjs-plugin-datalabels';
 
 
@@ -23,11 +24,10 @@ export class ReportPage {
 
     this.loader.present();
 
-    // Chart.defaults.global.plugins.datalabels.anchor = 'end';
-    // Chart.defaults.global.plugins.datalabels.align = 'end';
-    // Chart.defaults.global.legend.display = false;
-    // Chart.defaults.global.title.display = true;
-
+    Chart.defaults.global.plugins.datalabels.anchor = 'end';
+    Chart.defaults.global.plugins.datalabels.align = 'end';
+    Chart.defaults.global.legend.display = false;
+    Chart.defaults.global.title.display = true;
   }
 
   static get_title(): string {
