@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {IonicPage, NavParams, ViewController} from 'ionic-angular';
+import {BackButton} from "@scaffold-digital/ionic-hardware-buttons";
 
 @IonicPage()
 @Component({
@@ -40,5 +41,10 @@ export class CategoryModalPage {
 
   closeModal() {
     this.viewCtrl.dismiss();
+  }
+
+  @BackButton()
+  public onBackButton() {
+    return false; // Blocks any further action from parent views, default behaviour etc
   }
 }

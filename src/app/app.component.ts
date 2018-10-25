@@ -3,6 +3,8 @@ import {Nav, Platform} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {TabsPage} from "../pages/tabs/tabs";
+import { HardwareButtons } from '@scaffold-digital/ionic-hardware-buttons';
+
 
 @Component({
   templateUrl: 'app.html'
@@ -14,8 +16,10 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
+              public hardwareButtons: HardwareButtons) {
     this.initializeApp();
+    hardwareButtons.init();
   }
 
   initializeApp() {

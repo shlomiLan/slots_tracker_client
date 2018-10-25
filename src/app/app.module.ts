@@ -17,10 +17,11 @@ import {ReportPage} from "../pages/report/report";
 import {ChartsModule} from "ng2-charts";
 import {AuthServiceProvider} from '../providers/auth-service/auth-service';
 import {Pro} from "@ionic/pro";
+import {HardwareButtons} from "@scaffold-digital/ionic-hardware-buttons";
 
 
 Pro.init('a9f030da', {
-  appVersion: '1.4.2'
+  appVersion: '1.4.3'
 });
 
 @Injectable()
@@ -78,7 +79,8 @@ export class MyErrorHandler implements ErrorHandler {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ApiServiceProvider,
     DatePipe,
-    AuthServiceProvider
+    AuthServiceProvider,
+    HardwareButtons
   ]
 })
 export class AppModule {}

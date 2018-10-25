@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {IonicPage, NavParams, ViewController} from 'ionic-angular';
 import {ApiServiceProvider} from "../../../providers/api-service/api-service";
+import {BackButton} from "@scaffold-digital/ionic-hardware-buttons";
 
 @IonicPage()
 @Component({
@@ -142,5 +143,10 @@ export class ExpenseModalPage {
 
   close_and_display_error(err) {
     this.viewCtrl.dismiss(err);
+  }
+
+  @BackButton()
+  public onBackButton() {
+    return false; // Blocks any further action from parent views, default behaviour etc
   }
 }

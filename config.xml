@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="slots.tracker" version="1.4.2" xmlns="http://www.w3.org/ns/widgets">
+<widget id="slots.tracker" version="1.4.3" xmlns="http://www.w3.org/ns/widgets">
     <name>Slots tracker</name>
     <description>App to keep track on expenses.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>

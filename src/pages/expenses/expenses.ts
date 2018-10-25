@@ -3,6 +3,7 @@ import {DatePipe} from '@angular/common'
 import {LoadingController, ModalController, ModalOptions, ToastController} from 'ionic-angular';
 import {ApiServiceProvider} from '../../providers/api-service/api-service'
 import 'rxjs/add/operator/do'
+import {BackButton} from "@scaffold-digital/ionic-hardware-buttons";
 
 enum State {Unset = 1, Success = 2, Error = 4}
 
@@ -147,6 +148,11 @@ export class ExpensesPage {
         }).present();
       }
     }
+  }
+
+  @BackButton()
+  public onBackButton() {
+    return false; // Blocks any further action from parent views, default behaviour etc
   }
 }
 

@@ -3,6 +3,7 @@ import {ApiServiceProvider} from "../../providers/api-service/api-service";
 import {Loading, LoadingController, ToastController} from "ionic-angular";
 import Chart from 'chart.js';
 import 'chartjs-plugin-datalabels';
+import {BackButton} from "@scaffold-digital/ionic-hardware-buttons";
 
 
 @Component({
@@ -53,5 +54,8 @@ export class ReportPage {
     });
   }
 
-
+  @BackButton()
+  public onBackButton() {
+    return false; // Blocks any further action from parent views, default behaviour etc
+  }
 }

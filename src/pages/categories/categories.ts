@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {LoadingController, ModalController, ModalOptions, ToastController} from 'ionic-angular';
 import {ApiServiceProvider} from '../../providers/api-service/api-service'
 import 'rxjs/add/operator/do'
+import {BackButton} from "@scaffold-digital/ionic-hardware-buttons";
 
 @Component({
   selector: 'page-categories',
@@ -91,5 +92,10 @@ export class CategoriesPage {
         showCloseButton: true,
       }).present();
     });
+  }
+
+  @BackButton()
+  public onBackButton() {
+    return false; // Blocks any further action from parent views, default behaviour etc
   }
 }
