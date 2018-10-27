@@ -74,9 +74,6 @@ export class ExpensesPage {
             } else {
               this.expenses.unshift(item);
             }
-
-            console.log(this.filtered_expenses);
-            console.log(this.expenses);
           }
         }, err => {
           this.toastCtrl.create({

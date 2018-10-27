@@ -36,3 +36,4 @@ UserInterfaceState.xcuserstate
 config.xml
 my-release-key.jks
 slots-tracker.apk
+/src/environments/environment.ts
