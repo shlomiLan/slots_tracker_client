@@ -28,7 +28,7 @@ export class CategoriesPage {
   }
 
   static get_title(): string {
-    return 'Categories';
+    return 'Categories2';
   }
 
   static get_icon(): string {
