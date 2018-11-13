@@ -18,11 +18,24 @@ import {ChartsModule} from "ng2-charts";
 import {AuthServiceProvider} from '../providers/auth-service/auth-service';
 import {Pro} from "@ionic/pro";
 import {HardwareButtons} from "@scaffold-digital/ionic-hardware-buttons";
+import {Firebase} from "@ionic-native/firebase";
+import {AngularFireModule} from 'angularfire2';
+import {AngularFirestoreModule} from 'angularfire2/firestore';
+import { FcmProvider } from '../providers/fcm/fcm';
 
 
 Pro.init('a9f030da', {
   appVersion: '1.4.3'
 });
+
+const firebase = {
+  apiKey: "AIzaSyBFMOYJ7OFe3CVRQzgMsTrAYi7EBcNLJs0",
+  authDomain: "slots-tracker.firebaseapp.com",
+  databaseURL: "https://slots-tracker.firebaseio.com",
+  projectId: "slots-tracker",
+  storageBucket: "slots-tracker.appspot.com",
+  messagingSenderId: "488130817131"
+};
 
 @Injectable()
 export class MyErrorHandler implements ErrorHandler {
@@ -61,7 +74,9 @@ export class MyErrorHandler implements ErrorHandler {
     IonicModule.forRoot(MyApp, {
       animate: false // disable animation
     }),
-    ChartsModule
+    ChartsModule,
+    AngularFireModule.initializeApp(firebase),
+    AngularFirestoreModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -80,7 +95,9 @@ export class MyErrorHandler implements ErrorHandler {
     ApiServiceProvider,
     DatePipe,
     AuthServiceProvider,
-    HardwareButtons
+    HardwareButtons,
+    Firebase,
+    FcmProvider
   ]
 })
 export class AppModule {}

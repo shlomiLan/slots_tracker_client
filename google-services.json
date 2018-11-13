@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "488130817131",
+    "firebase_url": "https://slots-tracker.firebaseio.com",
+    "project_id": "slots-tracker",
+    "storage_bucket": "slots-tracker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:488130817131:android:4979b66a7835d68d",
+        "android_client_info": {
+          "package_name": "slots.tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "488130817131-51p73kpljijia2tvku7q0ukals80emhp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnDnsM1QkSXXzRAaUyRJmYzX6c-16a06g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
