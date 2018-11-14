@@ -4,7 +4,9 @@ import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {TabsPage} from "../pages/tabs/tabs";
 import {HardwareButtons} from '@scaffold-digital/ionic-hardware-buttons';
-import {FcmProvider} from "../providers/fcm/fcm";
+// import {FcmProvider} from "../providers/fcm/fcm";
+import {Firebase} from "@ionic-native/firebase";
+import { AngularFirestore } from 'angularfire2/firestore';
 
 
 @Component({
@@ -18,7 +20,8 @@ export class MyApp {
   pages: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-              public hardwareButtons: HardwareButtons, public fcm: FcmProvider, public toastCtrl: ToastController) {
+              public hardwareButtons: HardwareButtons, private firebase: Firebase, public firebaseNative: Firebase,
+              public afs: AngularFirestore) {
     this.initializeApp();
     hardwareButtons.init();
   }
@@ -31,22 +34,31 @@ export class MyApp {
       this.splashScreen.hide();
 
       //Notifications
-      // Get a FCM token
-      this.fcm.getToken();
+      this.firebase.getToken()
+        .then(token => this.saveTokenToFirestore(token)) // save the token server-side and use it to push notifications to this device
+        .catch(error => console.error('Error getting token', error));
 
-      // Listen to incoming messages
-      this.fcm.listenToNotifications().subscribe(
-        msg => {
-          // show a toast
-          const toast = this.toastCtrl.create({
-            message: msg.body,
-            duration: 3000
-          });
-          toast.present();
-        },
-        err => {
-          console.log(err);
-        })
+      this.firebase.onTokenRefresh()
+        .subscribe((token: string) => this.saveTokenToFirestore(token));
     });
+  }
+
+  // Save the token to firestore
+  private saveTokenToFirestore(token) {
+    if (!token) return;
+
+    console.log(`The token is ${token}`);
+    const devicesRef = this.afs.collection('devices');
+
+    const docData = {
+      token
+    };
+
+    return devicesRef.doc(token).set(docData)
+  }
+
+  // Listen to incoming FCM messages
+  listenToNotifications() {
+    return this.firebaseNative.onNotificationOpen()
   }
 }

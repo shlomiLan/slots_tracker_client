@@ -20,12 +20,11 @@ export class FcmProvider {
 
     if (this.platform.is('android')) {
       token = await this.firebaseNative.getToken();
-      console.log(token);
 
       if (!(token)){
         setTimeout(this.getToken(), 1000);
       }else{
-        this.saveTokenToFirestore(token);
+        return this.saveTokenToFirestore(token);
       }
     }
   }
@@ -38,7 +37,7 @@ export class FcmProvider {
 
     const docData = {
       token,
-      userId: 'testUser',
+      userId: 'newUser',
     };
 
     return devicesRef.doc(token).set(docData)
