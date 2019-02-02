@@ -1,0 +1,63 @@
+<template>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-10">
+        <div v-for='(chart, index) in charts' :key='index'>
+          <div v-if="chart.type === 'table'">
+            <p v-for='(row, index2) of chart.data' :key='index2'>
+              {{row[0]}} - {{row[1]}}
+            </p>
+          </div>
+
+          <vue-chart v-else v-bind:style="'height: 500px'"
+            :data="chart.data"
+            :type="chart.type"
+            :options="chart.options"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import Alert from './Alert';
+import ChartsAPI from '../api/Charts';
+
+export default {
+  data() {
+    return {
+      charts: [],
+      message: {
+        text: '',
+        type: 'success',
+        display: false,
+      },
+    };
+  },
+  components: {
+    alert: Alert,
+  },
+  methods: {
+    getChartData() {
+      ChartsAPI.get()
+        .then((res) => {
+          this.charts = res.data;
+        })
+        .catch((error) => {
+          // eslint-disable-next-line
+            this.displayError(error);
+        });
+    },
+    displayError(message, type = 'danger') {
+      // TODO: Fix not displaying second time.
+      this.message.display = true;
+      this.message.type = type;
+      this.message.text = message;
+    },
+  },
+  created() {
+    this.getChartData();
+  },
+};
+</script>
