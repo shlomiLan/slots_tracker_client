@@ -8,12 +8,13 @@
               {{row[0]}} - {{row[1]}}
             </p>
           </div>
-
-          <vue-chart v-else v-bind:style="'height: 500px'"
-            :data="chart.data"
-            :type="chart.type"
-            :options="chart.options"
-          />
+          <div v-else>
+            <vue-chart v-bind:style="'height: 500px'"
+                       :data="chart.data"
+                       :type="chart.type"
+                       :options="chart.options"
+            />
+          </div>
         </div>
       </div>
     </div>

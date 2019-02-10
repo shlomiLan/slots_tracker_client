@@ -12,6 +12,7 @@ import ChartJsPluginDataLabels from 'chartjs-plugin-datalabels';
 import Vue from 'vue';
 import App from './App';
 import router from './router';
+import Chart from "chart.js";
 
 library.add(faUserSecret, faCircle, faTimes);
 
@@ -21,8 +22,14 @@ Vue.component('font-awesome-layers-text', FontAwesomeLayersText);
 
 Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
+
 Vue.component(VueChart.name, VueChart);
 Vue.component(ChartJsPluginDataLabels);
+Chart.defaults.global.plugins.datalabels.anchor = 'end';
+Chart.defaults.global.plugins.datalabels.align = 'end';
+Chart.defaults.global.legend.display = false;
+Chart.defaults.global.title.display = true;
+Chart.defaults.global.layout.padding.right = 50;
 
 /* eslint-disable no-new */
 new Vue({
