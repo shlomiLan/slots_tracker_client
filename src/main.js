@@ -29,6 +29,7 @@ Chart.defaults.global.plugins.datalabels.anchor = 'end';
 Chart.defaults.global.plugins.datalabels.align = 'end';
 Chart.defaults.global.legend.display = false;
 Chart.defaults.global.title.display = true;
+Chart.defaults.global.title.padding = 20;
 Chart.defaults.global.layout.padding.right = 50;
 
 /* eslint-disable no-new */
