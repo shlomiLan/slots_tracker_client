@@ -10,11 +10,7 @@ const chalk = require('chalk');
 const webpack = require('webpack');
 const config = require('../config');
 
-if (process.env.ENV === 'PROD'){
-  const webpackConfig = require('./webpack.prod.conf');
-}else {
-  const webpackConfig = require('./webpack.stage.conf');
-}
+const webpackConfig = require('./webpack.' + process.env.ENV + '.conf');
 
 const spinner = ora('building for production...');
 spinner.start();
