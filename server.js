@@ -5,10 +5,10 @@ const httpPort = process.env.PORT || 3000;
 http.createServer((req, res) => {
   console.log('req is: ' + req);
   console.log('res is: ' + res);
-  fs.readFile('index.htm', 'utf-8', (err, content) => {
+  fs.readFile('index.html', 'utf-8', (err, content) => {
     if (err) {
       console.log('err is: ' + err);
-      console.log('We cannot open "index.htm" file.')
+      console.log('We cannot open "index.html" file.')
     }
 
     res.writeHead(200, {
