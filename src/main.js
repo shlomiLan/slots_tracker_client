@@ -7,12 +7,12 @@ import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fort
 
 import 'bootstrap/dist/css/bootstrap.css';
 import BootstrapVue from 'bootstrap-vue';
+import Chart from 'chart.js';
 import VueChart from 'vuechart';
 import ChartJsPluginDataLabels from 'chartjs-plugin-datalabels';
 import Vue from 'vue';
 import App from './App';
 import router from './router';
-import Chart from "chart.js";
 
 library.add(faUserSecret, faCircle, faTimes);
 
