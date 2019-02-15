@@ -5,7 +5,6 @@
   "author": "shlomiLan <shlomilanton@gmail.com>",
   "private": true,
   "scripts": {
-    "build": "node build/build.js",
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "node src/main.js",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
