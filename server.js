@@ -59,8 +59,8 @@ EXPRESS SERVER
 
 var app = express();
 
-app.use(history({verbose: true}));
-app.use(serveStatic(path.join(__dirname, '/dist')));
+// app.use(history({verbose: true}));
+// app.use(serveStatic(path.join(__dirname, '/dist')));
 
 var port = process.env.PORT || 5000;
 
