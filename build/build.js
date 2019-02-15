@@ -9,8 +9,7 @@ const path = require('path')
 const chalk = require('chalk')
 const webpack = require('webpack')
 const config = require('../config')
-console.log(process.env.ENV);
-let  webpackConfig;
+let  webpackConfig = undefined;
 if (process.env.ENV === 'PROD'){
   webpackConfig = require('./webpack.prod.conf');
 }else {
