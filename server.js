@@ -3,9 +3,13 @@ const fs = require('fs');
 const httpPort = process.env.PORT || 3000;
 
 http.createServer((req, res) => {
-  console.log('req is: ' + req);
-  console.log('res is: ' + res);
+  console.log('req is:');
+  console.log(req);
+  console.log('res is:');
+  console.log(res);
   fs.readFile('index.html', 'utf-8', (err, content) => {
+    console.log('content is:');
+    console.log(content);
     if (err) {
       console.log('err is: ' + err);
       console.log('We cannot open "index.html" file.')
