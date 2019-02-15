@@ -3,8 +3,11 @@ const fs = require('fs');
 const httpPort = process.env.PORT || 3000;
 
 http.createServer((req, res) => {
+  console.log('req is: ' + req);
+  console.log('res is: ' + res);
   fs.readFile('index.htm', 'utf-8', (err, content) => {
     if (err) {
+      console.log('err is: ' + err);
       console.log('We cannot open "index.htm" file.')
     }
 
@@ -15,7 +18,7 @@ http.createServer((req, res) => {
     res.end(content)
   })
 }).listen(httpPort, () => {
-  console.log('Server listening on: http://localhost:%s', httpPort)
+  console.log('Server listening on port: %s', httpPort)
 });
 
 
