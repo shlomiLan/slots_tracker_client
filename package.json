@@ -11,8 +11,7 @@
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
-    "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
-    "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build"
+    "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.14",
