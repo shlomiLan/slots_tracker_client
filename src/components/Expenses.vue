@@ -141,20 +141,20 @@ export default {
     updateExpense(payload, index) {
       const expenseData = this.expenses[index];
       // eslint-disable-next-line
-        ExpensesAPI.updateExpense(expenseData._id, payload)
-        .then((res) => {
-          // Must have only one item
-          this.expenses[index].amount = res.data[0].amount;
-          this.expenses[index].description = res.data[0].description;
-          this.expenses[index].category = res.data[0].category;
-          this.expenses[index].pay_method = res.data[0].pay_method;
-          this.expenses[index].timestamp = res.data[0].timestamp;
-          this.expenses[index].one_time = res.data[0].one_time;
-          this.displayError('Expense was updated', 'success');
-        })
-        .catch((error) => {
-          this.displayError(error);
-        });
+      ExpensesAPI.updateExpense(expenseData._id, payload)
+      .then((res) => {
+        // Must have only one item
+        this.expenses[index].amount = res.data[0].amount;
+        this.expenses[index].description = res.data[0].description;
+        this.expenses[index].category = res.data[0].category;
+        this.expenses[index].pay_method = res.data[0].pay_method;
+        this.expenses[index].timestamp = res.data[0].timestamp;
+        this.expenses[index].one_time = res.data[0].one_time;
+        this.displayError('Expense was updated', 'success');
+      })
+      .catch((error) => {
+        this.displayError(error);
+      });
     },
     initForm() {
       this.addExpenseForm = Object.assign({}, this.addExpenseForm, {
@@ -199,9 +199,9 @@ export default {
       this.addExpenseForm.description = expense.description;
       // TODO: Maybe change in the server return JSON
       // eslint-disable-next-line
-        this.addExpenseForm.categories = expense.category._id;
+      this.addExpenseForm.categories = expense.category._id;
       // eslint-disable-next-line
-        this.addExpenseForm.payMethods = expense.pay_method._id;
+      this.addExpenseForm.payMethods = expense.pay_method._id;
 
       this.addExpenseForm.timestamp = expense.timestamp;
       this.addExpenseForm.oneTime = true;
