@@ -204,7 +204,7 @@ export default {
       this.addExpenseForm.payMethods = expense.pay_method._id;
 
       this.addExpenseForm.timestamp = expense.timestamp;
-      this.addExpenseForm.oneTime = true;
+      this.addExpenseForm.oneTime = expense.one_time;
 
       delete this.addExpenseForm.payments;
       this.addExpenseForm.index = index;
