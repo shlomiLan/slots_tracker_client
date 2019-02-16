@@ -10,8 +10,9 @@
 // app.use(history());
 
 
-const http = require('http')
-const fs = require('fs')
+const http = require('http');
+const fs = require('fs');
+const history = require('connect-history-api-fallback');
 const httpPort = process.env.PORT || 5000;
 
 http.createServer((req, res) => {
@@ -22,10 +23,10 @@ http.createServer((req, res) => {
 
     res.writeHead(200, {
       'Content-Type': 'text/html; charset=utf-8'
-    })
+    });
 
     res.end(content)
   })
 }).listen(httpPort, () => {
   console.log('Server listening on: http://localhost:%s', httpPort)
-})
+}).use(history());
