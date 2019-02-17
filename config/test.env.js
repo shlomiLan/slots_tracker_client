@@ -2,6 +2,6 @@ const merge = require('webpack-merge');
 const devEnv = require('./dev.env');
 
 module.exports = merge(devEnv, {
-  NODE_ENV: '"test"',
-  API_BASE_URL: '"google.com"',
+  NODE_ENV: '"testing"',
+  API_BASE_URL: '"https://slots-tracker-test.herokuapp.com"',
 });
