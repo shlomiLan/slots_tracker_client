@@ -4,7 +4,7 @@ const testConfigs = require('../../config/test.env');
 module.exports = {
   verbose: true,
   testURL: 'http://localhost/',
-  API_BASE_URL: testConfigs.API_BASE_URL,
+  API_BASE_URL: "'" + testConfigs.API_BASE_URL + "'",
   rootDir: path.resolve(__dirname, '../../'),
   moduleFileExtensions: [
     'js',
