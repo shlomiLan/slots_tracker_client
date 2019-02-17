@@ -1,9 +1,10 @@
 const path = require('path');
+const testConfs = require('../config/test.env');
 
 module.exports = {
   verbose: true,
   testURL: 'http://localhost/',
-  API_BASE_URL: '"http://127.0.0.1:5000/"',
+  API_BASE_URL: testConfs.API_BASE_URL,
   rootDir: path.resolve(__dirname, '../../'),
   moduleFileExtensions: [
     'js',
