@@ -1,6 +1,5 @@
 const path = require('path');
 
-console.log(process.env);
 module.exports = {
   verbose: true,
   testURL: 'http://localhost/',
@@ -30,4 +29,5 @@ module.exports = {
     '!**/node_modules/**',
   ],
 };
-console.log(process.env);
+
+process.env.API_BASE_URL = 'https://slots-tracker-test.herokuapp.com';
