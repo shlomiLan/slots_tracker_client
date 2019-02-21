@@ -14,7 +14,9 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const env = require('../config/test.env');
 
 console.log('In test configs');
-console.log('env vars: ' + env.API_BASE_URL);
+console.log('env vars:');
+console.log(env.API_BASE_URL);
+console.log('End env vars');
 
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
