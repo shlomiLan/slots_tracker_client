@@ -1,8 +1,8 @@
 const path = require('path');
 
+console.log(process.env);
 module.exports = {
   verbose: true,
-  API_BASE_URL: '"https://slots-tracker-test.herokuapp.com"',
   testURL: 'http://localhost/',
   rootDir: path.resolve(__dirname, '../../'),
   moduleFileExtensions: [
@@ -30,3 +30,4 @@ module.exports = {
     '!**/node_modules/**',
   ],
 };
+console.log(process.env);
