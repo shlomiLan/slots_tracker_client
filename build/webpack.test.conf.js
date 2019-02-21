@@ -13,6 +13,9 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const env = require('../config/test.env');
 
+console.log('In test confugs');
+console.log('env vars: ' + env);
+
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({
