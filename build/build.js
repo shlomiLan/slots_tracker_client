@@ -12,7 +12,9 @@ const config = require('../config');
 
 const envName = process.env.ENV.toLowerCase();
 console.log('Using ' + envName + ' config');
+console.log('./webpack.' + envName + '.conf');
 const webpackConfig = require('./webpack.' + envName + '.conf');
+console.log('webpackConfig: ' + webpackConfig);
 
 const spinner = ora('building for production...');
 spinner.start();
