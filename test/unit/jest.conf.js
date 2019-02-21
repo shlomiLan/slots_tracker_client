@@ -1,5 +1,4 @@
 const path = require('path');
-const testConfigs = require('../../config/test.env');
 
 module.exports = {
   verbose: true,
