@@ -89,16 +89,13 @@ export default {
         .then((res) => {
           const resData = res.data;
           const categories = this.categories;
-          resData.forEach((element) => {
-            if (element) {
-              categories.unshift(element);
-            }
-          });
-
+          if (resData) {
+            categories.unshift(resData);
+          }
           this.displayError('Category was added', 'success');
         })
         .catch((error) => {
-          this.displayError(error);
+          this.displayError(error + 'ERROR');
         });
     },
     updateCategory(payload, index) {

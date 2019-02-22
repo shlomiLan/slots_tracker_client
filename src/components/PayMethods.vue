@@ -89,12 +89,9 @@ export default {
         .then((res) => {
           const resData = res.data;
           const payMethods = this.payMethods;
-          resData.forEach((element) => {
-            if (element) {
-              payMethods.unshift(element);
-            }
-          });
-
+          if (resData) {
+            payMethods.unshift(resData);
+          }
           this.displayError('Pay method was added', 'success');
         })
         .catch((error) => {
