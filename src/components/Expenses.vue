@@ -2,11 +2,12 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-10">
+        <input type="text" v-model="searchQuery" placeholder="Filter expenses" />
         <button class="btn btn-success btn-sm" type="button" @click="onLoad">Add expense</button>
         <br><br>
         <alert :message=message v-if="message.display"></alert>
         <div class="list-group list-group-flush">
-          <a v-for="(expense, index) in expenses" :key="index" @click="onUpdateLoad(expense, index)"
+          <a v-for="(expense, index) in filterExpenses" :key="index" @click="onUpdateLoad(expense, index)"
              href="#" class="list-group-item list-group-item-action flex-column align-items-start">
             <div class="d-flex w-100 justify-content-between">
               <div class="mb-1">
@@ -85,6 +86,7 @@ export default {
         display: false,
       },
       form: {},
+      searchQuery: ''
     };
   },
   components: {
@@ -219,5 +221,12 @@ export default {
     this.getPayMethods();
     this.getCategories();
   },
+  computed: {
+    filterExpenses: function () {
+      return this.expenses.filter((expense) => {
+        return expense.description.match(this.searchQuery);
+      })
+    }
+  }
 };
 </script>
