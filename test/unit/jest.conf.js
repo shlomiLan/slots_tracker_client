@@ -30,4 +30,9 @@ module.exports = {
   ],
 };
 
-process.env.API_BASE_URL = 'https://slots-tracker-test.herokuapp.com';
+const envName = process.env.ENV.toLowerCase();
+if (envName === 'dev'){
+  process.env.API_BASE_URL = 'http://127.0.0.1:5000/';
+}else{
+  process.env.API_BASE_URL = 'https://slots-tracker-test.herokuapp.com';
+}
