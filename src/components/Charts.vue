@@ -40,15 +40,15 @@ export default {
     alert: Alert,
   },
   methods: {
-    getChartData() {
-      ChartsAPI.get()
-        .then((res) => {
-          this.charts = res.data;
-        })
-        .catch((error) => {
-          // eslint-disable-next-line
-            this.displayError(error);
-        });
+    async getChartData() {
+      try {
+        const res = await ChartsAPI.get();
+        const resData = res.data;
+        this.charts = resData;
+        return resData;
+      } catch (e) {
+        this.displayError(e);
+      }
     },
     displayError(message, type = 'danger') {
       // TODO: Fix not displaying second time.

@@ -50,15 +50,14 @@ export default {
     alert: Alert,
   },
   methods: {
-    getCategories() {
-      CategoriesAPI.get()
-        .then((res) => {
-          this.categories = res.data;
-        })
-        .catch((error) => {
-          // eslint-disable-next-line
-            this.displayError(error);
-        });
+    async getCategories() {
+      try {
+        const res = await CategoriesAPI.get();
+        this.categories = res.data;
+        return res;
+      } catch (e) {
+        this.displayError(e);
+      }
     },
     initForm() {
       this.addCategoryForm = Object.assign({}, this.addCategoryForm, {
@@ -84,32 +83,31 @@ export default {
         this.addCategory(payload);
       }
     },
-    addCategory(payload) {
-      CategoriesAPI.create(payload)
-        .then((res) => {
-          const resData = res.data;
-          const categories = this.categories;
-          if (resData) {
-            categories.unshift(resData);
-          }
-          this.displayError('Category was added', 'success');
-        })
-        .catch((error) => {
-          this.displayError(error + 'ERROR');
-        });
+    async addCategory(payload) {
+      try {
+        const res = await CategoriesAPI.create(payload);
+        const resData = res.data;
+        const categories = this.categories;
+        if (resData) {
+          categories.unshift(resData);
+        }
+        this.displayError('Category was added', 'success');
+      }catch (e){
+        this.displayError(e);
+      }
     },
-    updateCategory(payload, index) {
-      const categoryData = this.categories[index];
-      // eslint-disable-next-line
-        CategoriesAPI.update(categoryData._id, payload)
-        .then((res) => {
-          // Must have only one item
-          this.categories[index].name = res.data.name;
-          this.displayError('Category was updated', 'success');
-        })
-        .catch((error) => {
-          this.displayError(error);
-        });
+    async updateCategory(payload, index) {
+      try {
+        const categoryData = this.categories[index];
+        // eslint-disable-next-line
+        const res = await CategoriesAPI.update(categoryData._id, payload);
+        // Must have only one item
+        this.categories[index].name = res.data.name;
+        this.displayError('Category was updated', 'success');
+
+      }catch (e){
+        this.displayError(e);
+      }
     },
     onUpdateLoad(category, index) {
       this.addCategoryForm.name = category.name;

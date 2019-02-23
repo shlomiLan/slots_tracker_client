@@ -50,15 +50,14 @@ export default {
     alert: Alert,
   },
   methods: {
-    getPayMethods() {
-      PayMethodsAPI.get()
-        .then((res) => {
-          this.payMethods = res.data;
-        })
-        .catch((error) => {
-          // eslint-disable-next-line
-            this.displayError(error);
-        });
+    async getPayMethods() {
+      try {
+        const res = await PayMethodsAPI.get();
+        this.payMethods = res.data;
+        return res;
+      } catch (e) {
+        this.displayError(e);
+      }
     },
     initForm() {
       this.addPayMethodForm = Object.assign({}, this.addPayMethodForm, {
@@ -84,32 +83,32 @@ export default {
         this.addPayMethod(payload);
       }
     },
-    addPayMethod(payload) {
-      PayMethodsAPI.create(payload)
-        .then((res) => {
+    async addPayMethod(payload) {
+      try{
+          const res = await PayMethodsAPI.create(payload);
           const resData = res.data;
           const payMethods = this.payMethods;
           if (resData) {
             payMethods.unshift(resData);
           }
-          this.displayError('Pay method was added', 'success');
-        })
-        .catch((error) => {
-          this.displayError(error);
-        });
+
+          return res;
+      } catch (e) {
+        this.displayError(e);
+      }
     },
-    updatePayMethod(payload, index) {
-      const categoryData = this.payMethods[index];
-      // eslint-disable-next-line
-        CategoriesAPI.update(categoryData._id, payload)
-        .then((res) => {
-          // Must have only one item
-          this.payMethods[index].name = res.data.name;
-          this.displayError('Pay method was updated', 'success');
-        })
-        .catch((error) => {
-          this.displayError(error);
-        });
+    async updatePayMethod(payload, index) {
+      try {
+        const payMethodsData = this.payMethods[index];
+        // eslint-disable-next-line
+        const res = await PayMethodsAPI.update(payMethodsData._id, payload);
+        const resData = res.data;
+        // Must have only one item
+        this.payMethods[index].name = resData.name;
+        this.displayError('Pay method was updated', 'success');
+      } catch (e){
+        this.displayError(e);
+      }
     },
     onUpdateLoad(payMethod, index) {
       this.addPayMethodForm.name = payMethod.name;

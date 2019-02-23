@@ -91,70 +91,66 @@ export default {
     alert: Alert,
   },
   methods: {
-    getExpenses() {
-      ExpensesAPI.get()
-        .then((res) => {
-          this.expenses = res.data;
-        })
-        .catch((error) => {
-          // eslint-disable-next-line
-            this.displayError(error);
-        });
+    async getExpenses() {
+      try {
+        const res = await ExpensesAPI.get();
+        this.expenses = res.data;
+      } catch (e) {
+        this.displayError(e);
+      }
     },
-    getPayMethods() {
-      PayMethodsAPI.get()
-        .then((res) => {
-          this.payMethods = res.data;
-        })
-        .catch((error) => {
-          // eslint-disable-next-line
-            this.displayError(error);
-        });
+    async getPayMethods() {
+      try {
+        const res = await PayMethodsAPI.get();
+        const resData = res.data;
+        this.payMethods = resData;
+        return resData;
+      } catch (e) {
+        this.displayError(e);
+      }
     },
-    getCategories() {
-      CategoriesAPI.get()
-        .then((res) => {
-          this.categories = res.data;
-        })
-        .catch((error) => {
-          // eslint-disable-next-line
-            this.displayError(error);
-        });
+    async getCategories() {
+      try {
+        const res = await CategoriesAPI.get();
+        this.categories = res.data;
+        return res;
+      } catch (e) {
+        this.displayError(e);
+      }
     },
-    addExpense(payload, payments) {
-      ExpensesAPI.createExpense(payments, payload)
-        .then((res) => {
-          const resData = res.data;
-          const expenses = this.expenses;
-          resData.forEach((element) => {
-            if (element) {
-              expenses.unshift(element);
-            }
-          });
+    async addExpense(payload, payments) {
+      try {
+        const res = await ExpensesAPI.createExpense(payments, payload);
+        const resData = res.data;
+        const expenses = this.expenses;
+        resData.forEach((element) => {
+          if (element) {
+            expenses.unshift(element);
+          }
+        });
 
-          this.displayError('Expense was added', 'success');
-        })
-        .catch((error) => {
-          this.displayError(error);
-        });
+        this.displayError('Expense was added', 'success');
+      }catch (e){
+        this.displayError(e);
+      }
     },
-    updateExpense(payload, index) {
-      const expenseData = this.expenses[index];
-      // eslint-disable-next-line
-      ExpensesAPI.updateExpense(expenseData._id, payload)
-      .then((res) => {
+    async updateExpense(payload, index) {
+      try {
+        const expenseData = this.expenses[index];
+        // eslint-disable-next-line
+        const res = await ExpensesAPI.updateExpense(expenseData._id, payload);
+        const resData = res.data[0];
         // Must have only one item
-        this.expenses[index].amount = res.data[0].amount;
-        this.expenses[index].description = res.data[0].description;
-        this.expenses[index].category = res.data[0].category;
-        this.expenses[index].pay_method = res.data[0].pay_method;
-        this.expenses[index].timestamp = res.data[0].timestamp;
-        this.expenses[index].one_time = res.data[0].one_time;
+        this.expenses[index].amount = resData.amount;
+        this.expenses[index].description = resData.description;
+        this.expenses[index].category = resData.category;
+        this.expenses[index].pay_method = resData.pay_method;
+        this.expenses[index].timestamp = resData.timestamp;
+        this.expenses[index].one_time = resData.one_time;
         this.displayError('Expense was updated', 'success');
-      })
-      .catch((error) => {
+      } catch (e){
         this.displayError(error);
-      });
+      }
     },
     initForm() {
       this.addExpenseForm = Object.assign({}, this.addExpenseForm, {
