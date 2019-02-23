@@ -91,7 +91,7 @@ export default {
           if (resData) {
             payMethods.unshift(resData);
           }
-
+          this.displayError('Pay method was created', 'success');
           return res;
       } catch (e) {
         this.displayError(e);
