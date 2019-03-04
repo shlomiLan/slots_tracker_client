@@ -1,23 +1,32 @@
 <template>
   <div id="app">
-    <Navigation></Navigation>
-    <router-view/>
+    <v-app>
+      <drawer></drawer>
+      <router-view/>
+    </v-app>
   </div>
 </template>
 
 <script>
-  import Navigation from './components/Navigation';
+  // import Navigation from './components/Navigation';
+  import drawer from './components/drawer.vue'
+
 
   export default {
     name: 'App',
     components: {
-      Navigation,
+      // Navigation,
+      drawer
     },
   };
 </script>
 
 <style>
-  #app {
-    margin-top: 60px;
+  /*#app {*/
+    /*margin-top: 60px;*/
+  /*}*/
+
+  a, .text-decoration-line{
+    text-decoration: none !important;
   }
 </style>

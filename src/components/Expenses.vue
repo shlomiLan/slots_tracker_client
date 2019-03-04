@@ -3,8 +3,17 @@
     <div class="row">
       <div class="col-sm-10">
         <input type="text" v-model="searchQuery" placeholder="Filter expenses" />
-        <button class="btn btn-success btn-sm" type="button" @click="onLoad">Add expense</button>
-        <br><br>
+        <v-btn
+            color="pink"
+            dark
+            fixed
+            bottom
+            right
+            fab round
+            @click="onLoad"
+          >
+            <v-icon>add</v-icon>
+         </v-btn>
         <alert :message=message v-if="message.display"></alert>
         <div class="list-group list-group-flush">
           <a v-for="(expense, index) in filterExpenses" :key="index" @click="onUpdateLoad(expense, index)"
