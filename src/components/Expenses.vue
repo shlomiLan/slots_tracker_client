@@ -1,7 +1,5 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-10">
+  <div>
         <input type="text" v-model="searchQuery" placeholder="Filter expenses" />
         <v-btn
             color="pink"
@@ -31,8 +29,6 @@
             </div>
           </a>
         </div>
-      </div>
-    </div>
     <b-modal ref="addExpenseModal" id="expense-modal" title="Add a new expense" hide-footer>
       <b-form @submit="onSubmit" class="w-100">
         <b-form-group id="form-amount-group" label="Amount:" label-for="form-amount-input">
