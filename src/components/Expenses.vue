@@ -1,34 +1,63 @@
 <template>
   <div>
-        <input type="text" v-model="searchQuery" placeholder="Filter expenses" />
-        <v-btn
-            color="pink"
-            dark
-            fixed
-            bottom
-            right
-            fab round
-            @click="onLoad"
-          >
-            <v-icon>add</v-icon>
-         </v-btn>
-        <alert :message=message v-if="message.display"></alert>
-        <div class="list-group list-group-flush">
-          <a v-for="(expense, index) in filterExpenses" :key="index" @click="onUpdateLoad(expense, index)"
-             href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-            <div class="d-flex w-100 justify-content-between">
-              <div class="mb-1">
-                <div>{{expense.description}}</div>
-                <div>{{expense.category.name}}</div>
-                <div>{{expense.pay_method.name}}</div>
-              </div>
-              <div class="mb-1">
-                <div>{{expense.amount}}</div>
-                <div>{{expense.timestamp}}</div>
-              </div>
-            </div>
-          </a>
-        </div>
+    <v-text-field v-model="searchQuery" placeholder="Filter expenses"></v-text-field>
+    <v-btn
+        color="pink"
+        dark
+        fixed
+        bottom
+        right
+        fab round
+        @click="onLoad"
+      >
+        <v-icon>add</v-icon>
+     </v-btn>
+    <alert :message=message v-if="message.display"></alert>
+      <v-card>
+        <v-list two-line>
+          <template v-for="(expense, index) in filterExpenses">
+            <v-list-tile
+              :key="expense.title"
+              avatar
+              ripple
+              @click="onUpdateLoad(expense, index)"
+            >
+              <v-list-tile-content>
+                <v-list-tile-title>{{ expense.description }}</v-list-tile-title>
+                <v-list-tile-sub-title class="text--primary">{{expense.category.name}}</v-list-tile-sub-title>
+                <v-list-tile-sub-title>{{expense.pay_method.name}}</v-list-tile-sub-title>
+              </v-list-tile-content>
+
+              <v-list-tile-action>
+                <v-list-tile-action-text>{{ expense.amount }}</v-list-tile-action-text>
+                <v-list-tile-action-text>{{ expense.timestamp }}</v-list-tile-action-text>
+              </v-list-tile-action>
+
+            </v-list-tile>
+            <v-divider
+              v-if="index + 1 < filterExpenses.length"
+              :key="index"
+            ></v-divider>
+          </template>
+        </v-list>
+      </v-card>
+  <!--</v-layout>-->
+    <!--<div class="list-group list-group-flush">-->
+        <!--<a v-for="(expense, index) in filterExpenses" :key="index" @click="onUpdateLoad(expense, index)"-->
+           <!--href="#" class="list-group-item list-group-item-action flex-column align-items-start">-->
+          <!--<div class="d-flex w-100 justify-content-between">-->
+            <!--<div class="mb-1">-->
+              <!--<div>{{expense.description}}</div>-->
+              <!--<div>{{expense.category.name}}</div>-->
+              <!--<div>{{expense.pay_method.name}}</div>-->
+            <!--</div>-->
+            <!--<div class="mb-1">-->
+              <!--<div>{{expense.amount}}</div>-->
+              <!--<div>{{expense.timestamp}}</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</a>-->
+      <!--</div>-->
     <b-modal ref="addExpenseModal" id="expense-modal" title="Add a new expense" hide-footer>
       <b-form @submit="onSubmit" class="w-100">
         <b-form-group id="form-amount-group" label="Amount:" label-for="form-amount-input">

@@ -29,4 +29,9 @@
   a, .text-decoration-line{
     text-decoration: none !important;
   }
+
+  hr {
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
 </style>
