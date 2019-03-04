@@ -64,12 +64,14 @@
           <b-form-input id="form-amount-input" type="number" v-model="addExpenseForm.amount" required
                         placeholder="Amount"> </b-form-input>
         </b-form-group>
-        <b-form-group id="form-description-group" label="Description:" label-for="form-description-input">
-          <b-form-input id="form-description-input" type="text" v-model="addExpenseForm.description" required
-                        placeholder="Description"> </b-form-input>
-        </b-form-group>
+        <v-combobox
+          v-model="addExpenseForm.description" required
+          placeholder="Description"
+          :items="descriptions"
+          label="Description"
+        ></v-combobox>
         <b-form-group id="form-pay-method-group" label="Pay method:" label-for="form-pay-method-input">
-            <b-form-select v-model="addExpenseForm.payMethods" :options="payMethods" text-field="name"
+          <b-form-select v-model="addExpenseForm.payMethods" :options="payMethods" text-field="name"
                            value-field="_id" class="mb-3" required>
             </b-form-select>
         </b-form-group>
@@ -105,6 +107,7 @@ import Alert from './Alert';
 import ExpensesAPI from '../api/Expenses';
 import CategoriesAPI from '../api/Categories';
 import PayMethodsAPI from '../api/PayMethods';
+import DescriptionsAPI from '../api/Descriptions';
 
 export default {
   data() {
@@ -112,6 +115,7 @@ export default {
       expenses: [],
       payMethods: [],
       categories: [],
+      descriptions: [],
       addExpenseForm: {
       },
       message: {
@@ -149,6 +153,15 @@ export default {
       try {
         const res = await CategoriesAPI.get();
         this.categories = res.data;
+        return res;
+      } catch (e) {
+        this.displayError(e);
+      }
+    },
+    async getDescriptions() {
+      try {
+        const res = await DescriptionsAPI.get();
+        this.descriptions = res.data;
         return res;
       } catch (e) {
         this.displayError(e);
@@ -197,7 +210,7 @@ export default {
         timestamp: moment().format('YYYY-MM-DD'),
         oneTime: [],
         payments: 1,
-        index: undefined,
+        index: undefined
       });
     },
     onLoad(evt) {
@@ -254,6 +267,7 @@ export default {
     this.getExpenses();
     this.getPayMethods();
     this.getCategories();
+    this.getDescriptions();
   },
   computed: {
     filterExpenses: function () {
