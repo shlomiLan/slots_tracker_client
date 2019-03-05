@@ -51,13 +51,16 @@ export default {
   },
   methods: {
     async getCategories() {
+      let res = [];
       try {
-        const res = await CategoriesAPI.get();
+        res = await CategoriesAPI.get();
         this.categories = res.data;
         return res;
       } catch (e) {
         this.displayError(e);
       }
+
+      return res;
     },
     initForm() {
       this.addCategoryForm = Object.assign({}, this.addCategoryForm, {
@@ -84,30 +87,35 @@ export default {
       }
     },
     async addCategory(payload) {
+      let res = [];
       try {
-        const res = await CategoriesAPI.create(payload);
+        res = await CategoriesAPI.create(payload);
         const resData = res.data;
         const categories = this.categories;
         if (resData) {
           categories.unshift(resData);
         }
         this.displayError('Category was added', 'success');
-      }catch (e){
+      } catch (e) {
         this.displayError(e);
       }
+
+      return res;
     },
     async updateCategory(payload, index) {
+      let categoryData = [];
       try {
-        const categoryData = this.categories[index];
+        categoryData = this.categories[index];
         // eslint-disable-next-line
         const res = await CategoriesAPI.update(categoryData._id, payload);
         // Must have only one item
         this.categories[index].name = res.data.name;
         this.displayError('Category was updated', 'success');
-
-      }catch (e){
+      } catch (e) {
         this.displayError(e);
       }
+
+      return categoryData;
     },
     onUpdateLoad(category, index) {
       this.addCategoryForm.name = category.name;

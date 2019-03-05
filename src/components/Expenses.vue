@@ -124,7 +124,7 @@ export default {
         display: false,
       },
       form: {},
-      searchQuery: ''
+      searchQuery: '',
     };
   },
   components: {
@@ -132,44 +132,55 @@ export default {
   },
   methods: {
     async getExpenses() {
+      let res = [];
       try {
-        const res = await ExpensesAPI.get();
+        res = await ExpensesAPI.get();
         this.expenses = res.data;
       } catch (e) {
         this.displayError(e);
       }
+
+      return res;
     },
     async getPayMethods() {
+      let resData = [];
       try {
         const res = await PayMethodsAPI.get();
-        const resData = res.data;
+        resData = res.data;
         this.payMethods = resData;
-        return resData;
       } catch (e) {
         this.displayError(e);
       }
+
+      return resData;
     },
     async getCategories() {
+      let res = [];
       try {
-        const res = await CategoriesAPI.get();
+        res = await CategoriesAPI.get();
         this.categories = res.data;
-        return res;
       } catch (e) {
         this.displayError(e);
       }
+
+      return res;
     },
     async getDescriptions() {
+      let res = [];
       try {
-        const res = await DescriptionsAPI.get();
+        res = await DescriptionsAPI.get();
         this.descriptions = res.data;
         return res;
       } catch (e) {
         this.displayError(e);
       }
+
+      return res;
     },
     async addExpense(payload, payments) {
+      let res = [];
       try {
-        const res = await ExpensesAPI.createExpense(payments, payload);
+        res = await ExpensesAPI.createExpense(payments, payload);
         const resData = res.data;
         const expenses = this.expenses;
         resData.forEach((element) => {
@@ -179,13 +190,16 @@ export default {
         });
 
         this.displayError('Expense was added', 'success');
-      }catch (e){
+      } catch (e) {
         this.displayError(e);
       }
+
+      return res;
     },
     async updateExpense(payload, index) {
+      let expenseData = [];
       try {
-        const expenseData = this.expenses[index];
+        expenseData = this.expenses[index];
         // eslint-disable-next-line
         const res = await ExpensesAPI.updateExpense(expenseData._id, payload);
         const resData = res.data[0];
@@ -197,9 +211,11 @@ export default {
         this.expenses[index].timestamp = resData.timestamp;
         this.expenses[index].one_time = resData.one_time;
         this.displayError('Expense was updated', 'success');
-      } catch (e){
-        this.displayError(error);
+      } catch (e) {
+        this.displayError(e);
       }
+
+      return expenseData;
     },
     initForm() {
       this.addExpenseForm = Object.assign({}, this.addExpenseForm, {
@@ -210,7 +226,7 @@ export default {
         timestamp: moment().format('YYYY-MM-DD'),
         oneTime: [],
         payments: 1,
-        index: undefined
+        index: undefined,
       });
     },
     onLoad(evt) {
@@ -270,11 +286,9 @@ export default {
     this.getDescriptions();
   },
   computed: {
-    filterExpenses: function () {
-      return this.expenses.filter((expense) => {
-        return expense.description.match(this.searchQuery);
-      })
-    }
-  }
+    filterExpenses() {
+      return this.expenses.filter(expense => expense.description.match(this.searchQuery));
+    },
+  },
 };
 </script>

@@ -11,16 +11,16 @@
 </template>
 <script>
   export default {
-    data () {
+    data() {
       return {
         items: [
           { title: 'Expenses', icon: 'question_answer', link: 'expenses' },
-          { title: 'Categories', icon: 'dashboard', link: 'categories'},
-          { title: 'pay_methods', icon: 'dashboard', link: 'pay_methods'},
-          { title: 'charts', icon: 'dashboard', link: 'charts'},
+          { title: 'Categories', icon: 'dashboard', link: 'categories' },
+          { title: 'Pay methods', icon: 'dashboard', link: 'pay_methods' },
+          { title: 'charts', icon: 'dashboard', link: 'charts' },
         ],
-        right: null
-      }
-    }
-  }
+        right: null,
+      };
+    },
+  };
 </script>

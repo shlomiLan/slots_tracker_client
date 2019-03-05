@@ -41,14 +41,17 @@ export default {
   },
   methods: {
     async getChartData() {
+      let res = [];
       try {
-        const res = await ChartsAPI.get();
+        res = await ChartsAPI.get();
         const resData = res.data;
         this.charts = resData;
         return resData;
       } catch (e) {
         this.displayError(e);
       }
+
+      return res;
     },
     displayError(message, type = 'danger') {
       // TODO: Fix not displaying second time.
