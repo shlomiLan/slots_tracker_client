@@ -51,13 +51,16 @@ export default {
   },
   methods: {
     async getPayMethods() {
+      let resData = [];
+
       try {
-        const res = await PayMethodsAPI.get();
-        this.payMethods = res.data;
-        return res;
+        resData = await PayMethodsAPI.get();
+        this.payMethods = resData.data;
       } catch (e) {
         this.displayError(e);
       }
+
+      return resData;
     },
     initForm() {
       this.addPayMethodForm = Object.assign({}, this.addPayMethodForm, {
@@ -84,18 +87,21 @@ export default {
       }
     },
     async addPayMethod(payload) {
-      try{
-          const res = await PayMethodsAPI.create(payload);
+      let res = [];
+
+      try {
+          res = await PayMethodsAPI.create(payload);
           const resData = res.data;
           const payMethods = this.payMethods;
           if (resData) {
             payMethods.unshift(resData);
           }
           this.displayError('Pay method was created', 'success');
-          return res;
       } catch (e) {
         this.displayError(e);
       }
+
+      return res;
     },
     async updatePayMethod(payload, index) {
       try {
@@ -106,7 +112,7 @@ export default {
         // Must have only one item
         this.payMethods[index].name = resData.name;
         this.displayError('Pay method was updated', 'success');
-      } catch (e){
+      } catch (e) {
         this.displayError(e);
       }
     },

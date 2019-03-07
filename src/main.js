@@ -13,8 +13,8 @@ import router from './router';
 Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
 
-Vue.use(Vuetify,  {
-  iconfont: 'mdi' // 'md' || 'mdi' || 'fa' || 'fa4'
+Vue.use(Vuetify, {
+  iconfont: 'mdi', // 'md' || 'mdi' || 'fa' || 'fa4'
 });
 
 Vue.component(VueChart.name, VueChart);

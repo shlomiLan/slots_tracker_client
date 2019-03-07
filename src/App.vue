@@ -8,13 +8,13 @@
 </template>
 
 <script>
-  import drawer from './components/drawer.vue';
+  import drawer from './components/drawer';
 
 
   export default {
     name: 'App',
     components: {
-      drawer
+      drawer,
     },
   };
 </script>
