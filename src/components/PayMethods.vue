@@ -1,30 +1,59 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-10">
-        <button class="btn btn-success btn-sm" type="button" @click="onLoad">Add Pay Method</button>
-        <br><br>
-        <alert :message=message v-if="message.display"></alert>
-        <div class="list-group list-group-flush">
-          <a v-for="(payMethod, index) in payMethods" :key="index" @click="onUpdateLoad(payMethod, index)"
-             href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-            <div class="d-flex w-100 justify-content-between">
-              <div>{{payMethod.name}}</div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-    <b-modal ref="addPayMethodModal" id="payMethod-modal" title="Add a new pay method" hide-footer>
-      <b-form @submit="onSubmit" class="w-100">
-        <b-form-group id="form-description-group" label="Name:" label-for="form-description-input">
-          <b-form-input id="form-description-input" type="text" v-model="addPayMethodForm.name" required
-                        placeholder="Name"> </b-form-input>
-        </b-form-group>
+  <div>
+    <v-card>
+      <alert :message=message v-if="message.display"></alert>
+      <v-list>
+        <template v-for="(payMethod, index) in payMethods">
+          <v-list-tile
+            :key="payMethod.name"
+            avatar
+            ripple
+            @click="onUpdateLoad(payMethod, index)"
+          >
+            <v-list-tile-content>
+              <v-list-tile-title>{{payMethod.name}}</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-divider
+            v-if="index + 1 < payMethod.length"
+            :key="index"
+          ></v-divider>
+        </template>
+      </v-list>
+    </v-card>
 
-        <b-button type="submit" variant="primary" :disabled="addPayMethodForm.$invalid">Submit</b-button>
-      </b-form>
-    </b-modal>
+    <v-btn
+      color="pink"
+      slot="activator"
+      dark
+      fixed
+      bottom
+      right
+      fab round
+    >
+      <v-icon @click="onLoad()">add</v-icon>
+    </v-btn>
+
+    <v-dialog v-model="dialog" persistent max-width="600px">
+      <v-card>
+        <v-form onSubmit="return false;">
+          <v-card-text>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <v-flex xs6>
+                  <v-text-field label="Name" type="text" v-model="addPayMethodForm.name" required></v-text-field>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" flat @click="closeForm()">Close</v-btn>
+            <v-btn color="blue darken-1" flat type="submit" @click="onSubmit()">Save</v-btn>
+          </v-card-actions>
+        </v-form>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -44,6 +73,7 @@ export default {
         display: false,
       },
       form: {},
+      dialog: false,
     };
   },
   components: {
@@ -68,14 +98,15 @@ export default {
         index: undefined,
       });
     },
-    onLoad(evt) {
-      evt.preventDefault();
-      this.initForm();
-      this.$refs.addPayMethodModal.show();
+    closeForm() {
+      this.dialog = false;
     },
-    onSubmit(evt) {
-      evt.preventDefault();
-      this.$refs.addPayMethodModal.hide();
+    onLoad() {
+      this.initForm();
+      this.dialog = true;
+    },
+    onSubmit() {
+      this.dialog = false;
       const payload = {
         name: this.addPayMethodForm.name,
       };
@@ -119,7 +150,7 @@ export default {
     onUpdateLoad(payMethod, index) {
       this.addPayMethodForm.name = payMethod.name;
       this.addPayMethodForm.index = index;
-      this.$refs.addPayMethodModal.show();
+      this.dialog = true;
     },
     // TODO: Make global function and change name to displayMessage
     displayError(message, type = 'danger') {
