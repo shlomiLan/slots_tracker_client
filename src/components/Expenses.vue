@@ -2,7 +2,7 @@
   <div>
     <v-card>
       <v-text-field v-model="searchQuery" placeholder="Filter expenses"></v-text-field>
-      <alert :message=message v-if="message.display" :alert=alert></alert>
+      <alert :message=message v-if="message.display"></alert>
       <v-list two-line>
         <template v-for="(expense, index) in filterExpenses">
           <v-list-tile
@@ -45,10 +45,7 @@
 
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
-        <v-form
-          @submit="onSubmit()"
-          onSubmit="return false;"
-        >
+        <v-form onSubmit="return false;">
           <v-card-text>
             <v-container grid-list-md>
               <v-layout wrap>
@@ -141,7 +138,6 @@
         form: {},
         searchQuery: '',
         dialog: false,
-        alert: false,
       };
     },
     components: {
@@ -255,7 +251,6 @@
         this.dialog = true;
       },
       onSubmit() {
-        console.log('2222');
         this.dialog = false;
         let oneTime = false;
         if (this.addExpenseForm.oneTime[0]) oneTime = true;
@@ -289,7 +284,6 @@
 
         delete this.addExpenseForm.payments;
         this.addExpenseForm.index = index;
-        // this.$refs.addExpenseModal.show();
         this.dialog = true;
       },
       displayError(message, type = 'danger') {
