@@ -1,14 +1,17 @@
 <template>
   <div>
-    <b-alert :show=message.display
-             @dismissed="message.display=false"
-             dismissible
-             :variant=message.type>{{ message.text }}</b-alert>
+    <v-alert
+      v-model="message.display"
+      :color="message.type"
+      dismissible
+    >
+      {{ message.text }}
+    </v-alert>
   </div>
 </template>
 
 <script>
-export default {
-  props: ['message'],
-};
+  export default {
+    props: ['message', 'alert'],
+  };
 </script>

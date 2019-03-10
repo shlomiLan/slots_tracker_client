@@ -1,7 +1,4 @@
-// The Vue build version to load with the `import` command
-import 'bootstrap/dist/css/bootstrap.css';
 import 'vuetify/dist/vuetify.min.css';
-import BootstrapVue from 'bootstrap-vue';
 import Chart from 'chart.js';
 import VueChart from 'vuechart';
 import ChartJsPluginDataLabels from 'chartjs-plugin-datalabels';
@@ -11,10 +8,10 @@ import App from './App';
 import router from './router';
 
 Vue.config.productionTip = false;
-Vue.use(BootstrapVue);
+// Vue.use(BootstrapVue);
 
 Vue.use(Vuetify, {
-  iconfont: 'mdi', // 'md' || 'mdi' || 'fa' || 'fa4'
+  iconfont: 'md', // 'md' || 'mdi' || 'fa' || 'fa4'
 });
 
 Vue.component(VueChart.name, VueChart);
