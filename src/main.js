@@ -11,7 +11,7 @@ Vue.config.productionTip = false;
 // Vue.use(BootstrapVue);
 
 Vue.use(Vuetify, {
-  iconfont: 'md', // 'md' || 'mdi' || 'fa' || 'fa4'
+  iconfont: 'fa', // 'md' || 'mdi' || 'fa' || 'fa4'
 });
 
 Vue.component(VueChart.name, VueChart);

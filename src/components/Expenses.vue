@@ -40,7 +40,7 @@
       right
       fab round
     >
-      <v-icon @click="onLoad()">add</v-icon>
+      <v-icon @click="onLoad()">fa-plus</v-icon>
     </v-btn>
 
     <v-dialog v-model="dialog" persistent max-width="600px">

@@ -16,13 +16,13 @@
       return {
         items: [
           // eslint-disable-next-line
-          { id: 1, title: 'Expenses',    icon: 'question_answer', link: 'expenses' },
+          { id: 1, title: 'Expenses',    icon: 'fa-shopping-cart', link: 'expenses' },
           // eslint-disable-next-line
-          { id: 2, title: 'Categories',  icon: 'dashboard',       link: 'categories' },
+          { id: 2, title: 'Categories',  icon: 'fa-clipboard-list',          link: 'categories' },
           // eslint-disable-next-line
-          { id: 3, title: 'Pay methods', icon: 'dashboard',       link: 'pay_methods' },
+          { id: 3, title: 'Pay methods', icon: 'fa-yen-sign',     link: 'pay_methods' },
           // eslint-disable-next-line
-          { id: 4, title: 'charts',      icon: 'dashboard',       link: 'charts' },
+          { id: 4, title: 'charts',      icon: 'fa-chart-line',     link: 'charts' },
         ],
         right: null,
       };

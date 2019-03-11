@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-sm-10">
         <div v-for='(chart, index) in charts' :key='index'>
-          <div v-if="chart.type === 'table'">
+          <div v-if="chart.type === 'table'" style="text-align: center;">
             <p v-for='(row, index2) of chart.data' :key='index2'>
               {{row[0]}} - {{row[1]}}
             </p>
