@@ -1,8 +1,9 @@
 <template>
   <div>
+    <loading :loading=loading></loading>
     <v-card>
       <v-text-field v-model="searchQuery" placeholder="Filter expenses"></v-text-field>
-      <alert :message=message v-if="message.display"></alert>
+      <alert :message=message></alert>
       <v-list two-line>
         <template v-for="(expense, index) in filterExpenses">
           <v-list-tile
@@ -116,6 +117,7 @@
 <script>
   import moment from 'moment';
   import Alert from './Alert';
+  import Loading from './Loading';
   import ExpensesAPI from '../api/Expenses';
   import CategoriesAPI from '../api/Categories';
   import PayMethodsAPI from '../api/PayMethods';
@@ -138,12 +140,26 @@
         form: {},
         searchQuery: '',
         dialog: false,
+        loading: true,
+        loadingVar: {
+          expenses: true,
+          payMethods: true,
+          categories: true,
+          descriptions: true,
+        },
       };
     },
     components: {
+      loading: Loading,
       alert: Alert,
     },
     methods: {
+      loadingProgress() {
+        if (this.loadingVar.expenses === false && this.loadingVar.payMethods === false &&
+          this.loadingVar.categories === false && this.loadingVar.descriptions === false) {
+          this.loading = false;
+        }
+      },
       async getExpenses() {
         let res = [];
         try {
@@ -153,6 +169,8 @@
           this.displayError(e);
         }
 
+        this.loadingVar.expenses = false;
+        this.loadingProgress();
         return res;
       },
       async getPayMethods() {
@@ -165,6 +183,8 @@
           this.displayError(e);
         }
 
+        this.loadingVar.payMethods = false;
+        this.loadingProgress();
         return resData;
       },
       async getCategories() {
@@ -176,6 +196,8 @@
           this.displayError(e);
         }
 
+        this.loadingVar.categories = false;
+        this.loadingProgress();
         return res;
       },
       async getDescriptions() {
@@ -183,11 +205,12 @@
         try {
           res = await DescriptionsAPI.get();
           this.descriptions = res.data;
-          return res;
         } catch (e) {
           this.displayError(e);
         }
 
+        this.loadingVar.descriptions = false;
+        this.loadingProgress();
         return res;
       },
       async addExpense(payload, payments) {
@@ -286,7 +309,7 @@
         this.addExpenseForm.index = index;
         this.dialog = true;
       },
-      displayError(message, type = 'danger') {
+      displayError(message, type = 'error') {
         this.message.display = true;
         this.message.type = type;
         this.message.text = message;

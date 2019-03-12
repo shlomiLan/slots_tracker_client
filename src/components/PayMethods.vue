@@ -1,7 +1,8 @@
 <template>
   <div>
+    <loading :loading=loading></loading>
     <v-card>
-      <alert :message=message v-if="message.display"></alert>
+      <alert :message=message></alert>
       <v-list>
         <template v-for="(payMethod, index) in payMethods">
           <v-list-tile
@@ -60,6 +61,7 @@
 <script>
 import Alert from './Alert';
 import PayMethodsAPI from '../api/PayMethods';
+import Loading from './Loading';
 
 export default {
   data() {
@@ -74,10 +76,12 @@ export default {
       },
       form: {},
       dialog: false,
+      loading: true,
     };
   },
   components: {
     alert: Alert,
+    loading: Loading,
   },
   methods: {
     async getPayMethods() {
@@ -90,6 +94,7 @@ export default {
         this.displayError(e);
       }
 
+      this.loading = false;
       return resData;
     },
     initForm() {
@@ -152,8 +157,7 @@ export default {
       this.addPayMethodForm.index = index;
       this.dialog = true;
     },
-    // TODO: Make global function and change name to displayMessage
-    displayError(message, type = 'danger') {
+    displayError(message, type = 'error') {
       // TODO: Fix not displaying second time.
       this.message.display = true;
       this.message.type = type;

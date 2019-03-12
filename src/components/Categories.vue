@@ -1,7 +1,8 @@
 <template>
   <div>
+    <loading :loading=loading></loading>
     <v-card>
-      <alert :message=message v-if="message.display"></alert>
+      <alert :message=message></alert>
       <v-list>
         <template v-for="(category, index) in categories">
           <v-list-tile
@@ -59,6 +60,7 @@
 
 <script>
 import Alert from './Alert';
+import Loading from './Loading';
 import CategoriesAPI from '../api/Categories';
 
 export default {
@@ -74,10 +76,12 @@ export default {
       },
       form: {},
       dialog: false,
+      loading: true,
     };
   },
   components: {
     alert: Alert,
+    loading: Loading,
   },
   methods: {
     async getCategories() {
@@ -85,11 +89,11 @@ export default {
       try {
         res = await CategoriesAPI.get();
         this.categories = res.data;
-        return res;
       } catch (e) {
         this.displayError(e);
       }
 
+      this.loading = false;
       return res;
     },
     initForm() {
@@ -153,8 +157,7 @@ export default {
       this.addCategoryForm.index = index;
       this.dialog = true;
     },
-    // TODO: Make global function and change name to displayMessage
-    displayError(message, type = 'danger') {
+    displayError(message, type = 'error') {
       // TODO: Fix not displaying second time.
       this.message.display = true;
       this.message.type = type;

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-  import drawer from './components/drawer';
+  import drawer from './components/Drawer';
 
 
   export default {
