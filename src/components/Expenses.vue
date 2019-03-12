@@ -83,7 +83,7 @@
                       <v-text-field
                         v-model="addExpenseForm.timestamp"
                         label="Date"
-                        prepend-icon="event"
+                        prepend-icon="far fa-calendar-alt"
                         readonly
                         v-on="on"
                       ></v-text-field>
