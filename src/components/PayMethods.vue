@@ -16,7 +16,7 @@
             </v-list-tile-content>
           </v-list-tile>
           <v-divider
-            v-if="index + 1 < payMethod.length"
+            v-if="index + 1 < payMethods.length"
             :key="index"
           ></v-divider>
         </template>
@@ -37,12 +37,15 @@
 
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
-        <v-form onSubmit="return false;">
+        <v-form onSubmit="return false;" lazy-validation ref="form">
           <v-card-text>
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs6>
-                  <v-text-field label="Name" type="text" v-model="addPayMethodForm.name" required></v-text-field>
+                  <v-text-field label="Name" type="text" v-model="addPayMethodForm.name"
+                                v-validate="'required'"
+                                :error-messages="errors.collect('name')"
+                                data-vv-name="name" required></v-text-field>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -111,16 +114,21 @@ export default {
       this.dialog = true;
     },
     onSubmit() {
-      this.dialog = false;
-      const payload = {
-        name: this.addPayMethodForm.name,
-      };
+      this.$validator.validateAll()
+      .then((res) => {
+        if (res === true) {
+          this.dialog = false;
+          const payload = {
+            name: this.addPayMethodForm.name,
+          };
 
-      if (this.addPayMethodForm.index !== undefined) {
-        this.updatePayMethod(payload, this.addPayMethodForm.index);
-      } else {
-        this.addPayMethod(payload);
-      }
+          if (this.addPayMethodForm.index !== undefined) {
+            this.updatePayMethod(payload, this.addPayMethodForm.index);
+          } else {
+            this.addPayMethod(payload);
+          }
+        }
+      });
     },
     async addPayMethod(payload) {
       let res = [];

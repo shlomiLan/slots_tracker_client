@@ -37,12 +37,15 @@
 
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
-        <v-form onSubmit="return false;">
+        <v-form onSubmit="return false;" lazy-validation ref="form">
           <v-card-text>
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs6>
-                  <v-text-field label="Name" type="text" v-model="addCategoryForm.name" required></v-text-field>
+                  <v-text-field label="Name" type="text" v-model="addCategoryForm.name"
+                                v-validate="'required'"
+                                :error-messages="errors.collect('name')"
+                                data-vv-name="name" required></v-text-field>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -110,16 +113,21 @@ export default {
       this.dialog = true;
     },
     onSubmit() {
-      this.dialog = false;
-      const payload = {
-        name: this.addCategoryForm.name,
-      };
+      this.$validator.validateAll()
+      .then((res) => {
+        if (res === true) {
+          this.dialog = false;
+          const payload = {
+            name: this.addCategoryForm.name,
+          };
 
-      if (this.addCategoryForm.index !== undefined) {
-        this.updateCategory(payload, this.addCategoryForm.index);
-      } else {
-        this.addCategory(payload);
-      }
+          if (this.addCategoryForm.index !== undefined) {
+            this.updateCategory(payload, this.addCategoryForm.index);
+          } else {
+            this.addCategory(payload);
+          }
+        }
+      });
     },
     async addCategory(payload) {
       let res = [];

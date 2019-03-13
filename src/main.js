@@ -1,5 +1,6 @@
 import 'vuetify/dist/vuetify.min.css';
 import Chart from 'chart.js';
+import VeeValidate from 'vee-validate';
 import VueChart from 'vuechart';
 import ChartJsPluginDataLabels from 'chartjs-plugin-datalabels';
 import Vuetify from 'vuetify';
@@ -7,12 +8,16 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 
+
 Vue.config.productionTip = false;
 // Vue.use(BootstrapVue);
 
 Vue.use(Vuetify, {
   iconfont: 'fa', // 'md' || 'mdi' || 'fa' || 'fa4'
 });
+
+// Vue.component('v-select', VueSelect.VueSelect);
+Vue.use(VeeValidate);
 
 Vue.component(VueChart.name, VueChart);
 Vue.component(ChartJsPluginDataLabels);

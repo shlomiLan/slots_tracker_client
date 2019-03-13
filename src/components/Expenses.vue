@@ -46,27 +46,40 @@
 
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
-        <v-form onSubmit="return false;">
+        <v-form onSubmit="return false;" lazy-validation ref="form">
           <v-card-text>
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs6>
-                  <v-text-field label="Amount" type="number" v-model="addExpenseForm.amount" required></v-text-field>
+                  <v-text-field label="Amount" type="number"
+                                v-validate="'required'"
+                                :error-messages="errors.collect('amount')"
+                                data-vv-name="amount"
+                                v-model="addExpenseForm.amount" required></v-text-field>
                 </v-flex>
                 <v-flex xs6>
                   <v-combobox v-model="addExpenseForm.description" required
-                               :items="descriptions" label="Description"
+                              v-validate="'required'"
+                              :error-messages="errors.collect('description')"
+                              data-vv-name="description"
+                              :items="descriptions" label="Description"
                   ></v-combobox>
                 </v-flex>
 
                 <v-flex xs12>
                   <v-select v-model="addExpenseForm.payMethods" :items="payMethods"
+                            v-validate="'required'"
+                            :error-messages="errors.collect('payMethods')"
                             label="Pay method" required item-text="name" item-value="_id"
+                            data-vv-name="payMethods"
                   ></v-select>
                 </v-flex>
                 <v-flex xs12>
                   <v-select v-model="addExpenseForm.categories" :items="categories"
+                            v-validate="'required'"
+                            :error-messages="errors.collect('categories')"
                             label="Category" required item-text="name" item-value="_id"
+                            data-vv-name="categories"
                   ></v-select>
                 </v-flex>
                 <v-flex xs12>
@@ -97,7 +110,10 @@
                   <v-checkbox v-model="addExpenseForm.oneTime" label="One time"></v-checkbox>
                 </v-flex>
                 <v-flex xs6>
-                  <v-text-field v-if="addExpenseForm.payments" label="Payments" type="number"
+                  <v-text-field v-if="!addExpenseForm.isUpdate" label="Payments" type="number"
+                                v-validate="'required'"
+                                :error-messages="errors.collect('payments')"
+                                data-vv-name="payments"
                                 v-model="addExpenseForm.payments" required></v-text-field>
                 </v-flex>
               </v-layout>
@@ -106,7 +122,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" flat @click="closeForm()">Close</v-btn>
-            <v-btn color="blue darken-1" flat type="submit" @click="onSubmit()">Save</v-btn>
+            <v-btn color="blue darken-1" flat @click="onSubmit()">Save</v-btn>
           </v-card-actions>
         </v-form>
       </v-card>
@@ -255,15 +271,16 @@
       },
       initForm() {
         this.addExpenseForm = Object.assign({}, this.addExpenseForm, {
-          amount: '',
-          description: '',
-          categories: '',
-          payMethods: '',
+          amount: undefined,
+          description: undefined,
+          categories: undefined,
+          payMethods: undefined,
           timestamp: moment().format('YYYY-MM-DD'),
           timestampInput: false,
           oneTime: [],
           payments: 1,
           index: undefined,
+          isUpdate: false,
         });
       },
       closeForm() {
@@ -271,27 +288,33 @@
       },
       onLoad() {
         this.initForm();
+        this.$validator.reset();
         this.dialog = true;
       },
       onSubmit() {
-        this.dialog = false;
-        let oneTime = false;
-        if (this.addExpenseForm.oneTime[0]) oneTime = true;
-        const payload = {
-          amount: this.addExpenseForm.amount,
-          description: this.addExpenseForm.description,
-          category: this.addExpenseForm.categories,
-          pay_method: this.addExpenseForm.payMethods,
-          timestamp: this.addExpenseForm.timestamp,
-          one_time: oneTime,
-        };
+        this.$validator.validateAll()
+        .then((res) => {
+          if (res === true) {
+            this.dialog = false;
+            let oneTime = false;
+            if (this.addExpenseForm.oneTime[0]) oneTime = true;
+            const payload = {
+              amount: this.addExpenseForm.amount,
+              description: this.addExpenseForm.description,
+              category: this.addExpenseForm.categories,
+              pay_method: this.addExpenseForm.payMethods,
+              timestamp: this.addExpenseForm.timestamp,
+              one_time: oneTime,
+            };
 
-        const payments = this.addExpenseForm.payments;
-        if (this.addExpenseForm.index !== undefined) {
-          this.updateExpense(payload, this.addExpenseForm.index);
-        } else {
-          this.addExpense(payload, payments);
-        }
+            const payments = this.addExpenseForm.payments;
+            if (this.addExpenseForm.index !== undefined) {
+              this.updateExpense(payload, this.addExpenseForm.index);
+            } else {
+              this.addExpense(payload, payments);
+            }
+          }
+        });
       },
       onUpdateLoad(expense, index) {
         this.addExpenseForm.amount = expense.amount;
@@ -307,6 +330,7 @@
 
         delete this.addExpenseForm.payments;
         this.addExpenseForm.index = index;
+        this.addExpenseForm.isUpdate = true;
         this.dialog = true;
       },
       displayError(message, type = 'error') {

@@ -24,6 +24,7 @@
     "express": "^4.16.4",
     "moment": "^2.24.0",
     "serve-static": "^1.13.2",
+    "vee-validate": "^2.1.7",
     "vue": "^2.6.8",
     "vue-router": "^3.0.1",
     "vuechart": "^18.10.21",
