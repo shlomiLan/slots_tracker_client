@@ -50,14 +50,14 @@
           <v-card-text>
             <v-container grid-list-md>
               <v-layout wrap>
-                <v-flex xs6>
+                <v-flex xs12>
                   <v-text-field label="Amount" type="number"
                                 v-validate="'required'"
                                 :error-messages="errors.collect('amount')"
                                 data-vv-name="amount"
                                 v-model="addExpenseForm.amount" required></v-text-field>
                 </v-flex>
-                <v-flex xs6>
+                <v-flex xs12>
                   <v-combobox v-model="addExpenseForm.description" required
                               v-validate="'required'"
                               :error-messages="errors.collect('description')"
@@ -67,19 +67,19 @@
                 </v-flex>
 
                 <v-flex xs12>
-                  <v-select v-model="addExpenseForm.payMethods" :items="payMethods"
-                            v-validate="'required'"
-                            :error-messages="errors.collect('payMethods')"
-                            label="Pay method" required item-text="name" item-value="_id"
-                            data-vv-name="payMethods"
-                  ></v-select>
-                </v-flex>
-                <v-flex xs12>
                   <v-select v-model="addExpenseForm.categories" :items="categories"
                             v-validate="'required'"
                             :error-messages="errors.collect('categories')"
                             label="Category" required item-text="name" item-value="_id"
                             data-vv-name="categories"
+                  ></v-select>
+                </v-flex>
+                <v-flex xs12>
+                  <v-select v-model="addExpenseForm.payMethods" :items="payMethods"
+                            v-validate="'required'"
+                            :error-messages="errors.collect('payMethods')"
+                            label="Pay method" required item-text="name" item-value="_id"
+                            data-vv-name="payMethods"
                   ></v-select>
                 </v-flex>
                 <v-flex xs12>
@@ -293,28 +293,28 @@
       },
       onSubmit() {
         this.$validator.validateAll()
-        .then((res) => {
-          if (res === true) {
-            this.dialog = false;
-            let oneTime = false;
-            if (this.addExpenseForm.oneTime[0]) oneTime = true;
-            const payload = {
-              amount: this.addExpenseForm.amount,
-              description: this.addExpenseForm.description,
-              category: this.addExpenseForm.categories,
-              pay_method: this.addExpenseForm.payMethods,
-              timestamp: this.addExpenseForm.timestamp,
-              one_time: oneTime,
-            };
+          .then((res) => {
+            if (res === true) {
+              this.dialog = false;
+              let oneTime = false;
+              if (this.addExpenseForm.oneTime[0]) oneTime = true;
+              const payload = {
+                amount: this.addExpenseForm.amount,
+                description: this.addExpenseForm.description,
+                category: this.addExpenseForm.categories,
+                pay_method: this.addExpenseForm.payMethods,
+                timestamp: this.addExpenseForm.timestamp,
+                one_time: oneTime,
+              };
 
-            const payments = this.addExpenseForm.payments;
-            if (this.addExpenseForm.index !== undefined) {
-              this.updateExpense(payload, this.addExpenseForm.index);
-            } else {
-              this.addExpense(payload, payments);
+              const payments = this.addExpenseForm.payments;
+              if (this.addExpenseForm.index !== undefined) {
+                this.updateExpense(payload, this.addExpenseForm.index);
+              } else {
+                this.addExpense(payload, payments);
+              }
             }
-          }
-        });
+          });
       },
       onUpdateLoad(expense, index) {
         this.addExpenseForm.amount = expense.amount;
