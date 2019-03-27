@@ -54,11 +54,11 @@
     "express": "^4.16.3",
     "firebase": "^5.5.8",
     "hoek": "^5.0.3",
-    "ionic": "^4.2.1",
+    "ionic": "^4.12.0",
     "ionic-angular": "3.9.2",
     "ionicons": "3.0.0",
     "ng2-charts": "^1.6.0",
-    "node-sass": "^4.9.2",
+    "node-sass": "^4.11.0",
     "request": "^2.87.0",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",
@@ -71,7 +71,7 @@
   },
   "description": "An Ionic project",
   "devDependencies": {
-    "@ionic/app-scripts": "3.2.0",
+    "@ionic/app-scripts": "^3.2.3",
     "@ionic/lab": "1.0.9"
   },
   "cordova": {
