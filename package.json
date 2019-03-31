@@ -19,7 +19,11 @@
     "vuechart": "^18.10.21",
     "vuetify": "^1.5.8",
     "vuex": "^3.0.1",
-    "moment": "latest"
+    "moment": "latest",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "serve-static": "^1.13.2",
+    "connect-history-api-fallback": "^1.6.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.5.0",
