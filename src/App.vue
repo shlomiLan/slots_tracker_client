@@ -1,35 +1,47 @@
 <template>
-  <div id="app" class="container">
-    <v-app>
-      <drawer></drawer>
-      <router-view/>
-    </v-app>
-  </div>
+  <v-app id="app">
+  <!--<div id="app">-->
+    <!--<div id="nav">-->
+    <drawer></drawer>
+    <router-view/>
+      <!--<router-link to="/">Home</router-link> |-->
+      <!--<router-link to="/about">About</router-link>-->
+    <!--</div>-->
+    <!--<router-view/>-->
+  <!--</div>-->
+  </v-app>
 </template>
 
 <script>
-  import drawer from './components/Drawer';
+import drawer from './components/Drawer.vue';
 
 
-  export default {
-    name: 'App',
-    components: {
-      drawer,
-    },
-  };
+export default {
+  name: 'App',
+  components: {
+    drawer,
+  },
+};
 </script>
 
 <style>
-  a, .text-decoration-line{
-    text-decoration: none !important;
+  #app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+  }
+  #nav {
+    padding: 30px;
   }
 
-  hr {
-    margin-bottom: 5px;
-    margin-top: 5px;
+  #nav a {
+    font-weight: bold;
+    color: #2c3e50;
   }
 
-  .v-tabs__item{
-    padding: 5px;
+  #nav a.router-link-exact-active {
+    color: #42b983;
   }
 </style>

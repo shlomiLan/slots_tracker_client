@@ -1,3 +1,4 @@
+import './registerServiceWorker';
 import 'vuetify/dist/vuetify.min.css';
 import Chart from 'chart.js';
 import VeeValidate from 'vee-validate';
@@ -5,7 +6,7 @@ import VueChart from 'vuechart';
 import ChartJsPluginDataLabels from 'chartjs-plugin-datalabels';
 import Vuetify from 'vuetify';
 import Vue from 'vue';
-import App from './App';
+import App from './App.vue';
 import router from './router';
 
 
@@ -28,10 +29,7 @@ Chart.defaults.global.title.display = true;
 Chart.defaults.global.title.padding = 20;
 Chart.defaults.global.layout.padding.right = 50;
 
-/* eslint-disable no-new */
 new Vue({
-  el: '#app',
   router,
-  components: { App },
-  template: '<App/>',
-});
+  render: h => h(App),
+}).$mount('#app');
