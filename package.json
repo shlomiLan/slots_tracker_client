@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build  --mode process.env.blbl",
+    "build": "vue-cli-service build  --mode process.env.VUE_APP_MODE",
     "lint": "vue-cli-service lint",
     "start": "node server.js"
   },
