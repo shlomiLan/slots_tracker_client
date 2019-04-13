@@ -32,14 +32,10 @@ Vue.use(Vuetify, {
     // eslint-disable-next-line
     VProgressLinear, VForm, VCheckbox, VTextField, VCombobox, VSelect, VBtn, VDatePicker, VMenu, VDialog, VIcon, VAlert,
   },
+  iconfont: 'fa', // 'md' || 'mdi' || 'fa' || 'fa4'
 });
 
 Vue.config.productionTip = false;
-// Vue.use(BootstrapVue);
-
-Vue.use(Vuetify, {
-  iconfont: 'fa', // 'md' || 'mdi' || 'fa' || 'fa4'
-});
 
 // Vue.component('v-select', VueSelect.VueSelect);
 Vue.use(VeeValidate);
