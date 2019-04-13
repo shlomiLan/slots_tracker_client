@@ -4,11 +4,35 @@ import Chart from 'chart.js';
 import VeeValidate from 'vee-validate';
 import VueChart from 'vuechart';
 import ChartJsPluginDataLabels from 'chartjs-plugin-datalabels';
-import Vuetify from 'vuetify';
+import Vuetify, {
+  VApp,
+  // eslint-disable-next-line
+  VList, VListTile, VListTileTitle, VListTileContent, VListTileAction, VListTileActionText, VListTileSubTitle,
+  VTab, VTabs, VTabsSlider,
+  VDivider, VSpacer,
+  VCard, VCardText, VCardActions,
+  VFlex, VLayout, VContainer, VProgressLinear,
+  VForm, VCheckbox, VTextField, VCombobox, VSelect, VBtn,
+  VDatePicker,
+  VMenu,
+  VDialog,
+  VIcon,
+  VAlert,
+} from 'vuetify/lib';
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 
+Vue.use(Vuetify, {
+  components: {
+    // eslint-disable-next-line
+    VApp, VList, VListTile, VListTileTitle, VListTileContent, VListTileAction, VListTileActionText, VListTileSubTitle,
+    // eslint-disable-next-line
+    VTab, VTabs, VTabsSlider, VDivider, VSpacer, VCard, VCardText, VCardActions, VFlex, VLayout, VContainer,
+    // eslint-disable-next-line
+    VProgressLinear, VForm, VCheckbox, VTextField, VCombobox, VSelect, VBtn, VDatePicker, VMenu, VDialog, VIcon, VAlert,
+  },
+});
 
 Vue.config.productionTip = false;
 // Vue.use(BootstrapVue);

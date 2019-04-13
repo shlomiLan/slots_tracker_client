@@ -1,9 +1,10 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Charts from './views/Charts.vue';
-import Expenses from './views/Expenses.vue';
-import Categories from './views/Categories.vue';
-import PayMethods from './views/PayMethods.vue';
+
+const Charts = () => import('./views/Charts.vue');
+const Expenses = () => import('./views/Expenses.vue');
+const Categories = () => import('./views/Categories.vue');
+const PayMethods = () => import('./views/PayMethods.vue');
 
 Vue.use(Router);
 
