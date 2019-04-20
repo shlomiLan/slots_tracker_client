@@ -1,4 +1,4 @@
-// import './registerServiceWorker';
+import './registerServiceWorker';
 import 'vuetify/dist/vuetify.min.css';
 import Chart from 'chart.js';
 import VeeValidate from 'vee-validate';
