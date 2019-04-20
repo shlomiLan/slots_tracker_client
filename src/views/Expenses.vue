@@ -2,16 +2,7 @@
   <div>
     <loading :loading=loading></loading>
     <v-card>
-        <v-form ref="form">
-          <v-layout wrap>
-          <v-text-field xs6 v-model="searchQuery" placeholder="Filter expenses"></v-text-field>
-          <v-btn xs3 :disabled="!searchQuery" color="success" @click="filter">Filter</v-btn>
-          <v-btn xs3 :disabled="!searchQuery" color="error" @click="reset">
-            Reset
-          </v-btn>
-        </v-layout>
-      </v-form>
-
+      <v-text-field v-on:input="filter" v-model="searchQuery" placeholder="Filter expenses"></v-text-field>
       <alert :message=message></alert>
       <v-list two-line>
         <template v-for="(expense, index) in expenses">
@@ -347,10 +338,6 @@ export default {
       this.message.text = message;
     },
     filter() {
-      this.getExpenses();
-    },
-    reset() {
-      this.searchQuery = '';
       this.getExpenses();
     },
   },
