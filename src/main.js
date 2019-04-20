@@ -4,6 +4,7 @@ import Chart from 'chart.js';
 import VeeValidate from 'vee-validate';
 import VueChart from 'vuechart';
 import ChartJsPluginDataLabels from 'chartjs-plugin-datalabels';
+import '@fortawesome/fontawesome-free/css/all.css';
 import Vuetify, {
   VApp,
   // eslint-disable-next-line
@@ -19,9 +20,12 @@ import Vuetify, {
   VIcon,
   VAlert,
 } from 'vuetify/lib';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
+
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.use(Vuetify, {
   components: {

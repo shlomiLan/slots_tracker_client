@@ -22,7 +22,6 @@
               <v-list-tile-action-text>{{ expense.amount }}</v-list-tile-action-text>
               <v-list-tile-action-text>{{ expense.timestamp }}</v-list-tile-action-text>
             </v-list-tile-action>
-
           </v-list-tile>
           <v-divider
             v-if="index + 1 < filterExpenses.length"

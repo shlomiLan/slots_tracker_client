@@ -15,8 +15,6 @@ app.options('*', cors());
 app.listen(port);
 console.log(`server started ${port}`);
 
-console.log('here');
-console.log(`${__dirname}/dist`);
 app.use('/', expressStaticGzip(`${__dirname}/dist`, {
   enableBrotli: true,
   customCompressions: [{
