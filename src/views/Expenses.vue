@@ -2,10 +2,19 @@
   <div>
     <loading :loading=loading></loading>
     <v-card>
-      <v-text-field v-model="searchQuery" placeholder="Filter expenses"></v-text-field>
+        <v-form ref="form">
+          <v-layout wrap>
+          <v-text-field xs6 v-model="searchQuery" placeholder="Filter expenses"></v-text-field>
+          <v-btn xs3 :disabled="!searchQuery" color="success" @click="filter">Filter</v-btn>
+          <v-btn xs3 :disabled="!searchQuery" color="error" @click="reset">
+            Reset
+          </v-btn>
+        </v-layout>
+      </v-form>
+
       <alert :message=message></alert>
       <v-list two-line>
-        <template v-for="(expense, index) in filterExpenses">
+        <template v-for="(expense, index) in expenses">
           <v-list-tile
             :key="expense.title"
             avatar
@@ -24,7 +33,7 @@
             </v-list-tile-action>
           </v-list-tile>
           <v-divider
-            v-if="index + 1 < filterExpenses.length"
+            v-if="index + 1 < expenses.length"
             :key="index"
           ></v-divider>
         </template>
@@ -178,7 +187,7 @@ export default {
     async getExpenses() {
       let res = [];
       try {
-        res = await ExpensesAPI.get();
+        res = await ExpensesAPI.get(this.searchQuery);
         this.expenses = res.data;
       } catch (e) {
         this.displayError(e);
@@ -337,6 +346,13 @@ export default {
       this.message.type = type;
       this.message.text = message;
     },
+    filter() {
+      this.getExpenses();
+    },
+    reset() {
+      this.searchQuery = '';
+      this.getExpenses();
+    },
   },
   created() {
     this.initForm();
@@ -344,11 +360,6 @@ export default {
     this.getPayMethods();
     this.getCategories();
     this.getDescriptions();
-  },
-  computed: {
-    filterExpenses() {
-      return this.expenses.filter(expense => expense.description.match(this.searchQuery));
-    },
   },
 };
 </script>
