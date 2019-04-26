@@ -1,20 +1,25 @@
-var express = require('express'),
-  app = express();
+const cors = require('cors');
+const express = require('express');
+const expressStaticGzip = require('express-static-gzip');
+const history = require('connect-history-api-fallback');
 
-app.use(express.static('www'));
+const port = process.env.PORT || 8080;
+
+const app = express();
+app.use(history());
 
 // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
-app.all('*', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
-});
+app.use(cors());
+app.options('*', cors());
 
-// API Routes
-// app.get('/blah', routeHandler);
+app.listen(port);
+console.log(`server started ${port}`);
 
-app.set('port', process.env.PORT || 5000);
-
-app.listen(app.get('port'), function () {
-  console.log('Express server listening on port ' + app.get('port'));
-});
+app.use('/', expressStaticGzip(`${__dirname}/dist`, {
+  enableBrotli: true,
+  customCompressions: [{
+    encodingName: 'deflate',
+    fileExtension: 'zz',
+  }],
+  orderPreference: ['br'],
+}));
