@@ -1,4 +1,4 @@
-# vue3-test
+# Slots tracker client
 
 ## Project setup
 ```

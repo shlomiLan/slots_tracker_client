@@ -1,6 +1,6 @@
 {
-  "name": "vue3-test",
-  "short_name": "vue3-test",
+  "name": "Slots tracker client<",
+  "short_name": "Slots tracker",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
