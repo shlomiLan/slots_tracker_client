@@ -12,9 +12,9 @@ matrix:
 #        - test
 #        - build
 #      script: npm run unit
-#notifications:
-#  email:
-#    on_failure: change # default: always
+notifications:
+  email:
+    on_failure: change # default: always
 #      jobs:
 #        include:
 #          - stage: lint
