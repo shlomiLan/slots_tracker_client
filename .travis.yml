@@ -7,14 +7,14 @@ matrix:
       install:
         - npm install -g vue-cli
         - npm install --save-dev jest jest-vue-preprocessor babel-jest jsdom vue-server-renderer
-      stages:
-        - lint
-        - test
-        - build
-      script: npm run unit
-notifications:
-  email:
-    on_failure: change # default: always
+#      stages:
+#        - lint
+#        - test
+#        - build
+#      script: npm run unit
+#notifications:
+#  email:
+#    on_failure: change # default: always
 #      jobs:
 #        include:
 #          - stage: lint
