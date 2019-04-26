@@ -1,6 +1,9 @@
 {
   "name": "slots-tracker-client",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "engines": {
+    "node": "11.13.0"
+  },
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -38,7 +41,7 @@
     "@vue/cli-plugin-babel": "^3.5.0",
     "@vue/cli-plugin-eslint": "^3.5.0",
     "@vue/cli-plugin-pwa": "^3.5.0",
-    "@vue/cli-service": "^3.5.0",
+    "@vue/cli-service": "^3.6.0",
     "@vue/eslint-config-airbnb": "^4.0.0",
     "babel-eslint": "^10.0.1",
     "brotli-webpack-plugin": "^1.1.0",
