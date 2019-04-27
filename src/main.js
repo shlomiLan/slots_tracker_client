@@ -15,7 +15,7 @@ import Vuetify, {
   VFlex, VLayout, VContainer, VProgressLinear,
   VForm, VCheckbox, VTextField, VCombobox, VSelect, VBtn,
   VDatePicker,
-  VMenu,
+  VMenu, VFooter,
   VDialog,
   VIcon,
   VAlert,
@@ -34,7 +34,7 @@ Vue.use(Vuetify, {
     // eslint-disable-next-line
     VTab, VTabs, VTabsSlider, VDivider, VSpacer, VCard, VCardText, VCardActions, VFlex, VLayout, VContainer,
     // eslint-disable-next-line
-    VProgressLinear, VForm, VCheckbox, VTextField, VCombobox, VSelect, VBtn, VDatePicker, VMenu, VDialog, VIcon, VAlert,
+    VProgressLinear, VForm, VCheckbox, VTextField, VCombobox, VSelect, VBtn, VDatePicker, VMenu, VDialog, VIcon, VAlert, VFooter
   },
   iconfont: 'fa', // 'md' || 'mdi' || 'fa' || 'fa4'
 });

@@ -30,6 +30,13 @@
         </template>
       </v-list>
     </v-card>
+    <v-footer fixed>
+      <v-card class="flex" flat tile>
+        <v-card-actions class="justify-center">
+          &copy; All right reserved to the Bobi's company :-) <br>{{ new Date().getFullYear() }} - {{ appVersion }}
+        </v-card-actions>
+      </v-card>
+    </v-footer>
 
     <v-btn
       color="pink"
@@ -50,7 +57,7 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12>
-                  <v-text-field label="Amount" type="number"
+                  <v-text-field label="Amount" prefix="₪"
                                 v-validate="'required'"
                                 :error-messages="errors.collect('amount')"
                                 data-vv-name="amount"
@@ -137,6 +144,8 @@ import ExpensesAPI from '../api/Expenses';
 import CategoriesAPI from '../api/Categories';
 import PayMethodsAPI from '../api/PayMethods';
 import DescriptionsAPI from '../api/Descriptions';
+
+const mathjs = require('mathjs');
 
 export default {
   data() {
@@ -228,10 +237,15 @@ export default {
       this.loadingProgress();
       return res;
     },
+    updatePayload(payload) {
+      const localPayload = payload;
+      localPayload.amount = mathjs.eval(localPayload.amount);
+      return localPayload;
+    },
     async addExpense(payload, payments) {
       let res = [];
       try {
-        res = await ExpensesAPI.createExpense(payments, payload);
+        res = await ExpensesAPI.createExpense(payments, this.updatePayload(payload));
         const resData = res.data;
         const { expenses } = this;
         resData.forEach((element) => {
@@ -252,7 +266,7 @@ export default {
       try {
         expenseData = this.expenses[index];
         // eslint-disable-next-line
-        const res = await ExpensesAPI.updateExpense(expenseData._id, payload);
+        const res = await ExpensesAPI.updateExpense(expenseData._id,  this.updatePayload(payload));
         const resData = res.data[0];
         // Must have only one item
         this.expenses[index].amount = resData.amount;
@@ -347,6 +361,11 @@ export default {
     this.getPayMethods();
     this.getCategories();
     this.getDescriptions();
+  },
+  computed: {
+    appVersion() {
+      return `${process.env.PACKAGE_VERSION} - ${process.env.VUE_APP_ENV}`;
+    },
   },
 };
 </script>
