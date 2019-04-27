@@ -31,6 +31,11 @@
       </v-list>
     </v-card>
 
+    <v-footer app fixed top>
+      <v-spacer></v-spacer>
+      <div>&copy; All right reserved to the Bobi's company :-) {{ new Date().getFullYear() }} - {{ appVersion }}</div>
+    </v-footer>
+
     <v-btn
       color="pink"
       slot="activator"
@@ -354,6 +359,11 @@ export default {
     this.getPayMethods();
     this.getCategories();
     this.getDescriptions();
+  },
+  computed: {
+    appVersion() {
+      return `${process.env.PACKAGE_VERSION} - ${process.env.ENV}`;
+    },
   },
 };
 </script>

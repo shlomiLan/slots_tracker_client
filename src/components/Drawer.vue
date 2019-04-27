@@ -1,15 +1,14 @@
 <template>
-    <v-tabs centered color="cyan" dark icons-and-text>
-      Version: {{ appVersion}}
+  <v-tabs centered color="cyan" dark icons-and-text>
     <v-tabs-slider color="yellow"></v-tabs-slider>
-      <v-tab
-        :to="item.link"
-        v-for="item in items"
-        :key="item.id">
-        <span>{{ item.title }}</span>
-        <v-icon>{{ item.icon }}</v-icon>
-      </v-tab>
-    </v-tabs>
+    <v-tab
+      :to="item.link"
+      v-for="item in items"
+      :key="item.id">
+      <span>{{ item.title }}</span>
+      <v-icon>{{ item.icon }}</v-icon>
+    </v-tab>
+  </v-tabs>
 </template>
 <script>
 
@@ -28,11 +27,6 @@ export default {
       ],
       right: null,
     };
-  },
-  computed: {
-    appVersion() {
-      return `${process.env.PACKAGE_VERSION} - ${process.env.ENV}`;
-    },
   },
 };
 </script>

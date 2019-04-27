@@ -37,7 +37,8 @@
     "vue-router": "^3.0.1",
     "vuechart": "^18.10.21",
     "vuetify": "^1.5.8",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "webpack": "^4.30.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.5.0",
