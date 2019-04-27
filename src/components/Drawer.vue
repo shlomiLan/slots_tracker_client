@@ -1,5 +1,6 @@
 <template>
     <v-tabs centered color="cyan" dark icons-and-text>
+      Version: {{ appVersion}}
     <v-tabs-slider color="yellow"></v-tabs-slider>
       <v-tab
         :to="item.link"
@@ -11,6 +12,7 @@
     </v-tabs>
 </template>
 <script>
+
 export default {
   data() {
     return {
@@ -26,6 +28,11 @@ export default {
       ],
       right: null,
     };
+  },
+  computed: {
+    appVersion() {
+      return `${process.env.PACKAGE_VERSION} - ${process.env.NODE_ENV}`;
+    },
   },
 };
 </script>
