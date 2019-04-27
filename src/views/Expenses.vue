@@ -362,7 +362,7 @@ export default {
   },
   computed: {
     appVersion() {
-      return `${process.env.PACKAGE_VERSION} - ${process.env.ENV}`;
+      return `${process.env.PACKAGE_VERSION} - ${process.env.VUE_APP_ENV}`;
     },
   },
 };
