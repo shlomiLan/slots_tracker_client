@@ -30,10 +30,10 @@
         </template>
       </v-list>
     </v-card>
-
     <v-footer app fixed top>
       <v-spacer></v-spacer>
-      <div>&copy; All right reserved to the Bobi's company :-) {{ new Date().getFullYear() }} - {{ appVersion }}</div>
+      <div>&copy; All right reserved to the Bobi's company :-) <br>
+        {{ new Date().getFullYear() }} - {{ appVersion }}</div>
     </v-footer>
 
     <v-btn
