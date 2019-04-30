@@ -38,7 +38,8 @@
     "vuechart": "^18.10.21",
     "vuetify": "^1.5.8",
     "vuex": "^3.0.1",
-    "webpack": "^4.30.0"
+    "webpack": "^4.30.0",
+    "firebase": "^5.10.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.5.0",

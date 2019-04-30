@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "production": "slots-tracker-new",
+    "default": "slots-tracker-new"
+  }
+}
