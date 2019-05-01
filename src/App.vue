@@ -11,7 +11,7 @@
 <script>
 import axios from 'axios';
 import drawer from './components/Drawer.vue';
-import firebase from './configFirebase';
+import firebase from '@/configFirebase.js';
 
 const { messaging } = firebase;
 
