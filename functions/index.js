@@ -4,6 +4,10 @@ const axios = require('axios');
 const cors = require('cors')({ origin: true });
 const serverKey = require('./serverKey');
 
+console.log('-------');
+console.log(serverKey);
+console.log('-------');
+
 admin.initializeApp(functions.config().firebase);
 const firestore = admin.firestore();
 

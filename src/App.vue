@@ -22,6 +22,9 @@ export default {
   },
   methods: {
     getMessagingToken() {
+      console.log('*******');
+      console.log(messaging);
+      console.log('*******');
       messaging.getToken().then(async (token) => {
         if (token) {
           const currentMessageToken = window.localStorage.getItem('messagingToken');
@@ -33,8 +36,6 @@ export default {
           console.log('No Instance ID token available. Request permission to generate one.');
           this.notificationsPermisionRequest();
         }
-      }).catch((err) => {
-        console.log('An error occurred while retrieving token. ', err);
       });
     },
     notificationsPermisionRequest() {
