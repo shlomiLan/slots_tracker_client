@@ -62,7 +62,7 @@ export default {
     },
     saveToken(token) {
       console.log('tokens', token);
-      axios.post('https://us-central1-cropchien.cloudfunctions.net/GeneralSubscription', { token })
+      axios.post('https://us-central1-slots-tracker-new.cloudfunctions.net/GeneralSubscription', { token })
         .then((response) => {
           window.localStorage.setItem('messagingToken', token);
           console.log(response);
