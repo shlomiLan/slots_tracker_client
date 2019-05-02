@@ -4,12 +4,12 @@ import 'firebase/messaging';
 import 'firebase/storage';
 
 const config = {
-  apiKey: '####',
-  authDomain: '####',
-  databaseURL: '####',
-  projectId: '####',
-  storageBucket: '####',
-  messagingSenderId: '####',
+  apiKey: 'AIzaSyAIBTEeDjBqsnu56eyTZUaXbX6PoNnTmL0',
+  authDomain: 'slots-tracker-new.firebaseapp.com',
+  databaseURL: 'https://slots-tracker-new.firebaseio.com',
+  projectId: 'slots-tracker-new',
+  storageBucket: 'slots-tracker-new.appspot.com',
+  messagingSenderId: '424581987334',
 };
 
 firebase.initializeApp(config);
