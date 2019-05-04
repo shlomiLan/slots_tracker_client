@@ -14,7 +14,6 @@ const config = {
 };
 
 firebase.initializeApp(config);
-console.log(config);
 
 // Initialize Cloud Firestore through Firebase
 const db = firebase.firestore();
@@ -25,11 +24,6 @@ const storage = firebase.storage();
 
 const messaging = firebase.messaging();
 messaging.usePublicVapidKey('BK4Odj0TLAUBNc7g3h9EZCpjexigiUdygZLAt5Drswe-cT8HwdEY_Sz5ICOsOzdwB3uQiicDbaU2h2yBz14js2M');
-
-messaging.onMessage((payload) => {
-  console.log('Message received. ', payload);
-});
-
 
 export default {
   db,

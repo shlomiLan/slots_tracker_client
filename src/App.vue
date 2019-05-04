@@ -3,6 +3,9 @@
     <v-btn icon @click="getMessagingToken">
       <v-icon>notifications_none</v-icon>
     </v-btn>
+    <v-snackbar v-model="snackbar" top color="info" >
+      {{ text }}
+    </v-snackbar>
     <drawer></drawer>
     <router-view/>
   </v-app>
@@ -20,6 +23,12 @@ export default {
   name: 'App',
   components: {
     drawer,
+  },
+  data() {
+    return {
+      snackbar: false,
+      text: '',
+    };
   },
   methods: {
     getMessagingToken() {
@@ -48,19 +57,19 @@ export default {
           console.log('Unable to get permission to notify.', err);
         });
     },
-    listenTokenRefresh() {
-      const currentMessageToken = window.localStorage.getItem('messagingToken');
-      console.log('currentMessageToken', currentMessageToken);
-      if (currentMessageToken) {
-        messaging.onTokenRefresh(() => {
-          messaging.getToken().then(function (token) {
-            this.saveToken(token);
-          }).catch((err) => {
-            console.log('Unable to retrieve refreshed token ', err);
-          });
-        });
-      }
-    },
+    // listenTokenRefresh() {
+    //   const currentMessageToken = window.localStorage.getItem('messagingToken');
+    //   console.log('currentMessageToken', currentMessageToken);
+    //   if (currentMessageToken) {
+    //     messaging.onTokenRefresh(() => {
+    //       messaging.getToken().then(function (token) {
+    //         this.saveToken(token);
+    //       }).catch((err) => {
+    //         console.log('Unable to retrieve refreshed token ', err);
+    //       });
+    //     });
+    //   }
+    // },
     saveToken(token) {
       console.log('tokens', token);
       const devicesRef = db.collection('devices');
@@ -72,6 +81,13 @@ export default {
 
       return devicesRef.doc(token).set(docData);
     },
+  },
+  created() {
+    messaging.onMessage((payload) => {
+      this.snackbar = true;
+      this.text = payload.notification.body;
+      console.log('Message received. ', payload);
+    });
   },
 };
 </script>
