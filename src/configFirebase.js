@@ -3,8 +3,7 @@ import 'firebase/firestore';
 import 'firebase/messaging';
 import 'firebase/storage';
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
+const config = {
   apiKey: 'AIzaSyAIBTEeDjBqsnu56eyTZUaXbX6PoNnTmL0',
   authDomain: 'slots-tracker-new.firebaseapp.com',
   databaseURL: 'https://slots-tracker-new.firebaseio.com',
@@ -14,10 +13,12 @@ const firebaseConfig = {
   appId: '1:424581987334:web:1e8f3c4166248069',
 };
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(config);
+console.log(config);
 
+// Initialize Cloud Firestore through Firebase
 const db = firebase.firestore();
+
 db.enablePersistence({ experimentalTabSynchronization: true });
 
 const storage = firebase.storage();
@@ -25,17 +26,10 @@ const storage = firebase.storage();
 const messaging = firebase.messaging();
 messaging.usePublicVapidKey('BK4Odj0TLAUBNc7g3h9EZCpjexigiUdygZLAt5Drswe-cT8HwdEY_Sz5ICOsOzdwB3uQiicDbaU2h2yBz14js2M');
 
-// Request Permission of Notifications
-messaging.requestPermission().then(() => {
-  console.log('Notification permission granted.');
-
-  // Get Token
-  messaging.getToken().then((token) => {
-    console.log(token);
-  });
-}).catch((err) => {
-  console.log('Unable to get permission to notify.', err);
+messaging.onMessage((payload) => {
+  console.log('Message received. ', payload);
 });
+
 
 export default {
   db,
