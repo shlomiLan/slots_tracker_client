@@ -57,7 +57,7 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12>
-                  <v-text-field label="Amount" prefix="₪"
+                  <v-text-field label="Amount" prefix="₪" type="tel"
                                 v-validate="'required'"
                                 :error-messages="errors.collect('amount')"
                                 data-vv-name="amount"
