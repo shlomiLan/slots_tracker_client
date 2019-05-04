@@ -1,8 +1,5 @@
 <template>
   <v-app id="app">
-    <v-btn icon @click="getMessagingToken">
-      <v-icon>notifications_none</v-icon>
-    </v-btn>
     <v-snackbar v-model="snackbar" top color="info" >
       {{ text }}
     </v-snackbar>
@@ -12,7 +9,6 @@
 </template>
 
 <script>
-// import axios from 'axios';
 import drawer from './components/Drawer.vue';
 import firebase from './configFirebase';
 
@@ -32,9 +28,6 @@ export default {
   },
   methods: {
     getMessagingToken() {
-      console.log('*******');
-      console.log(messaging);
-      console.log('*******');
       messaging.getToken().then(async (token) => {
         if (token) {
           const currentMessageToken = window.localStorage.getItem('messagingToken');
@@ -57,21 +50,7 @@ export default {
           console.log('Unable to get permission to notify.', err);
         });
     },
-    // listenTokenRefresh() {
-    //   const currentMessageToken = window.localStorage.getItem('messagingToken');
-    //   console.log('currentMessageToken', currentMessageToken);
-    //   if (currentMessageToken) {
-    //     messaging.onTokenRefresh(() => {
-    //       messaging.getToken().then(function (token) {
-    //         this.saveToken(token);
-    //       }).catch((err) => {
-    //         console.log('Unable to retrieve refreshed token ', err);
-    //       });
-    //     });
-    //   }
-    // },
     saveToken(token) {
-      console.log('tokens', token);
       const devicesRef = db.collection('devices');
 
       const docData = {
@@ -83,6 +62,7 @@ export default {
     },
   },
   created() {
+    this.getMessagingToken();
     messaging.onMessage((payload) => {
       this.snackbar = true;
       this.text = payload.notification.body;

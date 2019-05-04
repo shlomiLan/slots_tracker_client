@@ -4,7 +4,7 @@ import 'firebase/messaging';
 import 'firebase/storage';
 
 const config = {
-  apiKey: 'AIzaSyAIBTEeDjBqsnu56eyTZUaXbX6PoNnTmL0',
+  apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
   authDomain: 'slots-tracker-new.firebaseapp.com',
   databaseURL: 'https://slots-tracker-new.firebaseio.com',
   projectId: 'slots-tracker-new',
