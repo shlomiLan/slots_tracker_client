@@ -18,7 +18,7 @@ import Vuetify, {
   VMenu, VFooter,
   VDialog,
   VIcon,
-  VAlert,
+  VAlert, VSnackbar,
 } from 'vuetify/lib';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import Vue from 'vue';
@@ -34,7 +34,7 @@ Vue.use(Vuetify, {
     // eslint-disable-next-line
     VTab, VTabs, VTabsSlider, VDivider, VSpacer, VCard, VCardText, VCardActions, VFlex, VLayout, VContainer,
     // eslint-disable-next-line
-    VProgressLinear, VForm, VCheckbox, VTextField, VCombobox, VSelect, VBtn, VDatePicker, VMenu, VDialog, VIcon, VAlert, VFooter
+    VProgressLinear, VForm, VCheckbox, VTextField, VCombobox, VSelect, VBtn, VDatePicker, VMenu, VDialog, VIcon, VAlert, VFooter, VSnackbar
   },
   iconfont: 'fa', // 'md' || 'mdi' || 'fa' || 'fa4'
 });

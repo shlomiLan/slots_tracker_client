@@ -1,25 +1,73 @@
 <template>
   <v-app id="app">
-  <!--<div id="app">-->
-    <!--<div id="nav">-->
+    <v-snackbar v-model="snackbar" top multi-line color="info" >
+      {{ text }}
+    </v-snackbar>
     <drawer></drawer>
     <router-view/>
-      <!--<router-link to="/">Home</router-link> |-->
-      <!--<router-link to="/about">About</router-link>-->
-    <!--</div>-->
-    <!--<router-view/>-->
-  <!--</div>-->
   </v-app>
 </template>
 
 <script>
 import drawer from './components/Drawer.vue';
+import firebase from './configFirebase';
 
+const { db } = firebase;
+const { messaging } = firebase;
 
 export default {
   name: 'App',
   components: {
     drawer,
+  },
+  data() {
+    return {
+      snackbar: false,
+      text: '',
+    };
+  },
+  methods: {
+    getMessagingToken() {
+      messaging.getToken().then(async (token) => {
+        if (token) {
+          const currentMessageToken = window.localStorage.getItem('messagingToken');
+          console.log('token will be updated', currentMessageToken !== token);
+          if (currentMessageToken !== token) {
+            await this.saveToken(token);
+          }
+        } else {
+          console.log('No Instance ID token available. Request permission to generate one.');
+          this.notificationsPermisionRequest();
+        }
+      });
+    },
+    notificationsPermisionRequest() {
+      messaging.requestPermission()
+        .then(() => {
+          this.getMessagingToken();
+        })
+        .catch((err) => {
+          console.log('Unable to get permission to notify.', err);
+        });
+    },
+    saveToken(token) {
+      const devicesRef = db.collection('devices');
+
+      const docData = {
+        token,
+        userId: 'testUser',
+      };
+
+      return devicesRef.doc(token).set(docData);
+    },
+  },
+  created() {
+    this.getMessagingToken();
+    messaging.onMessage((payload) => {
+      this.snackbar = true;
+      this.text = payload.notification.body;
+      console.log('Message received. ', payload);
+    });
   },
 };
 </script>
