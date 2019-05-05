@@ -1,6 +1,6 @@
 <template>
   <v-app id="app">
-    <v-snackbar v-model="snackbar" top color="info" >
+    <v-snackbar v-model="snackbar" top multi-line color="info" >
       {{ text }}
     </v-snackbar>
     <drawer></drawer>
@@ -22,7 +22,7 @@ export default {
   },
   data() {
     return {
-      snackbar: false,
+      snackbar: true,
       text: '',
     };
   },
