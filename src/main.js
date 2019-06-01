@@ -21,6 +21,7 @@ import Vuetify, {
   VAlert, VSnackbar,
 } from 'vuetify/lib';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import vueNumeralFilterInstaller from 'vue-numeral-filter';
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
@@ -52,6 +53,8 @@ Chart.defaults.global.legend.display = false;
 Chart.defaults.global.title.display = true;
 Chart.defaults.global.title.padding = 20;
 Chart.defaults.global.layout.padding.right = 50;
+
+Vue.use(vueNumeralFilterInstaller);
 
 new Vue({
   router,
