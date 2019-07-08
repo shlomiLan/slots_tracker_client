@@ -290,7 +290,7 @@ export default {
         payMethods: undefined,
         timestamp: moment().format('YYYY-MM-DD'),
         timestampInput: false,
-        oneTime: [],
+        oneTime: false,
         payments: 1,
         index: undefined,
         isUpdate: false,
@@ -309,15 +309,13 @@ export default {
         .then((res) => {
           if (res === true) {
             this.dialog = false;
-            let oneTime = false;
-            if (this.addExpenseForm.oneTime[0]) oneTime = true;
             const payload = {
               amount: this.addExpenseForm.amount,
               description: this.addExpenseForm.description,
               category: this.addExpenseForm.categories,
               pay_method: this.addExpenseForm.payMethods,
               timestamp: this.addExpenseForm.timestamp,
-              one_time: oneTime,
+              one_time: this.addExpenseForm.oneTime,
             };
 
             const { payments } = this.addExpenseForm;
