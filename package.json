@@ -1,6 +1,6 @@
 {
   "name": "slots-tracker-client",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "engines": {
     "node": "11.13.0"
   },
