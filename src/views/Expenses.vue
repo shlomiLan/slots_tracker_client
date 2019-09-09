@@ -2,19 +2,8 @@
   <div>
     <loading :loading=loading></loading>
     <v-card>
-      <v-layout wrap>
-        <v-flex xs8>
-          <v-select
-            v-model="filterByPayMethod"
-            :items="payMethods"
-            label="Filter by paying method"
-            item-text="name" item-value="_id"
-            multiple
-            chips
-            v-on:input="filter"
-          ></v-select>
-        </v-flex>
-      </v-layout>
+      <v-text-field v-on:input="filter" v-model="searchQuery" type="tel"
+                    placeholder="Filter expenses by amount"></v-text-field>
       <alert :message=message></alert>
       <v-list two-line>
         <template v-for="(expense, index) in expenses">
@@ -163,7 +152,7 @@ export default {
         display: false,
       },
       form: {},
-      filterByPayMethod: '',
+      searchQuery: '',
       dialog: false,
       loading: true,
       loadingVar: {
@@ -187,7 +176,7 @@ export default {
     async getExpenses() {
       let res = [];
       try {
-        res = await ExpensesAPI.get(this.filterByPayMethod);
+        res = await ExpensesAPI.get(this.searchQuery);
         this.expenses = res.data;
       } catch (e) {
         this.displayError(e);
