@@ -2,7 +2,8 @@
   <div>
     <loading :loading=loading></loading>
     <v-card>
-      <v-text-field v-on:input="filter" v-model="searchQuery" placeholder="Filter expenses"></v-text-field>
+      <v-text-field v-on:input="filter" v-model="searchQuery" type="tel"
+                    placeholder="Filter expenses by amount"></v-text-field>
       <alert :message=message></alert>
       <v-list two-line>
         <template v-for="(expense, index) in expenses">
@@ -13,7 +14,6 @@
             @click="onUpdateLoad(expense, index)"
           >
             <v-list-tile-content>
-              <v-list-tile-title>{{ expense.description }}</v-list-tile-title>
               <v-list-tile-sub-title class="text--primary">{{expense.category.name}}</v-list-tile-sub-title>
               <v-list-tile-sub-title>{{expense.pay_method.name}}</v-list-tile-sub-title>
             </v-list-tile-content>
@@ -62,14 +62,6 @@
                                 :error-messages="errors.collect('amount')"
                                 data-vv-name="amount"
                                 v-model="addExpenseForm.amount" required></v-text-field>
-                </v-flex>
-                <v-flex xs12>
-                  <v-combobox v-model="addExpenseForm.description" required
-                              v-validate="'required'"
-                              :error-messages="errors.collect('description')"
-                              data-vv-name="description"
-                              :items="descriptions" label="Description"
-                  ></v-combobox>
                 </v-flex>
 
                 <v-flex xs12>
@@ -143,7 +135,6 @@ import Loading from '../components/Loading.vue';
 import ExpensesAPI from '../api/Expenses';
 import CategoriesAPI from '../api/Categories';
 import PayMethodsAPI from '../api/PayMethods';
-import DescriptionsAPI from '../api/Descriptions';
 
 const mathjs = require('mathjs');
 
@@ -153,7 +144,6 @@ export default {
       expenses: [],
       payMethods: [],
       categories: [],
-      descriptions: [],
       addExpenseForm: {
       },
       message: {
@@ -169,7 +159,6 @@ export default {
         expenses: true,
         payMethods: true,
         categories: true,
-        descriptions: true,
       },
     };
   },
@@ -180,7 +169,7 @@ export default {
   methods: {
     loadingProgress() {
       if (this.loadingVar.expenses === false && this.loadingVar.payMethods === false
-        && this.loadingVar.categories === false && this.loadingVar.descriptions === false) {
+        && this.loadingVar.categories === false) {
         this.loading = false;
       }
     },
@@ -221,19 +210,6 @@ export default {
       }
 
       this.loadingVar.categories = false;
-      this.loadingProgress();
-      return res;
-    },
-    async getDescriptions() {
-      let res = [];
-      try {
-        res = await DescriptionsAPI.get();
-        this.descriptions = res.data;
-      } catch (e) {
-        this.displayError(e);
-      }
-
-      this.loadingVar.descriptions = false;
       this.loadingProgress();
       return res;
     },
@@ -358,7 +334,6 @@ export default {
     this.getExpenses();
     this.getPayMethods();
     this.getCategories();
-    this.getDescriptions();
   },
   computed: {
     appVersion() {
