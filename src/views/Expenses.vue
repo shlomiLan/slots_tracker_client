@@ -5,7 +5,7 @@
       <v-text-field v-on:input="filter" v-model="searchQuery" type="tel"
                     placeholder="Filter expenses by amount"></v-text-field>
       <alert :message=message></alert>
-      <v-list two-line>
+      <v-list>
         <template v-for="(expense, index) in expenses">
           <v-list-tile
             :key="expense.title"
@@ -13,15 +13,18 @@
             ripple
             @click="onUpdateLoad(expense, index)"
           >
-            <v-list-tile-content>
-              <v-list-tile-sub-title class="text--primary">{{expense.category.name}}</v-list-tile-sub-title>
-              <v-list-tile-sub-title>{{expense.pay_method.name}}</v-list-tile-sub-title>
-            </v-list-tile-content>
-
-            <v-list-tile-action>
-              <v-list-tile-action-text>{{ expense.amount | numeral('0,0') }}</v-list-tile-action-text>
-              <v-list-tile-action-text>{{ expense.timestamp }}</v-list-tile-action-text>
-            </v-list-tile-action>
+            <v-flex xs6>
+              <v-list-tile-content>
+                <v-list-tile-sub-title class="text--primary">{{expense.category.name}}</v-list-tile-sub-title>
+                <v-list-tile-sub-title>{{expense.pay_method.name}}</v-list-tile-sub-title>
+              </v-list-tile-content>
+            </v-flex>
+            <v-flex xs4 offset-xs10>
+              <v-list-tile-content>
+                <v-list-tile-sub-title>{{ expense.amount | numeral('0,0') }}</v-list-tile-sub-title>
+                <v-list-tile-sub-title>{{ expense.timestamp }}</v-list-tile-sub-title>
+              </v-list-tile-content>
+            </v-flex>
           </v-list-tile>
           <v-divider
             v-if="index + 1 < expenses.length"
