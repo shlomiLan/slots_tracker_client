@@ -2,15 +2,19 @@
   <div>
     <loading :loading=loading></loading>
     <v-card>
-      <v-select
-          v-model="filterByPayMethod"
-          :items="payMethods"
-          label="Filter by paying method"
-          item-text="name" item-value="_id"
-          multiple
-          chips
-          v-on:input="filter"
-        ></v-select>
+      <v-layout wrap>
+        <v-flex xs8>
+          <v-select
+            v-model="filterByPayMethod"
+            :items="payMethods"
+            label="Filter by paying method"
+            item-text="name" item-value="_id"
+            multiple
+            chips
+            v-on:input="filter"
+          ></v-select>
+        </v-flex>
+      </v-layout>
       <alert :message=message></alert>
       <v-list two-line>
         <template v-for="(expense, index) in expenses">
