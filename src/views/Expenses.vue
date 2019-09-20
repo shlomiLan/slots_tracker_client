@@ -2,7 +2,7 @@
   <div>
     <loading :loading=loading></loading>
     <v-card>
-      <v-text-field v-on:input="filter" v-model="searchQuery" type="tel"
+      <v-text-field v-on:input="filter" v-model="searchQuery" type="number"
                     placeholder="Filter expenses by amount"></v-text-field>
       <alert :message=message></alert>
       <v-list>
