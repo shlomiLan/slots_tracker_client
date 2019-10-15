@@ -55,7 +55,7 @@ export default {
 
       const docData = {
         token,
-        userId: 'testUser',
+        evn: process.env.VUE_APP_ENV,
       };
 
       return devicesRef.doc(token).set(docData);
