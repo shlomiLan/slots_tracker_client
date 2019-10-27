@@ -1,5 +1,7 @@
 # Slots tracker client
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/shlomiLan/slots_tracker_client.svg)](https://greenkeeper.io/)
+
 ## Project setup
 ```
 npm install
