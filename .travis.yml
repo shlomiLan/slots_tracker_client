@@ -11,7 +11,7 @@ matrix:
 #        - lint
 #        - test
 #        - build
-#      script: npm run unit
+      script: npm run unit
 notifications:
   email:
     on_failure: change # default: always
