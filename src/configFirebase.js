@@ -18,7 +18,7 @@ firebase.initializeApp(config);
 // Initialize Cloud Firestore through Firebase
 const db = firebase.firestore();
 
-db.enablePersistence({ experimentalTabSynchronization: true });
+db.enablePersistence({ synchronizeTabs: true });
 
 const storage = firebase.storage();
 
