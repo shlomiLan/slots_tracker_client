@@ -6,6 +6,7 @@ module.exports = {
     config.plugin('define').tap((definitions) => {
       const temp = definitions;
       temp[0]['process.env'].PACKAGE_VERSION = JSON.stringify(packagesData.version);
+      config.module.rules.delete('eslint');
       return temp;
     });
   },
