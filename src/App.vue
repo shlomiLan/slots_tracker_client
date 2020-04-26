@@ -3,7 +3,7 @@
     <v-snackbar v-model="snackbar" top multi-line color="info" >
       {{ text }}
     </v-snackbar>
-    <drawer></drawer>
+    <drawer v-if="this.$store.state.is_authenticated_user"></drawer>
     <router-view/>
   </v-app>
 </template>
@@ -11,6 +11,7 @@
 <script>
 import drawer from './components/Drawer.vue';
 import firebase from './configFirebase';
+import auth from './auth';
 
 const { db } = firebase;
 const { messaging } = firebase;
@@ -60,6 +61,11 @@ export default {
 
       return devicesRef.doc(token).set(docData);
     },
+    updateAccessToken(){
+      if (auth.isAuthenticatedUser()){
+        this.$store.state.is_authenticated_user = true;
+      }
+    },
   },
   created() {
     this.getMessagingToken();
@@ -68,6 +74,7 @@ export default {
       this.text = payload.notification.body;
       console.log('Message received. ', payload);
     });
+    this.updateAccessToken();
   },
 };
 </script>
