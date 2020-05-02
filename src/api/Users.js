@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // TODO: move to global file
 const baseURL = process.env.VUE_APP_API_BASE_URL;
-const resource = '/login/';
+const resource = 'login/';
 
 
 export default {
