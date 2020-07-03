@@ -15,11 +15,7 @@ export default {
     return Base.post(`${resource}`, payload);
   },
 
-  update(expenseId, payload) {
-    return Base.put(`${resource}${expenseId}`, payload);
-  },
-
-  convert(categoryId, payload) {
+  update(categoryId, payload) {
     return Base.put(`${resource}${categoryId}`, payload);
   }
 };
