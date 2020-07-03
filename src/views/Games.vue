@@ -4,36 +4,24 @@
     <v-card>
       <alert :message=message></alert>
       <v-list>
-        <template v-for="(category, index) in categories">
+        <template v-for="(category, index) in auto_added_categories">
           <v-list-tile
             :key="category.name"
             avatar
             ripple
-            @click="onUpdateLoad(category, index)"
+            @click="onCovertLoad(category, index)"
           >
             <v-list-tile-content>
               <v-list-tile-title>{{category.name}}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
           <v-divider
-            v-if="index + 1 < categories.length"
+            v-if="index + 1 < auto_added_categories.length"
             :key="index"
           ></v-divider>
         </template>
       </v-list>
     </v-card>
-
-    <v-btn
-      color="pink"
-      slot="activator"
-      dark
-      fixed
-      bottom
-      right
-      fab round
-    >
-      <v-icon @click="onLoad()">fa-plus</v-icon>
-    </v-btn>
 
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
@@ -42,13 +30,19 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs6>
-                  <v-text-field label="Name" type="text" v-model="addCategoryForm.name"
+                  <v-text-field label="Name" type="text" v-model="convertCategoryForm.name"
                                 v-validate="'required'"
                                 :error-messages="errors.collect('name')"
+                                disabled
                                 data-vv-name="name" required></v-text-field>
                 </v-flex>
-                <v-flex xs6>
-                  <v-checkbox v-model="addCategoryForm.added_by_user" readonly label="Added by user"></v-checkbox>
+                <v-flex xs12>
+                  <v-select v-model="convertCategoryForm.user_added_categories" :items="user_added_categories"
+                            v-validate="'required'"
+                            :error-messages="errors.collect('user_added_categories')"
+                            label="Category" required item-text="name" item-value="_id"
+                            data-vv-name="user_added_categories"
+                  ></v-select>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -69,11 +63,13 @@ import CategoriesAPI from '../api/Categories';
 import Alert from '../components/Alert.vue';
 import Loading from '../components/Loading.vue';
 
+
 export default {
   data() {
     return {
-      categories: [],
-      addCategoryForm: {
+      user_added_categories: [],
+      auto_added_categories: [],
+      convertCategoryForm: {
       },
       message: {
         text: '',
@@ -91,30 +87,30 @@ export default {
   },
   methods: {
     async getCategories() {
-      let res = [];
+      let res_auto_added = [];
+      let res_user_added = [];
       try {
-        res = await CategoriesAPI.get();
-        this.categories = res.data;
+        res_auto_added = await CategoriesAPI.get(false);
+        res_user_added = await CategoriesAPI.get(true);
+
+        this.user_added_categories = res_user_added.data;
+        this.auto_added_categories = res_auto_added.data;
+
       } catch (e) {
         this.displayError(e);
       }
 
       this.loading = false;
-      return res;
     },
     initForm() {
-      this.addCategoryForm = Object.assign({}, this.addCategoryForm, {
+      this.convertCategoryForm = Object.assign({}, this.convertCategoryForm, {
         name: '',
-        added_by_user: true,
         index: undefined,
+        user_added_categories: undefined
       });
     },
     closeForm() {
       this.dialog = false;
-    },
-    onLoad() {
-      this.initForm();
-      this.dialog = true;
     },
     onSubmit() {
       this.$validator.validateAll()
@@ -122,58 +118,33 @@ export default {
           if (res === true) {
             this.dialog = false;
             const payload = {
-              name: this.addCategoryForm.name,
-              added_by_user: this.addCategoryForm.added_by_user
+              name: this.convertCategoryForm.name,
+              user_added_categories: this.convertCategoryForm.user_added_categories,
+              action: 'merge_categories'
             };
 
-            if (this.addCategoryForm.index !== undefined) {
-              this.updateCategory(payload, this.addCategoryForm.index);
-            } else {
-              this.addCategory(payload);
-            }
+            this.convertCategory(payload, this.convertCategoryForm.index);
           }
         });
     },
-    async addCategory(payload) {
-      let res = [];
-      try {
-        res = await CategoriesAPI.create(payload);
-        const resData = res.data;
-        const { categories } = this;
-        if (resData) {
-          categories.unshift(resData);
-        }
-        this.displayError('Category was added', 'success');
-      } catch (e) {
-        this.displayError(e);
-      }
-
-      return res;
-    },
-    async updateCategory(payload, index) {
+    async convertCategory(payload, index) {
       let categoryData = [];
       try {
-        categoryData = this.categories[index];
-        // eslint-disable-next-line
-        const res = await CategoriesAPI.update(categoryData._id, payload);
-        // Must have only one item
-        this.categories[index].name = res.data.name;
-        this.categories[index].added_by_user = res.added_by_user;
-        this.displayError('Category was updated', 'success');
+        categoryData = this.auto_added_categories[index];
+        const res = await CategoriesAPI.convert(categoryData._id, payload);
+        this.auto_added_categories.splice(index, 1);
+        this.displayError(res.data, 'success');
       } catch (e) {
         this.displayError(e);
       }
 
       return categoryData;
     },
-    onUpdateLoad(category, index) {
-      this.addCategoryForm.name = category.name;
-      if (category.added_by_user !== undefined) {
-        this.addCategoryForm.added_by_user = category.added_by_user;
-      }else {
-        this.addCategoryForm.added_by_user = true;
-      }
-      this.addCategoryForm.index = index;
+    onCovertLoad(category, index) {
+      this.initForm();
+      this.$validator.reset();
+      this.convertCategoryForm.name = category.name;
+      this.convertCategoryForm.index = index;
       this.dialog = true;
     },
     displayError(message, type = 'error') {

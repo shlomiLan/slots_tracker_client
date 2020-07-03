@@ -16,6 +16,7 @@
             <v-list-tile-content>
               <v-list-tile-sub-title class="text--primary">{{expense.category.name}}</v-list-tile-sub-title>
               <v-list-tile-sub-title>{{expense.pay_method.name}}</v-list-tile-sub-title>
+              <v-list-tile-sub-title>{{ expense.business_name }}</v-list-tile-sub-title>
             </v-list-tile-content>
             <v-list-tile-content>
               <v-list-tile-sub-title align="right">{{ expense.amount | numeral('0,0') }}</v-list-tile-sub-title>
