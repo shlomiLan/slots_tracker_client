@@ -5,6 +5,7 @@ const Charts = () => import('./views/Charts.vue');
 const Expenses = () => import('./views/Expenses.vue');
 const Categories = () => import('./views/Categories.vue');
 const PayMethods = () => import('./views/PayMethods.vue');
+const Games = () => import('./views/Games.vue');
 
 Vue.use(Router);
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/charts',
       name: 'Charts',
       component: Charts,
+    },
+    {
+      path: '/games',
+      name: 'Games',
+      component: Games,
     },
   ],
   mode: 'history',
