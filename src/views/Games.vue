@@ -131,7 +131,7 @@ export default {
       let categoryData = [];
       try {
         categoryData = this.auto_added_categories[index];
-        const res = await CategoriesAPI.convert(categoryData._id, payload);
+        const res = await CategoriesAPI.update(categoryData._id, payload);
         this.auto_added_categories.splice(index, 1);
         this.displayError(res.data, 'success');
       } catch (e) {
