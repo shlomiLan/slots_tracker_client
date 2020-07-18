@@ -1,3 +1,4 @@
+import VueSession from 'vue-session';
 import './registerServiceWorker';
 import 'vuetify/dist/vuetify.min.css';
 import Chart from 'chart.js';
@@ -25,6 +26,8 @@ import vueNumeralFilterInstaller from 'vue-numeral-filter';
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
+import store from "./store";
+
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
@@ -56,7 +59,14 @@ Chart.defaults.global.layout.padding.right = 50;
 
 Vue.use(vueNumeralFilterInstaller);
 
+let session_options = {
+    persist: true
+};
+
+Vue.use(VueSession, session_options);
+
 new Vue({
   router,
   render: h => h(App),
+  store
 }).$mount('#app');
