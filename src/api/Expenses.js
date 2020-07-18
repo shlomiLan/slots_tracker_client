@@ -3,8 +3,8 @@ import Base from './Base';
 const resource = '/expenses/';
 
 export default {
-  get(searchQuery) {
-    return Base.get(`${resource}?filter=${searchQuery}`);
+  get(searchQuery, category, pay_method) {
+    return Base.get(`${resource}?amount=${searchQuery}&category=${category}&pay_method=${pay_method}`);
   },
 
   createExpense(payments, payload) {
