@@ -62,6 +62,7 @@
 import CategoriesAPI from '../api/Categories';
 import Alert from '../components/Alert.vue';
 import Loading from '../components/Loading.vue';
+import store from '../store';
 
 
 export default {
@@ -71,6 +72,8 @@ export default {
       auto_added_categories: [],
       convertCategoryForm: {
       },
+      merge_message: undefined,
+      merge_counter: store.state.merge_counter,
       message: {
         text: '',
         type: 'success',
@@ -131,9 +134,17 @@ export default {
       let categoryData = [];
       try {
         categoryData = this.auto_added_categories[index];
-        const res = await CategoriesAPI.update(categoryData._id, payload);
+        await CategoriesAPI.update(categoryData._id, payload);
         this.auto_added_categories.splice(index, 1);
-        this.displayError(res.data, 'success');
+        this.merge_counter++;
+        if (this.merge_counter === 1) {
+          this.merge_message = 'You merged ' + this.merge_counter + ' categories great job :-)';
+        }else if (this.merge_counter === 2){
+          this.merge_message = 'WOW, excellent job, ' + this.merge_counter + ' categories are now merged';
+        }else {
+          this.merge_message = 'You are on a roll, keeping going'
+        }
+        this.displayError(this.merge_message, 'success');
       } catch (e) {
         this.displayError(e);
       }
